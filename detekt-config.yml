@@ -148,7 +148,7 @@ naming:
   MemberNameEqualsClassName:
     active: true
   ObjectPropertyNaming:
-    active: true
+    active: false
     constantPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
     propertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
     privatePropertyPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'

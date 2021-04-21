@@ -16,19 +16,20 @@ android {
 }
 
 dependencies {
+  implementation(project(autoModules.library))
+
   implementation(Kotlin.StdLib)
 
   implementation(Material.Core)
 
   implementation(AndroidX.AppCompat)
-  implementation(AndroidX.ConstraintLayout)
   implementation(AndroidX.ComposeActivity)
 
-  implementation(Compose.Runtime) // FIXME remove if not using compose
-  implementation(Compose.Ui) // FIXME remove if not using compose
-  implementation(Compose.Foundation) // FIXME remove if not using compose
-  implementation(Compose.FoundationLayout) // FIXME remove if not using compose
-  implementation(Compose.Material) // FIXME remove if not using compose
+  implementation(Compose.Runtime)
+  implementation(Compose.Ui)
+  implementation(Compose.Foundation)
+  implementation(Compose.FoundationLayout)
+  implementation(Compose.Material)
 
   debugImplementation(Debug.LeakCanary)
   debugImplementation(Debug.FoQA)

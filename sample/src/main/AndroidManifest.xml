@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposeCalendar">
-        <activity android:name="com.bpawlowski.composecalendar.MainActivity">
+        <activity android:name="com.bpawlowski.composecalendar.sample.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
