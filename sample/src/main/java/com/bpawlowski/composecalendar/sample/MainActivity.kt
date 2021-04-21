@@ -1,16 +1,17 @@
-package com.bpawlowski.composecalendar
+package com.bpawlowski.composecalendar.sample
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import com.bpawlowski.composecalendar.month.Month
+import com.bpawlowski.composecalendar.month.MonthState
+import java.time.YearMonth
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    // setContentView(R.layout.activity_main) FIXME uncomment if not using Compose
     setContent {
       MainScreen()
     }
@@ -20,6 +21,6 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MainScreen() {
   MaterialTheme {
-    Text(text = "Hello")
+    Month(monthState = MonthState(YearMonth.now()))
   }
 }

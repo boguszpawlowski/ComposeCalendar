@@ -41,7 +41,7 @@ object Kotlin {
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha12"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
