@@ -1,7 +1,7 @@
 package com.bpawlowski.composecalendar
 
-import androidx.compose.foundation.clickable
-import androidx.compose.material.swipeable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,8 +20,7 @@ fun Calendar(
   currentDate: LocalDate = LocalDate.now(),
   dayContent: @Composable (Day) -> Unit = {},
 ) {
-
-  val (viewedMonth, setVisibleMonth) = remember {
+  val (displayedMonth, setDisplayedMonth) = remember {
     mutableStateOf(
       YearMonth.of(
         initialDate.year,
@@ -30,8 +29,14 @@ fun Calendar(
     )
   }
 
-  MonthContent(
-    month = Month(viewedMonth, currentDate = currentDate),
-    modifier = Modifier.clickable { setVisibleMonth(viewedMonth.plusMonths(1))}
-  )
+  Column {
+    HeaderContent(
+      header = Header(displayedMonth),
+      modifier = Modifier.fillMaxWidth(),
+      onCurrentMonthChanged = { setDisplayedMonth(it) }
+    )
+    MonthContent(
+      month = Month(displayedMonth, currentDate = currentDate),
+    )
+  }
 }
