@@ -4,11 +4,11 @@ import androidx.compose.runtime.Immutable
 import java.time.LocalDate
 
 @Immutable
-sealed interface DateSelection {
-  val start: LocalDate
+public sealed interface DateSelection {
+  public val start: LocalDate
 
-  data class Day(override val start: LocalDate) : DateSelection
-  data class Period(
+  public data class Day(override val start: LocalDate) : DateSelection
+  public data class Period(
     override val start: LocalDate,
     val end: LocalDate,
   ) : DateSelection

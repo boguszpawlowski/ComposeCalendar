@@ -18,10 +18,10 @@ complexity:
     threshold: 400
   LongMethod:
     active: true
-    threshold: 20
+    threshold: 40
   LongParameterList:
     active: true
-    functionThreshold: 5
+    functionThreshold: 10
     constructorThreshold: 5
   NestedBlockDepth:
     active: true
@@ -156,7 +156,7 @@ naming:
     active: true
     packagePattern: '^[a-z]+(\.[a-z][a-z]*)*$'
   TopLevelPropertyNaming:
-    active: true
+    active: false
     constantPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
     propertyPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
     privatePropertyPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
@@ -273,7 +273,7 @@ style:
   UnusedPrivateClass:
     active: true
   UnusedPrivateMember:
-    active: true
+    active: false # Due to compose preview
   UseArrayLiteralsInAnnotations:
     active: true
   UseCheckOrError:
