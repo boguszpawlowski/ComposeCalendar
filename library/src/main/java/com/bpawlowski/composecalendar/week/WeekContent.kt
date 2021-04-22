@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.bpawlowski.composecalendar.day.DayContent
 
 @Composable
-fun WeekContent(
+internal fun WeekContent(
   week: Week,
   modifier: Modifier = Modifier,
 ) {

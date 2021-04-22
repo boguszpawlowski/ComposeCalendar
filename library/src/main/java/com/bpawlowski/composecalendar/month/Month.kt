@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 @Immutable
-data class Month(
+internal data class Month(
   val yearMonth: YearMonth,
   val currentDate: LocalDate,
 )

@@ -1,9 +1,9 @@
-package com.bpawlowski.composecalendar
+package com.bpawlowski.composecalendar.header
 
 import androidx.compose.runtime.Immutable
 import java.time.YearMonth
 
 @Immutable
-data class Header(
+public data class Header(
   val month: YearMonth,
 )

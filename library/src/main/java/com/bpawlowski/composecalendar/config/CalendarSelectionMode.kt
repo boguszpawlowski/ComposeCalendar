@@ -1,6 +1,6 @@
 package com.bpawlowski.composecalendar.config
 
-enum class CalendarSelectionMode {
+public enum class CalendarSelectionMode {
   None,
   Singular,
   Period,

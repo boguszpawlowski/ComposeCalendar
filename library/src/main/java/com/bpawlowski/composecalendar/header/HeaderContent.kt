@@ -1,4 +1,4 @@
-package com.bpawlowski.composecalendar
+package com.bpawlowski.composecalendar.header
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import java.time.YearMonth
 import java.util.Locale
 
 @Composable
-fun HeaderContent(
+public fun HeaderContent(
   header: Header,
   onCurrentMonthChanged: (YearMonth) -> Unit,
   modifier: Modifier = Modifier,

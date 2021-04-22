@@ -1,7 +1,17 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
   id(Android.LibraryPluginId)
   kotlin(Kotlin.AndroidPluginId)
   id("common-android-plugin")
+}
+
+android {
+  tasks.withType<KotlinCompile> {
+    kotlinOptions {
+      freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
+    }
+  }
 }
 
 dependencies {
