@@ -22,4 +22,7 @@ dependencies {
   implementation(Compose.Foundation)
   implementation(Compose.FoundationLayout)
   implementation(Compose.Material)
+
+  testImplementation(Kotest.Assertions)
+  testImplementation(Kotest.RunnerJunit5)
 }
