@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import com.bpawlowski.composecalendar.Calendar
+import com.bpawlowski.composecalendar.config.CalendarConfig
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +20,10 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MainScreen() {
   MaterialTheme {
-    Calendar()
+    Calendar(
+      config = CalendarConfig(
+        showAdjacentMonths = true
+      ),
+    )
   }
 }

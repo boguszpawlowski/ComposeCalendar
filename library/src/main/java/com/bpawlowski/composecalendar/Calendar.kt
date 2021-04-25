@@ -25,7 +25,7 @@ public fun Calendar(
   modifier: Modifier = Modifier,
   initialDate: LocalDate = LocalDate.now(),
   currentDate: LocalDate = LocalDate.now(),
-  calendarConfig: CalendarConfig = CalendarConfig(),
+  config: CalendarConfig = CalendarConfig(),
   dayContent: @Composable RowScope.(Day) -> Unit = {},
   headerContent: @Composable ColumnScope.(Header) -> Unit = {},
 ) {
@@ -47,7 +47,7 @@ public fun Calendar(
       onCurrentMonthChanged = { setDisplayedMonth(it) }
     )
     MonthContent(
-      showAdjacentMonths = calendarConfig.showAdjacentMonths,
+      showAdjacentMonths = config.showAdjacentMonths,
       month = Month(displayedMonth, currentDate = currentDate),
       modifier = Modifier.padding(8.dp),
     )

@@ -135,8 +135,8 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.0-beta03"
-  const val AccompanistVersion = "0.6.2"
+  const val Version = "1.0.0-beta05"
+  const val AccompanistVersion = "0.8.1"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
   const val Compiler = "androidx.compose.compiler:compiler:$Version"
@@ -178,6 +178,10 @@ object Kotest {
   const val RunnerJunit5 = "io.kotest:kotest-runner-junit5-jvm:$Version"
 
   const val Assertions = "io.kotest:kotest-assertions-core-jvm:$Version"
+}
+
+object JUnit {
+  const val Core = "junit:junit:4.13.2"
 }
 
 object CoroutineTest {

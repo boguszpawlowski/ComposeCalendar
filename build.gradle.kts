@@ -13,7 +13,6 @@ buildscript {
     google()
     mavenCentral()
     gradlePluginPortal()
-    jcenter()
   }
   dependencies {
     classpath(Android.GradlePlugin)
@@ -21,7 +20,6 @@ buildscript {
     classpath(DetektLib.Plugin)
     classpath(GradleVersions.Plugin)
     classpath(Firebase.CrashlyticsPlugin)
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30")
   }
 }
 

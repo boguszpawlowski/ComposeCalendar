@@ -4,7 +4,7 @@
 
 The main purpose is to provide flexible Calendar Composable function. It should enable:
 
-- Rendering custom view of particular day (Utilizing Slot approach)
+- Rendering custom view of particular day
   The library will provide standard composables for day views, but user will be able to override
   them
 - Customizable selection mode (None, Day, Period)
@@ -20,3 +20,13 @@ The main purpose is to provide flexible Calendar Composable function. It should 
   the `CalendarScope`.
 
 - Customizable animations - WIP
+
+## TODO
+- [] Selectable days
+- [] Selectable periods
+- [] Swipeable months
+- [] Week view mode
+- [] Default animations
+- [] Customizable animations
+- [x] Week header
+- [] UI tests
