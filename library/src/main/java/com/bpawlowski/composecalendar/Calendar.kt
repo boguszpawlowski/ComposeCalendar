@@ -13,13 +13,12 @@ import com.bpawlowski.composecalendar.config.CalendarConfig
 import com.bpawlowski.composecalendar.day.Day
 import com.bpawlowski.composecalendar.header.MonthHeader
 import com.bpawlowski.composecalendar.header.MonthState
-import com.bpawlowski.composecalendar.header.rememberMonthState
 import com.bpawlowski.composecalendar.month.Month
 import com.bpawlowski.composecalendar.month.MonthContent
 import com.bpawlowski.composecalendar.selection.SelectionMode
+import com.bpawlowski.composecalendar.selection.SelectionMode.Single
 import com.bpawlowski.composecalendar.selection.SelectionState
 import com.bpawlowski.composecalendar.selection.SelectionValue
-import com.bpawlowski.composecalendar.selection.rememberSelectionState
 import com.bpawlowski.composecalendar.util.yearMonth
 import java.time.LocalDate
 
@@ -27,16 +26,9 @@ import java.time.LocalDate
 @Composable
 public fun Calendar(
   modifier: Modifier = Modifier,
-  initialDate: LocalDate = LocalDate.now(),
-  selectionMode: SelectionMode = SelectionMode.Period,
-  initialSelection: SelectionValue = SelectionValue.None,
   currentDate: LocalDate = LocalDate.now(),
   config: CalendarConfig = CalendarConfig(),
-  calendarState: CalendarState = rememberCalendarState(
-    initialDate,
-    initialSelection,
-    selectionMode,
-  ),
+  calendarState: CalendarState = rememberCalendarState(),
   dayContent: @Composable RowScope.(Day) -> Unit = {},
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { MonthHeader(it) },
 ) {
@@ -62,9 +54,9 @@ public class CalendarState(
 
 @Composable
 public fun rememberCalendarState(
-  initialDate: LocalDate,
-  initialSelection: SelectionValue,
-  selectionMode: SelectionMode,
-  monthState: MonthState = rememberMonthState(initialMonth = initialDate.yearMonth()),
-  selectionState: SelectionState = rememberSelectionState(initialSelection, selectionMode),
+  initialDate: LocalDate = LocalDate.now(),
+  initialSelection: SelectionValue = SelectionValue.None,
+  selectionMode: SelectionMode = Single,
+  monthState: MonthState = remember { MonthState(initialDate.yearMonth) },
+  selectionState: SelectionState = remember { SelectionState(initialSelection, selectionMode) },
 ): CalendarState = remember { CalendarState(monthState, selectionState) }

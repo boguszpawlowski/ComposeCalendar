@@ -30,6 +30,7 @@ dependencies {
   implementation(Compose.Foundation)
   implementation(Compose.FoundationLayout)
   implementation(Compose.Material)
+  implementation(Timber.Core)
 
   debugImplementation(Debug.LeakCanary)
   debugImplementation(Debug.FoQA)

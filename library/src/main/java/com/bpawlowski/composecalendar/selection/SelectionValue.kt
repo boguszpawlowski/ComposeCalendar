@@ -1,9 +1,9 @@
 package com.bpawlowski.composecalendar.selection
 
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 import java.time.LocalDate
 
-@Stable
+@Immutable
 public sealed interface SelectionValue {
 
   public object None : SelectionValue
@@ -14,6 +14,13 @@ public sealed interface SelectionValue {
     val end: LocalDate? = null,
   ) : SelectionValue {
     public fun contains(date: LocalDate): Boolean =
-      date == start || date == end || (date.isAfter(start) && date.isBefore(end ?: LocalDate.MIN))
+      date == start || date == end || date.isAfter(start) && date.isBefore(end ?: LocalDate.MIN)
+  }
+
+  public fun isDateSelected(date: LocalDate): Boolean = when (this) {
+    None -> false
+    is Multiple -> selection.contains(date)
+    is Single -> this.date == date
+    is Period -> contains(date)
   }
 }

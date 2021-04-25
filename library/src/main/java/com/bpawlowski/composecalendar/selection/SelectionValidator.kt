@@ -7,39 +7,38 @@ import com.bpawlowski.composecalendar.selection.SelectionMode.Single
 import com.bpawlowski.composecalendar.util.addOrRemove
 import java.time.LocalDate
 
-internal class SelectionValidator(
-  private val selectionMode: SelectionMode,
-) {
+internal object SelectionValidator {
 
   fun calculateNewSelection(
     date: LocalDate,
-    value: SelectionValue
-  ) = when (value) {
+    selectionValue: SelectionValue,
+    selectionMode: SelectionMode,
+  ) = when (selectionValue) {
     SelectionValue.None -> when (selectionMode) {
       None -> SelectionValue.None
       Single -> SelectionValue.Single(date)
       Multiple -> SelectionValue.Multiple(listOf(date))
       Period -> SelectionValue.Period(start = date)
     }
-    is SelectionValue.Single -> if (value.date == date) {
+    is SelectionValue.Single -> if (selectionValue.date == date) {
       SelectionValue.None
     } else {
       SelectionValue.Single(date)
     }
     is SelectionValue.Multiple ->
-      SelectionValue.Multiple(value.selection.addOrRemove(date))
+      SelectionValue.Multiple(selectionValue.selection.addOrRemove(date))
     is SelectionValue.Period -> when {
-      date.isBefore(value.start) -> value.copy(
+      date.isBefore(selectionValue.start) -> selectionValue.copy(
         start = date,
         end = null,
       )
-      date.isAfter(value.start) -> value.copy(end = date)
-      date == value.start -> SelectionValue.None
-      else -> value
+      date.isAfter(selectionValue.start) -> selectionValue.copy(end = date)
+      date == selectionValue.start -> SelectionValue.None
+      else -> selectionValue
     }
   }
 
-  fun validateSelection(newSelection: SelectionValue) {
+  fun validateSelection(newSelection: SelectionValue, selectionMode: SelectionMode) {
     when (selectionMode) {
       None -> require(newSelection == SelectionValue.None)
       Single -> require(newSelection is SelectionValue.Single || newSelection == SelectionValue.None)

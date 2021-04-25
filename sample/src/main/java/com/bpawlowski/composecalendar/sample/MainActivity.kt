@@ -4,20 +4,21 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.bpawlowski.composecalendar.Calendar
 import com.bpawlowski.composecalendar.config.CalendarConfig
+import com.bpawlowski.composecalendar.rememberCalendarState
 import com.bpawlowski.composecalendar.selection.SelectionMode
-import com.bpawlowski.composecalendar.selection.SelectionMode.Multiple
-import com.bpawlowski.composecalendar.selection.SelectionMode.Period
-import com.bpawlowski.composecalendar.selection.SelectionMode.Single
-import com.bpawlowski.composecalendar.selection.SelectionValue
-import com.bpawlowski.composecalendar.selection.rememberSelectionState
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,29 +31,31 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun MainScreen() {
-  val (selectionMode, onSelectionModeChanged) = remember { mutableStateOf(SelectionMode.Multiple) }
-
   MaterialTheme {
-    Column {
-      Button(onClick = { onSelectionModeChanged(Period) }) {
-        Text(text = "Period")
-      }
+    val calendarState = rememberCalendarState()
 
-      Button(onClick = { onSelectionModeChanged(Multiple) }) {
-        Text(text = "Multiple")
-      }
-
-      Button(onClick = { onSelectionModeChanged(Single) }) {
-        Text(text = "Single")
-      }
-
-
+    Column(modifier = Modifier.padding(8.dp)) {
       Calendar(
-        selectionMode = selectionMode,
+        calendarState = calendarState,
         config = CalendarConfig(
           showAdjacentMonths = true
         ),
       )
+
+      Text(
+        text = "Calendar Selection Mode",
+        style = MaterialTheme.typography.h5,
+      )
+      SelectionMode.values().forEach { selectionMode ->
+        Row(modifier = Modifier.fillMaxWidth()) {
+          RadioButton(
+            selected = calendarState.selectionState.selectionMode == selectionMode,
+            onClick = { calendarState.selectionState.onSelectionModeChanged(selectionMode) }
+          )
+          Text(text = selectionMode.name)
+          Spacer(modifier = Modifier.height(4.dp))
+        }
+      }
     }
   }
 }
