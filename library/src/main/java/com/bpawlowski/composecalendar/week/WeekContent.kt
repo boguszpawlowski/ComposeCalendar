@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bpawlowski.composecalendar.day.DayContent
+import com.bpawlowski.composecalendar.selection.SelectionState
 
 @Composable
 internal fun WeekContent(
   week: Week,
+  selectionState: SelectionState,
   modifier: Modifier = Modifier,
 ) {
 
@@ -21,6 +23,7 @@ internal fun WeekContent(
     week.days.forEachIndexed { index, day ->
       DayContent(
         day = day,
+        selectionState = selectionState,
         modifier = Modifier
           .fillMaxWidth(1 / (7f - index))
           .aspectRatio(1f)
