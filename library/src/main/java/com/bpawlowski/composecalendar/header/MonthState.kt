@@ -3,6 +3,7 @@ package com.bpawlowski.composecalendar.header
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import java.time.YearMonth
 
@@ -13,6 +14,14 @@ public fun MonthState(initialMonth: YearMonth): MonthState = MonthStateImpl(init
 public interface MonthState {
   public val currentMonth: YearMonth
   public fun onMonthChanged(newMonth: YearMonth)
+
+  public companion object {
+    @Suppress("FunctionName") // Factory function
+    public fun Saver(): Saver<MonthState, String> = Saver(
+      save = { it.currentMonth.toString() },
+      restore = { MonthState(YearMonth.parse(it)) }
+    )
+  }
 }
 
 @Stable

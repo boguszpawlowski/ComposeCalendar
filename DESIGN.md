@@ -22,11 +22,14 @@ The main purpose is to provide flexible Calendar Composable function. It should 
 - Customizable animations - WIP
 
 ## TODO
-- [] Selectable days
-- [] Selectable periods
+- [x] Selectable days
+- [] Customizable day content
+- [x] Selectable periods
 - [] Swipeable months
 - [] Week view mode
 - [] Default animations
 - [] Customizable animations
 - [x] Week header
+- [] Customizable week header
 - [] UI tests
+- [x] State retained across configuration changes

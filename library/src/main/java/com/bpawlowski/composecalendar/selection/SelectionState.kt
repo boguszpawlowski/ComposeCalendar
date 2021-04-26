@@ -3,6 +3,8 @@ package com.bpawlowski.composecalendar.selection
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.setValue
 import java.time.LocalDate
 
@@ -19,6 +21,29 @@ public interface SelectionState {
   public fun onSelectionModeChanged(newSelectionMode: SelectionMode)
   public fun onSelectionChanged(newSelection: SelectionValue)
   public fun onDateSelected(date: LocalDate)
+
+  public companion object {
+    private const val ModeKey = "mode_key"
+    private const val SelectionKey = "selection_key"
+
+    @Suppress("FunctionName")
+    public fun Saver(): Saver<SelectionState, Any> = mapSaver(
+      save = { selectionState ->
+        mapOf(
+          ModeKey to selectionState.selectionMode,
+          SelectionKey to SelectionValueSerializer.serialize(selectionState.selectionValue)
+        )
+      },
+      restore = { map ->
+        val selectionMode = map[ModeKey] as SelectionMode
+
+        SelectionState(
+          selectionMode = selectionMode,
+          initialSelection = SelectionValueSerializer.deserialize(map[SelectionKey], selectionMode),
+        )
+      }
+    )
+  }
 }
 
 @Stable

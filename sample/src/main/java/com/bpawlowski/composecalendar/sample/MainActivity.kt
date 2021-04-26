@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
@@ -33,13 +34,17 @@ class MainActivity : AppCompatActivity() {
 fun MainScreen() {
   MaterialTheme {
     val calendarState = rememberCalendarState()
-
-    Column(modifier = Modifier.padding(8.dp)) {
+    Column(
+      modifier = Modifier
+        .padding(8.dp)
+        .wrapContentHeight()
+    ) {
       Calendar(
         calendarState = calendarState,
         config = CalendarConfig(
           showAdjacentMonths = true
         ),
+        modifier = Modifier.padding(vertical = 8.dp)
       )
 
       Text(

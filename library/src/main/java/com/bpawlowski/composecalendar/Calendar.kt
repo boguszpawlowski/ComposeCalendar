@@ -3,12 +3,11 @@ package com.bpawlowski.composecalendar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.bpawlowski.composecalendar.config.CalendarConfig
 import com.bpawlowski.composecalendar.day.Day
 import com.bpawlowski.composecalendar.header.MonthHeader
@@ -41,7 +40,6 @@ public fun Calendar(
       showAdjacentMonths = config.showAdjacentMonths,
       month = Month(calendarState.monthState.currentMonth, currentDate = currentDate),
       selectionState = calendarState.selectionState,
-      modifier = Modifier.padding(8.dp),
     )
   }
 }
@@ -57,6 +55,13 @@ public fun rememberCalendarState(
   initialDate: LocalDate = LocalDate.now(),
   initialSelection: SelectionValue = SelectionValue.None,
   selectionMode: SelectionMode = Single,
-  monthState: MonthState = remember { MonthState(initialDate.yearMonth) },
-  selectionState: SelectionState = remember { SelectionState(initialSelection, selectionMode) },
+  monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
+    MonthState(initialMonth = initialDate.yearMonth)
+  },
+  selectionState: SelectionState = rememberSaveable(saver = SelectionState.Saver()) {
+    SelectionState(
+      initialSelection = initialSelection,
+      selectionMode = selectionMode
+    )
+  },
 ): CalendarState = remember { CalendarState(monthState, selectionState) }
