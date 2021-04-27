@@ -18,6 +18,7 @@ import com.bpawlowski.composecalendar.selection.SelectionMode
 import com.bpawlowski.composecalendar.selection.SelectionState
 import com.bpawlowski.composecalendar.selection.SelectionStateImpl
 import com.bpawlowski.composecalendar.selection.SelectionValue.None
+import com.bpawlowski.composecalendar.selection.onDateSelected
 import java.time.LocalDate
 
 @Composable

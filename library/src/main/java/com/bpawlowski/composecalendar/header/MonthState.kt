@@ -12,8 +12,7 @@ public fun MonthState(initialMonth: YearMonth): MonthState = MonthStateImpl(init
 
 @Stable
 public interface MonthState {
-  public val currentMonth: YearMonth
-  public fun onMonthChanged(newMonth: YearMonth)
+  public var currentMonth: YearMonth
 
   public companion object {
     @Suppress("FunctionName") // Factory function
@@ -31,10 +30,9 @@ private class MonthStateImpl(
 
   private var _currentMonth by mutableStateOf<YearMonth>(initialMonth)
 
-  override val currentMonth: YearMonth
+  override var currentMonth: YearMonth
     get() = _currentMonth
-
-  override fun onMonthChanged(newMonth: YearMonth) {
-    _currentMonth = newMonth
-  }
+    set(value) {
+      _currentMonth = value
+    }
 }

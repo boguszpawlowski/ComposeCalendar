@@ -26,8 +26,8 @@ public fun MonthHeader(
     modifier = modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.Center,
   ) {
-    IconButton(onClick = { monthState.onMonthChanged(monthState.currentMonth.plusMonths(-1)) }) {
-      Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "Next")
+    IconButton(onClick = { monthState.currentMonth = monthState.currentMonth.minusMonths(1) }) {
+      Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "Previous")
     }
     Text(
       text = monthState.currentMonth.month.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT),
@@ -35,7 +35,7 @@ public fun MonthHeader(
     )
     Spacer(modifier = Modifier.width(8.dp))
     Text(text = monthState.currentMonth.year.toString(), style = MaterialTheme.typography.h4)
-    IconButton(onClick = { monthState.onMonthChanged(monthState.currentMonth.plusMonths(1)) }) {
+    IconButton(onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }) {
       Image(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "Next")
     }
   }

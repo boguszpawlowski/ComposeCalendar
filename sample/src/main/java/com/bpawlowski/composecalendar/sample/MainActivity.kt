@@ -55,7 +55,7 @@ fun MainScreen() {
         Row(modifier = Modifier.fillMaxWidth()) {
           RadioButton(
             selected = calendarState.selectionState.selectionMode == selectionMode,
-            onClick = { calendarState.selectionState.onSelectionModeChanged(selectionMode) }
+            onClick = { calendarState.selectionState.selectionMode = selectionMode }
           )
           Text(text = selectionMode.name)
           Spacer(modifier = Modifier.height(4.dp))
