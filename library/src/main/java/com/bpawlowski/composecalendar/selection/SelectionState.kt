@@ -4,8 +4,13 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.setValue
+import com.bpawlowski.composecalendar.selection.SelectionMode.Multiple
+import com.bpawlowski.composecalendar.selection.SelectionMode.None
+import com.bpawlowski.composecalendar.selection.SelectionMode.Period
+import com.bpawlowski.composecalendar.selection.SelectionMode.Single
+import com.bpawlowski.composecalendar.util.addOrRemove
 import java.time.LocalDate
 
 @Suppress("FunctionNaming") // Factory function
@@ -16,30 +21,21 @@ public fun SelectionState(
 
 @Stable
 public interface SelectionState {
-  public val selectionValue: SelectionValue
-  public val selectionMode: SelectionMode
-  public fun onSelectionModeChanged(newSelectionMode: SelectionMode)
-  public fun onSelectionChanged(newSelection: SelectionValue)
-  public fun onDateSelected(date: LocalDate)
+  public var selectionValue: SelectionValue
+  public var selectionMode: SelectionMode
 
   public companion object {
-    private const val ModeKey = "mode_key"
-    private const val SelectionKey = "selection_key"
-
-    @Suppress("FunctionName")
-    public fun Saver(): Saver<SelectionState, Any> = mapSaver(
-      save = { selectionState ->
-        mapOf(
-          ModeKey to selectionState.selectionMode,
-          SelectionKey to SelectionValueSerializer.serialize(selectionState.selectionValue)
-        )
+    @Suppress("FunctionName") // Factory function
+    public fun Saver(): Saver<SelectionState, Any> = listSaver(
+      save = {
+        listOf(it.selectionMode, SelectionValueSerializer.serialize(it.selectionValue))
       },
-      restore = { map ->
-        val selectionMode = map[ModeKey] as SelectionMode
+      restore = { restored ->
+        val selectionMode = restored[0] as SelectionMode
 
         SelectionState(
           selectionMode = selectionMode,
-          initialSelection = SelectionValueSerializer.deserialize(map[SelectionKey], selectionMode),
+          initialSelection = SelectionValueSerializer.deserialize(restored[1], selectionMode),
         )
       }
     )
@@ -59,29 +55,47 @@ internal class SelectionStateImpl(
     SelectionValidator.validateSelection(initialSelectionValue, initialSelectionMode)
   }
 
-  override val selectionValue: SelectionValue
+  override var selectionValue: SelectionValue
     get() = _selectionValue
+    set(value) {
+      SelectionValidator.validateSelection(value, selectionMode)
+      _selectionValue = value
+    }
 
-  override val selectionMode: SelectionMode
+  override var selectionMode: SelectionMode
     get() = _selectionMode
+    set(value) {
+      if (value != selectionMode) {
+        _selectionValue = SelectionValue.None
+        _selectionMode = value
+      }
+    }
+}
 
-  override fun onSelectionChanged(newSelection: SelectionValue) {
-    SelectionValidator.validateSelection(newSelection, selectionMode)
-    _selectionValue = newSelection
-  }
-
-  override fun onDateSelected(date: LocalDate) {
-    onSelectionChanged(
-      SelectionValidator.calculateNewSelection(
-        date = date,
-        selectionValue = selectionValue,
-        selectionMode = selectionMode
+@Suppress("ComplexMethod")
+public fun SelectionState.onDateSelected(date: LocalDate) {
+  selectionValue = when (val selectionValue = selectionValue) {
+    SelectionValue.None -> when (selectionMode) {
+      None -> SelectionValue.None
+      Single -> SelectionValue.Single(date)
+      Multiple -> SelectionValue.Multiple(listOf(date))
+      Period -> SelectionValue.Period(start = date)
+    }
+    is SelectionValue.Single -> if (selectionValue.date == date) {
+      SelectionValue.None
+    } else {
+      SelectionValue.Single(date)
+    }
+    is SelectionValue.Multiple ->
+      SelectionValue.Multiple(selectionValue.selection.addOrRemove(date))
+    is SelectionValue.Period -> when {
+      date.isBefore(selectionValue.start) -> selectionValue.copy(
+        start = date,
+        end = null,
       )
-    )
-  }
-
-  override fun onSelectionModeChanged(newSelectionMode: SelectionMode) {
-    onSelectionChanged(SelectionValue.None)
-    _selectionMode = newSelectionMode
+      date.isAfter(selectionValue.start) -> selectionValue.copy(end = date)
+      date == selectionValue.start -> SelectionValue.None
+      else -> selectionValue
+    }
   }
 }

@@ -1,16 +1,16 @@
 package com.bpawlowski.composecalendar
 
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import com.bpawlowski.composecalendar.config.CalendarConfig
-import com.bpawlowski.composecalendar.day.Day
-import com.bpawlowski.composecalendar.header.MonthHeader
+import com.bpawlowski.composecalendar.day.DayState
+import com.bpawlowski.composecalendar.day.DefaultDay
+import com.bpawlowski.composecalendar.header.DefaultMonthHeader
 import com.bpawlowski.composecalendar.header.MonthState
 import com.bpawlowski.composecalendar.month.Month
 import com.bpawlowski.composecalendar.month.MonthContent
@@ -21,15 +21,14 @@ import com.bpawlowski.composecalendar.selection.SelectionValue
 import com.bpawlowski.composecalendar.util.yearMonth
 import java.time.LocalDate
 
-@Suppress("UnusedPrivateMember") // STOPSHIP: 22/04/2021 Remove once not true
 @Composable
 public fun Calendar(
   modifier: Modifier = Modifier,
   currentDate: LocalDate = LocalDate.now(),
-  config: CalendarConfig = CalendarConfig(),
+  showAdjacentMonths: Boolean = true,
   calendarState: CalendarState = rememberCalendarState(),
-  dayContent: @Composable RowScope.(Day) -> Unit = {},
-  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { MonthHeader(it) },
+  dayContent: @Composable BoxScope.(DayState) -> Unit = { DefaultDay(it) },
+  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
 ) {
 
   Column(
@@ -37,9 +36,10 @@ public fun Calendar(
   ) {
     monthHeader(calendarState.monthState)
     MonthContent(
-      showAdjacentMonths = config.showAdjacentMonths,
+      showAdjacentMonths = showAdjacentMonths,
       month = Month(calendarState.monthState.currentMonth, currentDate = currentDate),
       selectionState = calendarState.selectionState,
+      dayContent = dayContent,
     )
   }
 }
