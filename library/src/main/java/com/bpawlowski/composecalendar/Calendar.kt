@@ -3,6 +3,7 @@ package com.bpawlowski.composecalendar
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -19,6 +20,7 @@ import com.bpawlowski.composecalendar.selection.SelectionMode.Single
 import com.bpawlowski.composecalendar.selection.SelectionState
 import com.bpawlowski.composecalendar.selection.SelectionValue
 import com.bpawlowski.composecalendar.util.yearMonth
+import com.bpawlowski.composecalendar.week.DefaultWeekHeader
 import java.time.LocalDate
 
 @Composable
@@ -29,8 +31,8 @@ public fun Calendar(
   calendarState: CalendarState = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
+  weekHeader: @Composable RowScope.() -> Unit = { DefaultWeekHeader() },
 ) {
-
   Column(
     modifier = modifier,
   ) {
@@ -40,6 +42,7 @@ public fun Calendar(
       month = Month(calendarState.monthState.currentMonth, currentDate = currentDate),
       selectionState = calendarState.selectionState,
       dayContent = dayContent,
+      weekHeader = weekHeader,
     )
   }
 }
