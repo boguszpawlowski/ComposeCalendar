@@ -72,6 +72,7 @@ internal class SelectionStateImpl(
     }
 }
 
+@Suppress("ComplexMethod")
 public fun SelectionState.onDateSelected(date: LocalDate) {
   selectionValue = when (val selectionValue = selectionValue) {
     SelectionValue.None -> when (selectionMode) {

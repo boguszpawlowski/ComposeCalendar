@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import java.util.Locale
 
 @Composable
-public fun MonthHeader(
+public fun DefaultMonthHeader(
   monthState: MonthState,
   modifier: Modifier = Modifier,
 ) {

@@ -1,3 +1,5 @@
+@file:Suppress("UnderscoresInNumericLiterals")
+
 package com.bpawlowski.composecalendar.selection
 
 import io.kotest.core.spec.style.ShouldSpec
@@ -6,7 +8,7 @@ import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import java.time.Month.APRIL
 
-internal class SelectionStateTest: ShouldSpec({
+internal class SelectionStateTest : ShouldSpec({
 
   val yesterday = LocalDate.of(2020, APRIL, 9)
   val today = LocalDate.of(2020, APRIL, 10)
@@ -75,7 +77,10 @@ internal class SelectionStateTest: ShouldSpec({
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
 
-      (state.selectionValue as SelectionValue.Multiple).selection shouldContainExactly listOf(today, tomorrow)
+      (state.selectionValue as SelectionValue.Multiple).selection shouldContainExactly listOf(
+        today,
+        tomorrow
+      )
     }
 
     should("switch selection off once day is selected second time") {
@@ -85,7 +90,9 @@ internal class SelectionStateTest: ShouldSpec({
       state.onDateSelected(tomorrow)
       state.onDateSelected(today)
 
-      (state.selectionValue as SelectionValue.Multiple).selection shouldContainExactly listOf(tomorrow)
+      (state.selectionValue as SelectionValue.Multiple).selection shouldContainExactly listOf(
+        tomorrow
+      )
     }
   }
 
