@@ -21,15 +21,23 @@ internal fun MonthContent(
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState) -> Unit,
   weekHeader: @Composable RowScope.() -> Unit,
+  monthContainer: @Composable (content: @Composable () -> Unit) -> Unit,
 ) {
-  Column(modifier = modifier) {
-    Row(modifier = Modifier.fillMaxWidth().wrapContentHeight(), content = weekHeader)
-    month.yearMonth.getWeeks(showAdjacentMonths).forEach { week ->
-      WeekContent(
-        week = week,
-        selectionState = selectionState,
-        dayContent = dayContent,
-      )
+  Row(
+    modifier = modifier
+      .fillMaxWidth()
+      .wrapContentHeight(),
+    content = weekHeader,
+  )
+  monthContainer {
+    Column {
+      month.yearMonth.getWeeks(showAdjacentMonths).forEach { week ->
+        WeekContent(
+          week = week,
+          selectionState = selectionState,
+          dayContent = dayContent,
+        )
+      }
     }
   }
 }
