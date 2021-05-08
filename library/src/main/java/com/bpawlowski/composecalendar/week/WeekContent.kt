@@ -24,11 +24,9 @@ internal fun WeekContent(
       .wrapContentHeight(),
     horizontalArrangement = if (week.isFirstWeekOfTheMonth) Arrangement.End else Arrangement.Start
   ) {
-    week.days.forEach { day ->
+    week.days.forEachIndexed { index, day ->
       Box(
-        modifier = Modifier
-          .weight(1f)
-          .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(1f / (7 - index))
       ) {
         dayContent(DayState(day, selectionState))
       }

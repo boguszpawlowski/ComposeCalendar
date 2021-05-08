@@ -6,11 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.setValue
-import com.bpawlowski.composecalendar.selection.SelectionMode.Multiple
-import com.bpawlowski.composecalendar.selection.SelectionMode.None
-import com.bpawlowski.composecalendar.selection.SelectionMode.Period
-import com.bpawlowski.composecalendar.selection.SelectionMode.Single
-import com.bpawlowski.composecalendar.util.addOrRemove
 import java.time.LocalDate
 
 @Suppress("FunctionNaming") // Factory function
@@ -23,6 +18,10 @@ public fun SelectionState(
 public interface SelectionState {
   public var selectionValue: SelectionValue
   public var selectionMode: SelectionMode
+
+  public fun onDateSelected(date: LocalDate) {
+    selectionValue = SelectionHandler.calculateNewSelection(date, selectionValue, selectionMode)
+  }
 
   public companion object {
     @Suppress("FunctionName") // Factory function
@@ -70,32 +69,4 @@ internal class SelectionStateImpl(
         _selectionMode = value
       }
     }
-}
-
-@Suppress("ComplexMethod")
-public fun SelectionState.onDateSelected(date: LocalDate) {
-  selectionValue = when (val selectionValue = selectionValue) {
-    SelectionValue.None -> when (selectionMode) {
-      None -> SelectionValue.None
-      Single -> SelectionValue.Single(date)
-      Multiple -> SelectionValue.Multiple(listOf(date))
-      Period -> SelectionValue.Period(start = date)
-    }
-    is SelectionValue.Single -> if (selectionValue.date == date) {
-      SelectionValue.None
-    } else {
-      SelectionValue.Single(date)
-    }
-    is SelectionValue.Multiple ->
-      SelectionValue.Multiple(selectionValue.selection.addOrRemove(date))
-    is SelectionValue.Period -> when {
-      date.isBefore(selectionValue.start) -> selectionValue.copy(
-        start = date,
-        end = null,
-      )
-      date.isAfter(selectionValue.start) -> selectionValue.copy(end = date)
-      date == selectionValue.start -> SelectionValue.None
-      else -> selectionValue
-    }
-  }
 }
