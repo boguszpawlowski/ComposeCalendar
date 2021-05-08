@@ -7,6 +7,9 @@ import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import java.time.DayOfWeek.MONDAY
+import java.time.DayOfWeek.SATURDAY
+import java.time.DayOfWeek.SUNDAY
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -19,7 +22,7 @@ internal class WeekUtilTest : ShouldSpec({
   context("Extracting weeks without adjacent months") {
     val includeAdjacentMonths = false
     should("return days only from current month") {
-      val weeks = month.getWeeks(includeAdjacentMonths)
+      val weeks = month.getWeeks(includeAdjacentMonths, MONDAY)
       val days = weeks.flatMap { it.days }
 
       days.map { it.date }.forEach {
@@ -30,7 +33,7 @@ internal class WeekUtilTest : ShouldSpec({
     }
 
     should("return all days from the month") {
-      val weeks = month.getWeeks(includeAdjacentMonths)
+      val weeks = month.getWeeks(includeAdjacentMonths, MONDAY)
       val days = weeks.flatMap { it.days }.map { it.date }
 
       val daysLength = month.lengthOfMonth()
@@ -40,7 +43,7 @@ internal class WeekUtilTest : ShouldSpec({
     }
 
     should("return days properly split to weeks") {
-      val weeks = month.getWeeks(includeAdjacentMonths)
+      val weeks = month.getWeeks(includeAdjacentMonths, MONDAY)
 
       weeks[0].days shouldHaveSize 6
       weeks[1].days shouldHaveSize 7
@@ -50,12 +53,36 @@ internal class WeekUtilTest : ShouldSpec({
 
       weeks shouldHaveSize 5
     }
+
+    should("return days properly split to weeks when first day is Saturday") {
+      val weeks = month.getWeeks(includeAdjacentMonths, SATURDAY)
+
+      weeks[0].days shouldHaveSize 4
+      weeks[1].days shouldHaveSize 7
+      weeks[2].days shouldHaveSize 7
+      weeks[3].days shouldHaveSize 7
+      weeks[4].days shouldHaveSize 5
+
+      weeks shouldHaveSize 5
+    }
+
+    should("return days properly split to weeks when first day is Sunday ") {
+      val weeks = month.getWeeks(includeAdjacentMonths, SUNDAY)
+
+      weeks[0].days shouldHaveSize 5
+      weeks[1].days shouldHaveSize 7
+      weeks[2].days shouldHaveSize 7
+      weeks[3].days shouldHaveSize 7
+      weeks[4].days shouldHaveSize 4
+
+      weeks shouldHaveSize 5
+    }
   }
 
   context("Extracting weeks with adjacent months") {
     val includeAdjacentMonths = true
     should("return days from current and previous months") {
-      val weeks = month.getWeeks(includeAdjacentMonths)
+      val weeks = month.getWeeks(includeAdjacentMonths, MONDAY)
       val days = weeks.flatMap { it.days }
 
       days.map { it.date }.forEachIndexed { index, day ->
@@ -80,7 +107,7 @@ internal class WeekUtilTest : ShouldSpec({
     }
 
     should("return all days from the month") {
-      val weeks = month.getWeeks(includeAdjacentMonths)
+      val weeks = month.getWeeks(includeAdjacentMonths, MONDAY)
       val days = weeks.flatMap { it.days }.map { it.date }
 
       val daysLength = month.lengthOfMonth()
@@ -97,7 +124,31 @@ internal class WeekUtilTest : ShouldSpec({
     }
 
     should("return days properly split to weeks") {
-      val weeks = month.getWeeks(includeAdjacentMonths)
+      val weeks = month.getWeeks(includeAdjacentMonths, MONDAY)
+
+      weeks[0].days shouldHaveSize 7
+      weeks[1].days shouldHaveSize 7
+      weeks[2].days shouldHaveSize 7
+      weeks[3].days shouldHaveSize 7
+      weeks[4].days shouldHaveSize 7
+
+      weeks shouldHaveSize 5
+    }
+
+    should("return days properly split to weeks when first day is Sunday") {
+      val weeks = month.getWeeks(includeAdjacentMonths, SUNDAY)
+
+      weeks[0].days shouldHaveSize 7
+      weeks[1].days shouldHaveSize 7
+      weeks[2].days shouldHaveSize 7
+      weeks[3].days shouldHaveSize 7
+      weeks[4].days shouldHaveSize 7
+
+      weeks shouldHaveSize 5
+    }
+
+    should("return days properly split to weeks when first day is Saturday") {
+      val weeks = month.getWeeks(includeAdjacentMonths, SATURDAY)
 
       weeks[0].days shouldHaveSize 7
       weeks[1].days shouldHaveSize 7

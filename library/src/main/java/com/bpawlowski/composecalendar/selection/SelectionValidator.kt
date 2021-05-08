@@ -4,7 +4,7 @@ import com.bpawlowski.composecalendar.selection.SelectionMode.Multiple
 import com.bpawlowski.composecalendar.selection.SelectionMode.None
 import com.bpawlowski.composecalendar.selection.SelectionMode.Period
 import com.bpawlowski.composecalendar.selection.SelectionMode.Single
-import com.bpawlowski.composecalendar.util.addOrRemove
+import com.bpawlowski.composecalendar.util.addOrRemoveIfExists
 import java.time.LocalDate
 
 internal object SelectionValidator {
@@ -20,13 +20,13 @@ internal object SelectionValidator {
       Multiple -> SelectionValue.Multiple(listOf(date))
       Period -> SelectionValue.Period(start = date)
     }
-    is SelectionValue.Single -> if (selectionValue.date == date) {
+    is SelectionValue.Single -> if (selectionValue.selection == date) {
       SelectionValue.None
     } else {
       SelectionValue.Single(date)
     }
     is SelectionValue.Multiple ->
-      SelectionValue.Multiple(selectionValue.selection.addOrRemove(date))
+      SelectionValue.Multiple(selectionValue.selection.addOrRemoveIfExists(date))
     is SelectionValue.Period -> when {
       date.isBefore(selectionValue.start) -> selectionValue.copy(
         start = date,

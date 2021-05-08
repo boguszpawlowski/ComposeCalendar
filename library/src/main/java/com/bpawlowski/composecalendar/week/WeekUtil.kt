@@ -1,18 +1,24 @@
 package com.bpawlowski.composecalendar.week
 
-import com.bpawlowski.composecalendar.day.Day
+import com.bpawlowski.composecalendar.day.WeekDay
+import com.bpawlowski.composecalendar.util.daysFrom
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 
+// TODO make first day of the week customizable
+//  https://stackoverflow.com/questions/28450720/get-date-of-first-day-of-week-based-on-localdate-now-in-java-8/28450817
 private const val DaysInAWeek = 7
 
 internal fun YearMonth.getWeeks(
   includeAdjacentMonths: Boolean,
+  firstDayOfTheWeek: DayOfWeek,
 ): List<Week> {
   val daysLength = lengthOfMonth()
 
-  val starOffset = atDay(1).dayOfWeek.ordinal
-  val endOffset = DaysInAWeek - (atDay(daysLength).dayOfWeek.ordinal + 1)
+  val starOffset = atDay(1).dayOfWeek daysFrom firstDayOfTheWeek
+  val endOffset =
+    DaysInAWeek - (atDay(daysLength).dayOfWeek daysFrom firstDayOfTheWeek) - 1
 
   return (1 - starOffset..daysLength + endOffset).chunked(DaysInAWeek).mapIndexed { index, days ->
     Week(
@@ -34,7 +40,7 @@ internal fun YearMonth.getWeeks(
           }
         }
 
-        Day(
+        WeekDay(
           date = date,
           isFromCurrentMonth = isFromCurrentMonth,
           isCurrentDay = date.equals(LocalDate.now()),

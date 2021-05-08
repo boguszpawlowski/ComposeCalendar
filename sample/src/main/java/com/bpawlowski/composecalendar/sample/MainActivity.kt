@@ -26,6 +26,7 @@ import com.bpawlowski.composecalendar.Calendar
 import com.bpawlowski.composecalendar.rememberCalendarState
 import com.bpawlowski.composecalendar.selection.SelectionMode
 import com.bpawlowski.composecalendar.selection.SelectionState
+import java.time.DayOfWeek
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,7 @@ fun MainScreen() {
           .padding(vertical = 8.dp)
           .animateContentSize(),
         monthContainer = { MonthContainer(it) },
+        firstDayOfWeek = DayOfWeek.MONDAY,
       )
 
       SelectionControls(selectionState = calendarState.selectionState)

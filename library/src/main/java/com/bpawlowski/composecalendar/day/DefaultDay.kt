@@ -19,8 +19,7 @@ public fun DefaultDay(
   state: DayState,
   modifier: Modifier = Modifier,
 ) {
-  val day = state.day
-  val date = day.date
+  val date = state.date
   val selectionState = state.selectionState
 
   val isSelected = selectionState.selectionValue.isDateSelected(date)
@@ -29,8 +28,8 @@ public fun DefaultDay(
     modifier = modifier
       .aspectRatio(1f)
       .padding(2.dp),
-    elevation = if (day.isFromCurrentMonth) 4.dp else 0.dp,
-    border = if (day.isCurrentDay) BorderStroke(1.dp, MaterialTheme.colors.primary) else null,
+    elevation = if (state.isFromCurrentMonth) 4.dp else 0.dp,
+    border = if (state.isCurrentDay) BorderStroke(1.dp, MaterialTheme.colors.primary) else null,
     contentColor = if (isSelected) MaterialTheme.colors.secondary else contentColorFor(
       backgroundColor = MaterialTheme.colors.surface
     )

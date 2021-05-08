@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -22,17 +21,21 @@ import com.bpawlowski.composecalendar.selection.SelectionState
 import com.bpawlowski.composecalendar.selection.SelectionValue
 import com.bpawlowski.composecalendar.util.yearMonth
 import com.bpawlowski.composecalendar.week.DefaultWeekHeader
+import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.temporal.WeekFields
+import java.util.Locale
 
 @Composable
 public fun Calendar(
   modifier: Modifier = Modifier,
+  firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   currentDate: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   calendarState: CalendarState = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable RowScope.() -> Unit = { DefaultWeekHeader() },
+  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
   monthContainer: @Composable (content: @Composable () -> Unit) -> Unit = { Box { it() } }
 ) {
   Column(
@@ -43,6 +46,7 @@ public fun Calendar(
       showAdjacentMonths = showAdjacentMonths,
       month = Month(calendarState.monthState.currentMonth, currentDate = currentDate),
       selectionState = calendarState.selectionState,
+      firstDayOfWeek = firstDayOfWeek,
       dayContent = dayContent,
       weekHeader = weekHeader,
       monthContainer = monthContainer,

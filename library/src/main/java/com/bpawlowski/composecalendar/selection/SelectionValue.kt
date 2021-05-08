@@ -7,7 +7,7 @@ import java.time.LocalDate
 public sealed interface SelectionValue {
 
   public object None : SelectionValue
-  public data class Single(val date: LocalDate) : SelectionValue
+  public data class Single(val selection: LocalDate) : SelectionValue
   public data class Multiple(val selection: Collection<LocalDate>) : SelectionValue
   public data class Period(
     val start: LocalDate,
@@ -20,7 +20,7 @@ public sealed interface SelectionValue {
   public fun isDateSelected(date: LocalDate): Boolean = when (this) {
     None -> false
     is Multiple -> selection.contains(date)
-    is Single -> this.date == date
+    is Single -> this.selection == date
     is Period -> contains(date)
   }
 }

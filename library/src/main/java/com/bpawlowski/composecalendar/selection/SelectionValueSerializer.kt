@@ -13,7 +13,7 @@ internal object SelectionValueSerializer {
       None -> emptyList()
       is Period -> listOfNotNull(start.toString(), end?.toString())
       is Multiple -> selection.map { it.toString() }
-      is Single -> listOf(date.toString())
+      is Single -> listOf(selection.toString())
     }
   }
 
