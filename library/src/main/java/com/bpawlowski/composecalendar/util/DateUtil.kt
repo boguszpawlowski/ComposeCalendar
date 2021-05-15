@@ -1,13 +1,17 @@
 package com.bpawlowski.composecalendar.util
 
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 
-internal val LocalDate.yearMonth get() = YearMonth.of(year, month)
+internal val LocalDate.yearMonth: YearMonth
+  get() = YearMonth.of(year, month)
 
-internal fun Collection<LocalDate>.addOrRemove(date: LocalDate) =
+internal fun Collection<LocalDate>.addOrRemoveIfExists(date: LocalDate) =
   if (contains(date)) {
     this - date
   } else {
     this + date
   }
+
+internal infix fun DayOfWeek.daysFrom(other: DayOfWeek) = (7 + (value - other.value)) % 7
