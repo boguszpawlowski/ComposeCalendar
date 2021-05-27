@@ -28,9 +28,7 @@ internal fun WeekContent(
       Box(
         modifier = Modifier.fillMaxWidth(1f / (7 - index))
       ) {
-        dayContent(
-          DayState(day, selectionState)
-        )
+        dayContent(DayState(day, selectionState))
       }
     }
   }

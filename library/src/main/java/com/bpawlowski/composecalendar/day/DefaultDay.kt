@@ -22,7 +22,7 @@ public fun DefaultDay(
   val date = state.date
   val selectionState = state.selectionState
 
-  val isSelected = selectionState.selectionValue.isDateSelected(date)
+  val isSelected = selectionState.selection.contains(date)
 
   Card(
     modifier = modifier
