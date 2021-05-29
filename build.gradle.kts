@@ -17,9 +17,10 @@ buildscript {
   dependencies {
     classpath(Android.GradlePlugin)
     classpath(Kotlin.GradlePlugin)
+    classpath(Kotlin.DokkaGradlePlugin)
     classpath(DetektLib.Plugin)
     classpath(GradleVersions.Plugin)
-    classpath(Firebase.CrashlyticsPlugin)
+    classpath(MavenPublish.GradlePlugin)
   }
 }
 
@@ -39,15 +40,11 @@ allprojects {
   tasks.withType<KotlinCompile> {
     kotlinOptions {
       jvmTarget = "1.8"
-      languageVersion = "1.5"
-      apiVersion = "1.5"
       freeCompilerArgs = freeCompilerArgs + listOf(
         "-progressive",
         "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-        "-Xskip-prerelease-check",
         "-Xuse-experimental=kotlin.contracts.ExperimentalContracts",
-        "-Xjvm-enable-preview"
       )
     }
   }

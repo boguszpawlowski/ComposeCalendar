@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -35,7 +36,9 @@ public fun Calendar(
   dayContent: @Composable BoxScope.(DayState) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
-  monthContainer: @Composable (content: @Composable () -> Unit) -> Unit = { Box { it() } }
+  monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
+    Box { content(PaddingValues()) }
+  }
 ) {
   Column(
     modifier = modifier,
