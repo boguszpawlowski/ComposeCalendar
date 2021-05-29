@@ -10,31 +10,29 @@ import java.time.LocalDate
 
 @Suppress("FunctionNaming") // Factory function
 public fun SelectionState(
-  initialSelection: SelectionValue,
+  initialSelection: List<LocalDate>,
   selectionMode: SelectionMode
 ): SelectionState = SelectionStateImpl(initialSelection, selectionMode)
 
 @Stable
 public interface SelectionState {
-  public var selectionValue: SelectionValue
+  public var selection: List<LocalDate>
   public var selectionMode: SelectionMode
 
   public fun onDateSelected(date: LocalDate) {
-    selectionValue = SelectionHandler.calculateNewSelection(date, selectionValue, selectionMode)
+    selection = SelectionHandler.calculateNewSelection(date, selection, selectionMode)
   }
 
   public companion object {
     @Suppress("FunctionName") // Factory function
     public fun Saver(): Saver<SelectionState, Any> = listSaver(
       save = {
-        listOf(it.selectionMode, SelectionValueSerializer.serialize(it.selectionValue))
+        listOf(it.selectionMode, it.selection.map { it.toString() })
       },
       restore = { restored ->
-        val selectionMode = restored[0] as SelectionMode
-
         SelectionState(
-          selectionMode = selectionMode,
-          initialSelection = SelectionValueSerializer.deserialize(restored[1], selectionMode),
+          selectionMode = restored[0] as SelectionMode,
+          initialSelection = (restored[1] as? List<String>)?.map { LocalDate.parse(it) }.orEmpty(),
         )
       }
     )
@@ -43,29 +41,24 @@ public interface SelectionState {
 
 @Stable
 internal class SelectionStateImpl(
-  initialSelectionValue: SelectionValue,
+  initialSelection: List<LocalDate>,
   initialSelectionMode: SelectionMode,
 ) : SelectionState {
 
-  private var _selectionValue by mutableStateOf<SelectionValue>(initialSelectionValue)
+  private var _selection by mutableStateOf<List<LocalDate>>(initialSelection)
   private var _selectionMode by mutableStateOf<SelectionMode>(initialSelectionMode)
 
-  init {
-    SelectionValidator.validateSelection(initialSelectionValue, initialSelectionMode)
-  }
-
-  override var selectionValue: SelectionValue
-    get() = _selectionValue
+  override var selection: List<LocalDate>
+    get() = _selection
     set(value) {
-      SelectionValidator.validateSelection(value, selectionMode)
-      _selectionValue = value
+      _selection = value
     }
 
   override var selectionMode: SelectionMode
     get() = _selectionMode
     set(value) {
       if (value != selectionMode) {
-        _selectionValue = SelectionValue.None
+        _selection = emptyList()
         _selectionMode = value
       }
     }

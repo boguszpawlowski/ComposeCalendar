@@ -13,8 +13,8 @@ class CommonAndroidPlugin : Plugin<Project> {
       compileSdkVersion(AndroidSdk.Compile)
       buildToolsVersion(AndroidSdk.BuildTools)
       defaultConfig {
-        minSdkVersion(AndroidSdk.Min)
-        targetSdkVersion(AndroidSdk.Target)
+        minSdk = AndroidSdk.Min
+        targetSdk = AndroidSdk.Target
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
       }
 
@@ -24,9 +24,9 @@ class CommonAndroidPlugin : Plugin<Project> {
         isCoreLibraryDesugaringEnabled = true
       }
 
-      buildFeatures.compose = true // FIXME remove if not using compose
+      buildFeatures.compose = true
 
-      composeOptions { // FIXME remove if not using compose
+      composeOptions {
         kotlinCompilerExtensionVersion = Compose.Version
       }
 

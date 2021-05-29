@@ -26,7 +26,7 @@ object AndroidSdk {
 }
 
 object Kotlin {
-  const val Version = "1.4.31"
+  const val Version = "1.4.32"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
   const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib:$Version"
@@ -41,7 +41,7 @@ object Kotlin {
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0-beta03"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
@@ -135,8 +135,8 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.0-beta05"
-  const val AccompanistVersion = "0.8.1"
+  const val Version = "1.0.0-beta07"
+  const val AccompanistVersion = "0.10.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
   const val Compiler = "androidx.compose.compiler:compiler:$Version"

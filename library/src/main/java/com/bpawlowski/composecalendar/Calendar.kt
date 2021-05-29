@@ -18,7 +18,6 @@ import com.bpawlowski.composecalendar.month.MonthContent
 import com.bpawlowski.composecalendar.selection.SelectionMode
 import com.bpawlowski.composecalendar.selection.SelectionMode.Single
 import com.bpawlowski.composecalendar.selection.SelectionState
-import com.bpawlowski.composecalendar.selection.SelectionValue
 import com.bpawlowski.composecalendar.util.yearMonth
 import com.bpawlowski.composecalendar.week.DefaultWeekHeader
 import java.time.DayOfWeek
@@ -63,7 +62,7 @@ public class CalendarState(
 @Composable
 public fun rememberCalendarState(
   initialDate: LocalDate = LocalDate.now(),
-  initialSelection: SelectionValue = SelectionValue.None,
+  initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = Single,
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialDate.yearMonth)

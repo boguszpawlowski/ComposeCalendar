@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import java.util.Locale
 
@@ -27,7 +28,11 @@ public fun DefaultMonthHeader(
     horizontalArrangement = Arrangement.Center,
   ) {
     IconButton(onClick = { monthState.currentMonth = monthState.currentMonth.minusMonths(1) }) {
-      Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "Previous")
+      Image(
+        imageVector = Icons.Default.KeyboardArrowLeft,
+        colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+        contentDescription = "Previous",
+      )
     }
     Text(
       text = monthState.currentMonth.month.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT),
@@ -36,7 +41,11 @@ public fun DefaultMonthHeader(
     Spacer(modifier = Modifier.width(8.dp))
     Text(text = monthState.currentMonth.year.toString(), style = MaterialTheme.typography.h4)
     IconButton(onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }) {
-      Image(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "Next")
+      Image(
+        imageVector = Icons.Default.KeyboardArrowRight,
+        colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+        contentDescription = "Next",
+      )
     }
   }
 }
