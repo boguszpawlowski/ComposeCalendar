@@ -7,6 +7,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -71,12 +72,12 @@ fun MainScreen() {
 }
 
 @Composable
-fun MonthContainer(content: @Composable () -> Unit) {
+fun MonthContainer(content: @Composable (PaddingValues) -> Unit) {
   Card(
     elevation = 0.dp,
     shape = RoundedCornerShape(10.dp),
     border = BorderStroke(1.dp, Color.LightGray),
-    content = content,
+    content = { content(PaddingValues(4.dp)) },
   )
 }
 

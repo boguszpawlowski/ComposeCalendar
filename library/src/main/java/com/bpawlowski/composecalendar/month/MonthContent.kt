@@ -3,7 +3,9 @@ package com.bpawlowski.composecalendar.month
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -26,7 +28,7 @@ internal fun MonthContent(
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState) -> Unit,
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
-  monthContainer: @Composable (content: @Composable () -> Unit) -> Unit,
+  monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
 ) {
 
   val daysOfWeek = remember(firstDayOfWeek) {
@@ -40,8 +42,10 @@ internal fun MonthContent(
     content = { weekHeader(daysOfWeek) },
   )
 
-  monthContainer {
-    Column {
+  monthContainer { paddingValues ->
+    Column(
+      modifier = Modifier.padding(paddingValues)
+    ) {
       month.yearMonth.getWeeks(
         includeAdjacentMonths = showAdjacentMonths,
         firstDayOfTheWeek = firstDayOfWeek,
