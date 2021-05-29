@@ -48,7 +48,7 @@ object Android {
 }
 
 object GradleVersions {
-  const val Version = "0.38.0"
+  const val Version = "0.39.0"
 
   const val PluginId = "com.github.ben-manes.versions"
   const val Plugin = "com.github.ben-manes:gradle-versions-plugin:$Version"
@@ -95,10 +95,10 @@ object AndroidX {
   const val Version = "1.0.0"
   const val LifecycleVersion = "2.2.0"
 
-  const val AppCompat = "androidx.appcompat:appcompat:1.3.0-rc01"
+  const val AppCompat = "androidx.appcompat:appcompat:1.3.0"
   const val Activity = "androidx.activity:activity-ktx:1.1.0"
   const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
-  const val ComposeActivity = "androidx.activity:activity-compose:1.3.0-alpha05"
+  const val ComposeActivity = "androidx.activity:activity-compose:1.3.0-alpha08"
   const val Lifecycle = "androidx.lifecycle:lifecycle-extensions:$LifecycleVersion"
   const val LifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:$LifecycleVersion"
   const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$LifecycleVersion"
@@ -111,7 +111,7 @@ object Material {
 }
 
 object DetektLib {
-  const val Version = "1.16.0"
+  const val Version = "1.17.1"
 
   const val PluginId = "io.gitlab.arturbosch.detekt"
   const val Plugin = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$Version"
@@ -173,7 +173,7 @@ object Debug {
 }
 
 object Kotest {
-  const val Version = "4.4.3"
+  const val Version = "4.6.0"
 
   const val RunnerJunit5 = "io.kotest:kotest-runner-junit5-jvm:$Version"
 
