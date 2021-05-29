@@ -90,4 +90,9 @@ fun SelectionControls(
       Spacer(modifier = Modifier.height(4.dp))
     }
   }
+
+  Text(
+    text = "Selection: ${selectionState.selection.joinToString { it.toString() }}",
+    style = MaterialTheme.typography.h6,
+  )
 }

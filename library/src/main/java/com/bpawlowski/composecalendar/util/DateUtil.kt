@@ -14,4 +14,4 @@ internal fun Collection<LocalDate>.addOrRemoveIfExists(date: LocalDate) =
     this + date
   }
 
-internal infix fun DayOfWeek.daysFrom(other: DayOfWeek) = (7 + (value - other.value)) % 7
+internal infix fun DayOfWeek.daysUntil(other: DayOfWeek) = (7 + (value - other.value)) % 7
