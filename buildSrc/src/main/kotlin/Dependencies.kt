@@ -18,6 +18,11 @@ object App {
   val VersionName = generateVersionName()
 }
 
+object MavenPublish {
+  const val PluginId = "com.vanniktech.maven.publish"
+  const val GradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.13.0"
+}
+
 object AndroidSdk {
   const val Min = 24
   const val Compile = 30
@@ -29,6 +34,8 @@ object Kotlin {
   const val Version = "1.4.32"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
+  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:$Version"
+
   const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib:$Version"
   const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
 
@@ -38,6 +45,7 @@ object Kotlin {
   const val JvmPluginId = "jvm"
 
   const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.0.9"
+
 }
 
 object Android {

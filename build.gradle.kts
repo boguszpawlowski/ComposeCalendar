@@ -17,9 +17,10 @@ buildscript {
   dependencies {
     classpath(Android.GradlePlugin)
     classpath(Kotlin.GradlePlugin)
+    classpath(Kotlin.DokkaGradlePlugin)
     classpath(DetektLib.Plugin)
     classpath(GradleVersions.Plugin)
-    classpath(Firebase.CrashlyticsPlugin)
+    classpath(MavenPublish.GradlePlugin)
   }
 }
 
