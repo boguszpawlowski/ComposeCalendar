@@ -12,3 +12,4 @@
 - [] UI tests
 - [] Swipeable months
 - [] Week view mode
+- [] Multiplatform (iOS) support
