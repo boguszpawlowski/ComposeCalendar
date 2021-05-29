@@ -1,11 +1,10 @@
 # Compose Calendar
 
-Compose Calendar is a composable handling all complexity of rendering calendar and calendar selection.
-Due to Jetpack Compose declarative style, you can decide how the calendar will look like, the library
-will handle proper elements arrangement and persistence of the state.
+Compose Calendar is a composable handling all complexity of rendering calendar component and date selection.
+Due to flexibility provided by slot API's, you can decide how the calendar will look like, the library will handle proper calendar elements arrangement and persistence of the state.
 
 ## Basic Usage
-To show the basic version of the calendar, you can simply use the `Calendar` composable:
+To show the basic version of the calendar, you can simply use the `Calendar` composable without passing any parameters:
 ```kotlin
 
   @Composable
@@ -14,9 +13,8 @@ To show the basic version of the calendar, you can simply use the `Calendar` com
   }
 
 ```
-It will render the calendar with the current month showing, and default components for each day as well as month and week 
-headers.
-For the customization you should pass your own composable functions as day content etc.:
+This chunk will render the calendar with default components for each day, and also month and week headers.
+For the customization you should pass your own composable functions as day content, moth header etc.:
 ```kotlin
 
   @Composable
@@ -27,27 +25,34 @@ For the customization you should pass your own composable functions as day conte
   @Composable
   fun MainScreen() {
      Calendar(
-        dayContent = { MyDay(it) }
+        dayContent = { dayState -> MyDay(dayState) }
      )
   }
 
 ```
 The same you can do for every customizable element:
- - Day content - responsible for single day content
- - Month header - responsible for showing the current month (and by default for changing the current month)
- - Week header - responsible for showing the names of week days.
- - Month container - wrapping the month content, it defaults to a plain `Box`, but can be any layout.
+- Day content - responsible for single day content
+- Month header - responsible for showing the current month (and by default for changing the current month)
+- Week header - responsible for showing the names of week days.
+- Month container - wrapping the month content, it defaults to a plain `Box`, but can be any layout.
 
-The `Calendar` composable accepts a `Modifier` for simple customization of the overall appearance. 
+The `Calendar` composable accepts a `Modifier` for simple customization of the overall appearance.
+
+## Calendar customization
+Apart from rendering your own components inside the calendar, you can modify it by passing different properties.:
+- `showAdjacentMonths` - whenever to render days from adjacent months. Defaults to `true`.
+- `firstDayOfWeek` - you can pass the `DayOfWeek` which you want you week to start with. It defaults to the first day of week of the `Locale.default()`.
+
+Apart from that, `Calendar` accepts a `Modifier` object like any other composable.
 
 ## State
-Calendar composable holds its state as an object of `CalendarState` object, which consists of 2 properties.
-- `MonthState` - holding current value of the presented month.
-- `SelectionState` - holding current value and mode of the selection. 
-  
+Calendar composable holds its state as an `CalendarState` object, which consists of 2 properties.
+- `MonthState` - current value of the presented month.
+- `SelectionState` - current value and mode of the selection.
+
 Both properties are represented by interfaces, so the default implementation can be overwritten if needed.
-The calendar state is leveraging saving mechanism, so that the state will survive any configuration change, or
-process death. 
+The calendar state is leveraging Compose saving mechanism, so that the state will survive any configuration change, or
+process death.
 
 ### Initial state
 Initial state is provided by the `rememberCalendarState()` function. If you need to change the initial conditions,
@@ -68,7 +73,7 @@ you can pass the params to it:
 
 ```
 
-### State hoisting 
+### State hoisting
 In case you need to react to the state changes, or change the state from the outside of the composable,
 you need to hoist the state out of the `Calendar` composable:
 
@@ -82,22 +87,23 @@ you need to hoist the state out of the `Calendar` composable:
     // now you can manipulate the state from scope of this composable
     calendarState.monthState.currentMonth = MonthYear.of(2020, 5)
     // or extract Calendar's current state: 
-    Text("Current selection of the calendar is: ${calendarState.selectionState.selectionValue}")
+    Text("Current selection of the calendar is: ${calendarState.selectionState.selection}")
   }
 
 ```
 
 ## Selection
-The library allows for 4 selection modes:
-  - `None` - no selection allowed
-  - `Single` - only single day is selectable
-  - `Multiple` - a list of dates can be selected
-  - `Period` - selectable period - implemented by `start` and `end` dates.
+The selection is always represented by a list of dates. The specific behavior of the selection is dependent on the currently active selection mode.
+The library allows for 4 selection modes, represented by an enum class:
+- `None` - no selection allowed - selection will always be an empty list.
+- `Single` - only single day is selectable - selection will have 0/1 elements.
+- `Multiple` - a list of dates can be selected.
+- `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
 
-Each of this modes maps to the `SelectionValue` with the same name. The default implementation of the
-state guarantees, that the value will be of the type allowed by the mode.
+The mode is a mutable property of the `SelectionState`, thus you can change the selection mode in the
+runtime.
 
-## Additional features (TODO)
+##### By default, changing selection mode will clear your selection. If you want different behavior, you have to create your `SelectionState` implementation and pass it into the `CalendarState`.
 ## License
 
     Copyright 2021 Bogusz Pawłowski
