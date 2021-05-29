@@ -28,7 +28,7 @@ allprojects {
     mavenCentral()
     google()
     maven("https://jitpack.io")
-    jcenter()
+    jcenter() // required by detekt
   }
 
   tasks.withType<JavaCompile> {

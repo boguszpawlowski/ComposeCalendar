@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +18,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,25 +43,29 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun MainScreen() {
-  MaterialTheme {
-    Column(
-      modifier = Modifier
-        .verticalScroll(rememberScrollState())
-        .padding(horizontal = 8.dp)
-    ) {
-
-      val calendarState = rememberCalendarState()
-
-      Calendar(
-        calendarState = calendarState,
+  MaterialTheme(
+    colors = if (isSystemInDarkTheme()) darkColors() else lightColors()
+  ) {
+    Surface {
+      Column(
         modifier = Modifier
-          .padding(vertical = 8.dp)
-          .animateContentSize(),
-        monthContainer = { MonthContainer(it) },
-        firstDayOfWeek = DayOfWeek.MONDAY,
-      )
+          .verticalScroll(rememberScrollState())
+          .padding(horizontal = 8.dp)
+      ) {
 
-      SelectionControls(selectionState = calendarState.selectionState)
+        val calendarState = rememberCalendarState()
+
+        Calendar(
+          calendarState = calendarState,
+          modifier = Modifier
+            .padding(vertical = 8.dp)
+            .animateContentSize(),
+          monthContainer = { MonthContainer(it) },
+          firstDayOfWeek = DayOfWeek.MONDAY,
+        )
+
+        SelectionControls(selectionState = calendarState.selectionState)
+      }
     }
   }
 }
