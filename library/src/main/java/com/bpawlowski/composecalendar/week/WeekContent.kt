@@ -12,11 +12,11 @@ import com.bpawlowski.composecalendar.day.DayState
 import com.bpawlowski.composecalendar.selection.SelectionState
 
 @Composable
-internal fun WeekContent(
+internal fun <T : SelectionState> WeekContent(
   week: Week,
-  selectionState: SelectionState,
+  selectionState: T,
   modifier: Modifier = Modifier,
-  dayContent: @Composable BoxScope.(DayState) -> Unit
+  dayContent: @Composable BoxScope.(DayState<T>) -> Unit
 ) {
   Row(
     modifier = modifier

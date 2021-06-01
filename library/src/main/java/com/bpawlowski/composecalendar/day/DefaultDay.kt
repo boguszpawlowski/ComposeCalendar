@@ -13,16 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.bpawlowski.composecalendar.selection.SelectionState
 
 @Composable
-public fun DefaultDay(
-  state: DayState,
+public fun <T : SelectionState> DefaultDay(
+  state: DayState<T>,
   modifier: Modifier = Modifier,
 ) {
   val date = state.date
   val selectionState = state.selectionState
 
-  val isSelected = selectionState.selection.contains(date)
+  val isSelected = selectionState.isDateSelected(date)
 
   Card(
     modifier = modifier

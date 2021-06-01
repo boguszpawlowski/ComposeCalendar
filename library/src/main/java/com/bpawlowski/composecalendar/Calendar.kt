@@ -16,8 +16,6 @@ import com.bpawlowski.composecalendar.header.DefaultMonthHeader
 import com.bpawlowski.composecalendar.header.MonthState
 import com.bpawlowski.composecalendar.month.Month
 import com.bpawlowski.composecalendar.month.MonthContent
-import com.bpawlowski.composecalendar.selection.SelectionMode
-import com.bpawlowski.composecalendar.selection.SelectionMode.Single
 import com.bpawlowski.composecalendar.selection.SelectionState
 import com.bpawlowski.composecalendar.util.yearMonth
 import com.bpawlowski.composecalendar.week.DefaultWeekHeader
@@ -27,18 +25,18 @@ import java.time.temporal.WeekFields
 import java.util.Locale
 
 @Composable
-public fun Calendar(
+public fun <T : SelectionState> Calendar(
+  calendarState: CalendarState<T>,
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   currentDate: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
-  calendarState: CalendarState = rememberCalendarState(),
-  dayContent: @Composable BoxScope.(DayState) -> Unit = { DefaultDay(it) },
+  dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
-  }
+  },
 ) {
   Column(
     modifier = modifier,
@@ -57,23 +55,16 @@ public fun Calendar(
 }
 
 @Stable
-public class CalendarState(
+public class CalendarState<T : SelectionState>(
   public val monthState: MonthState,
-  public val selectionState: SelectionState,
+  public val selectionState: T,
 )
 
 @Composable
-public fun rememberCalendarState(
+public fun <T : SelectionState> rememberCalendarState(
   initialDate: LocalDate = LocalDate.now(),
-  initialSelection: List<LocalDate> = emptyList(),
-  initialSelectionMode: SelectionMode = Single,
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialDate.yearMonth)
   },
-  selectionState: SelectionState = rememberSaveable(saver = SelectionState.Saver()) {
-    SelectionState(
-      initialSelection = initialSelection,
-      selectionMode = initialSelectionMode
-    )
-  },
-): CalendarState = remember { CalendarState(monthState, selectionState) }
+  selectionState: T,
+): CalendarState<T> = remember { CalendarState(monthState, selectionState) }

@@ -20,13 +20,13 @@ import java.time.DayOfWeek
 internal const val DaysOfWeek = 7
 
 @Composable
-internal fun MonthContent(
+internal fun <T : SelectionState> MonthContent(
   showAdjacentMonths: Boolean,
-  selectionState: SelectionState,
+  selectionState: T,
   month: Month,
   firstDayOfWeek: DayOfWeek,
   modifier: Modifier = Modifier,
-  dayContent: @Composable BoxScope.(DayState) -> Unit,
+  dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
 ) {
