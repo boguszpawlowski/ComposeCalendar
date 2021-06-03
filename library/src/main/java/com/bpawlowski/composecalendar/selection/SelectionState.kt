@@ -1,5 +1,6 @@
 package com.bpawlowski.composecalendar.selection
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,24 +61,9 @@ public class DynamicSelectionState(
   }
 }
 
-public class SingleSelectionState(
-  initialSelection: LocalDate?
-) : SelectionState {
-  public var selection: LocalDate? by mutableStateOf(initialSelection)
-    private set
+@Immutable
+public object EmptySelectionState : SelectionState {
+  override fun isDateSelected(date: LocalDate): Boolean = false
 
-  override fun isDateSelected(date: LocalDate): Boolean =
-    selection == date
-
-  override fun onDateSelected(date: LocalDate) {
-    selection = date
-  }
-
-  internal companion object {
-    @Suppress("FunctionNaming")
-    fun Saver(): Saver<SingleSelectionState, Any> = Saver(
-      save = { it.selection.toString() },
-      restore = { SingleSelectionState(LocalDate.parse(it as String)) }
-    )
-  }
+  override fun onDateSelected(date: LocalDate): Unit = Unit
 }

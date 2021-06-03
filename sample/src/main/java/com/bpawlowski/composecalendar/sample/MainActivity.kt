@@ -27,8 +27,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.bpawlowski.composecalendar.Calendar
-import com.bpawlowski.composecalendar.rememberDynamicCalendarState
+import com.bpawlowski.composecalendar.SelectableCalendar
+import com.bpawlowski.composecalendar.rememberSelectableCalendarState
 import com.bpawlowski.composecalendar.selection.DynamicSelectionState
 import com.bpawlowski.composecalendar.selection.SelectionMode
 import java.time.DayOfWeek
@@ -54,9 +54,9 @@ fun MainScreen() {
           .padding(horizontal = 8.dp)
       ) {
 
-        val calendarState = rememberDynamicCalendarState()
+        val calendarState = rememberSelectableCalendarState()
 
-        Calendar(
+        SelectableCalendar(
           calendarState = calendarState,
           modifier = Modifier
             .padding(vertical = 8.dp)
