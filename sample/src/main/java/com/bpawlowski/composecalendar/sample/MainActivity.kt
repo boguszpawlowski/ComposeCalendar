@@ -27,10 +27,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.bpawlowski.composecalendar.Calendar
-import com.bpawlowski.composecalendar.rememberCalendarState
+import com.bpawlowski.composecalendar.SelectableCalendar
+import com.bpawlowski.composecalendar.rememberSelectableCalendarState
+import com.bpawlowski.composecalendar.selection.DynamicSelectionState
 import com.bpawlowski.composecalendar.selection.SelectionMode
-import com.bpawlowski.composecalendar.selection.SelectionState
 import java.time.DayOfWeek
 
 class MainActivity : AppCompatActivity() {
@@ -54,9 +54,9 @@ fun MainScreen() {
           .padding(horizontal = 8.dp)
       ) {
 
-        val calendarState = rememberCalendarState()
+        val calendarState = rememberSelectableCalendarState()
 
-        Calendar(
+        SelectableCalendar(
           calendarState = calendarState,
           modifier = Modifier
             .padding(vertical = 8.dp)
@@ -83,7 +83,7 @@ fun MonthContainer(content: @Composable (PaddingValues) -> Unit) {
 
 @Composable
 fun SelectionControls(
-  selectionState: SelectionState,
+  selectionState: DynamicSelectionState,
 ) {
   Text(
     text = "Calendar Selection Mode",

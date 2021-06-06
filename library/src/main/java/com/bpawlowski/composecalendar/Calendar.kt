@@ -16,8 +16,9 @@ import com.bpawlowski.composecalendar.header.DefaultMonthHeader
 import com.bpawlowski.composecalendar.header.MonthState
 import com.bpawlowski.composecalendar.month.Month
 import com.bpawlowski.composecalendar.month.MonthContent
+import com.bpawlowski.composecalendar.selection.DynamicSelectionState
+import com.bpawlowski.composecalendar.selection.EmptySelectionState
 import com.bpawlowski.composecalendar.selection.SelectionMode
-import com.bpawlowski.composecalendar.selection.SelectionMode.Single
 import com.bpawlowski.composecalendar.selection.SelectionState
 import com.bpawlowski.composecalendar.util.yearMonth
 import com.bpawlowski.composecalendar.week.DefaultWeekHeader
@@ -27,18 +28,72 @@ import java.time.temporal.WeekFields
 import java.util.Locale
 
 @Composable
+public fun SelectableCalendar(
+  modifier: Modifier = Modifier,
+  firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
+  currentDate: LocalDate = LocalDate.now(),
+  showAdjacentMonths: Boolean = true,
+  calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
+  dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
+  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
+  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
+    Box { content(PaddingValues()) }
+  },
+) {
+  CalendarLayout(
+    modifier = modifier,
+    firstDayOfWeek = firstDayOfWeek,
+    currentDate = currentDate,
+    showAdjacentMonths = showAdjacentMonths,
+    calendarState = calendarState,
+    dayContent = dayContent,
+    monthHeader = monthHeader,
+    weekHeader = weekHeader,
+    monthContainer = monthContainer
+  )
+}
+
+@Composable
 public fun Calendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   currentDate: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
-  calendarState: CalendarState = rememberCalendarState(),
-  dayContent: @Composable BoxScope.(DayState) -> Unit = { DefaultDay(it) },
+  calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
+  dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
-  }
+  },
+) {
+  CalendarLayout(
+    modifier = modifier,
+    firstDayOfWeek = firstDayOfWeek,
+    currentDate = currentDate,
+    showAdjacentMonths = showAdjacentMonths,
+    calendarState = calendarState,
+    dayContent = dayContent,
+    monthHeader = monthHeader,
+    weekHeader = weekHeader,
+    monthContainer = monthContainer
+  )
+}
+
+@Composable
+public fun <T : SelectionState> CalendarLayout(
+  calendarState: CalendarState<T>,
+  modifier: Modifier = Modifier,
+  firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
+  currentDate: LocalDate = LocalDate.now(),
+  showAdjacentMonths: Boolean = true,
+  dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
+  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
+  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
+    Box { content(PaddingValues()) }
+  },
 ) {
   Column(
     modifier = modifier,
@@ -57,23 +112,28 @@ public fun Calendar(
 }
 
 @Stable
-public class CalendarState(
+public class CalendarState<T : SelectionState>(
   public val monthState: MonthState,
-  public val selectionState: SelectionState,
+  public val selectionState: T,
 )
+
+@Composable
+public fun rememberSelectableCalendarState(
+  initialDate: LocalDate = LocalDate.now(),
+  initialSelection: List<LocalDate> = emptyList(),
+  initialSelectionMode: SelectionMode = SelectionMode.Single,
+  monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
+    MonthState(initialMonth = initialDate.yearMonth)
+  },
+  selectionState: DynamicSelectionState = rememberSaveable(saver = DynamicSelectionState.Saver()) {
+    DynamicSelectionState(initialSelection, initialSelectionMode)
+  },
+): CalendarState<DynamicSelectionState> = remember { CalendarState(monthState, selectionState) }
 
 @Composable
 public fun rememberCalendarState(
   initialDate: LocalDate = LocalDate.now(),
-  initialSelection: List<LocalDate> = emptyList(),
-  initialSelectionMode: SelectionMode = Single,
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialDate.yearMonth)
   },
-  selectionState: SelectionState = rememberSaveable(saver = SelectionState.Saver()) {
-    SelectionState(
-      initialSelection = initialSelection,
-      selectionMode = initialSelectionMode
-    )
-  },
-): CalendarState = remember { CalendarState(monthState, selectionState) }
+): CalendarState<EmptySelectionState> = remember { CalendarState(monthState, EmptySelectionState) }
