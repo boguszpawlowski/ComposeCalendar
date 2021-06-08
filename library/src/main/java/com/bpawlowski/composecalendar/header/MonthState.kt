@@ -7,7 +7,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import java.time.YearMonth
 
-@Suppress("FunctionNaming") // Factory function
+@Suppress("FunctionName") // Factory function
 public fun MonthState(initialMonth: YearMonth): MonthState = MonthStateImpl(initialMonth)
 
 @Stable

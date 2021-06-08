@@ -163,7 +163,7 @@ naming:
   VariableNaming:
     active: true
     variablePattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
-    privateVariablePattern: '^_[a-z]+(?:[A-Z][a-z]+)*$'
+    privateVariablePattern: '^[_a-z]+(?:[A-Z][a-z]+)*$'
 
 performance:
   active: true

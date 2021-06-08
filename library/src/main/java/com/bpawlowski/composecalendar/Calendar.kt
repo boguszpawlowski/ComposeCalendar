@@ -41,7 +41,7 @@ public fun SelectableCalendar(
     Box { content(PaddingValues()) }
   },
 ) {
-  CalendarLayout(
+  Calendar(
     modifier = modifier,
     firstDayOfWeek = firstDayOfWeek,
     currentDate = currentDate,
@@ -55,7 +55,7 @@ public fun SelectableCalendar(
 }
 
 @Composable
-public fun Calendar(
+public fun StaticCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   currentDate: LocalDate = LocalDate.now(),
@@ -68,7 +68,7 @@ public fun Calendar(
     Box { content(PaddingValues()) }
   },
 ) {
-  CalendarLayout(
+  Calendar(
     modifier = modifier,
     firstDayOfWeek = firstDayOfWeek,
     currentDate = currentDate,
@@ -82,7 +82,7 @@ public fun Calendar(
 }
 
 @Composable
-public fun <T : SelectionState> CalendarLayout(
+public fun <T : SelectionState> Calendar(
   calendarState: CalendarState<T>,
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,

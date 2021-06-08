@@ -15,6 +15,10 @@ public interface SelectionState {
   public fun onDateSelected(date: LocalDate)
 }
 
+/**
+ * Class that enables for dynamically changing selection modes in the runtime. Depending on the mode, selection changes differently.
+ * Mode can be varied by setting desired [SelectionMode] in the [selectionMode] mutable property.
+ */
 @Stable
 public class DynamicSelectionState(
   selection: List<LocalDate>,

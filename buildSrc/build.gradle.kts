@@ -18,5 +18,5 @@ gradlePlugin {
 
 dependencies {
   implementation("com.android.tools.build:gradle:7.0.0-beta03")
-  implementation(kotlin("gradle-plugin", "1.4.32"))
+  implementation(kotlin("gradle-plugin", "1.5.10"))
 }
