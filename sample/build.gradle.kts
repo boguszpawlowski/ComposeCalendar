@@ -26,7 +26,9 @@ dependencies {
   implementation(AndroidX.ComposeActivity)
 
   implementation(Compose.Runtime)
+  implementation(Compose.Navigation)
   implementation(Compose.Ui)
+  implementation(Compose.UiTooling)
   implementation(Compose.Foundation)
   implementation(Compose.FoundationLayout)
   implementation(Compose.Material)

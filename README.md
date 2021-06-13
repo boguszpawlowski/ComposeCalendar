@@ -1,19 +1,54 @@
 # Compose Calendar
 
 Compose Calendar is a composable handling all complexity of rendering calendar component and date selection.
-Due to flexibility provided by slot API's, you can decide how the calendar will look like, the library will handle proper calendar elements arrangement and persistence of the state.
+Due to flexibility provided by slot API's, you can decide how the calendar will look like, the library will handle proper calendar elements arrangement and it's state.
+
+## Setup
+As the library is currently in early development, in order to install it, you have to access current snapshot via `Jitpack`.
+```kotlin
+    
+  // top-level build.gradle
+  repositories {
+    maven { url "https://jitpack.io" }
+  }
+
+  // module-level build.gradle
+  dependecies {
+    implementation "com.github.boguszpawlowski.ComposeCalendar:main-SNAPSHOT"
+  }
+```
 
 ## Basic Usage
-To show the basic version of the calendar, you can simply use the `Calendar` composable without passing any parameters:
+
+### Static calendar
+To show the basic version of the calendar, without any kind of selection mechanism, you can simply use the `StaticCalendar` composable without passing any parameters:
 ```kotlin
 
   @Composable
   fun MainScreen() {
-    Calendar()
+    StaticCalendar()
   }
 
 ```
 This chunk will render the calendar with default components for each day, and also month and week headers.
+See the `StaticCalendarSample` file for a full example.
+
+### Selectable calendar
+Calendar with a mechanism for selection. The default implementation uses `DynamicSelectionState` (see [Dynamic Selection section](#dynamic-selection-state)) which allows to change `SelectionMode` in the runtime.
+```kotlin
+
+  @Composable
+  fun MainScreen() {
+    StaticCalendar()
+  }
+
+```
+By the default, after changing the selection mode, selection is cleared.
+See the `SelectableCalendarSample` file for a full example
+
+> ℹ️ If you want to define your own selection behavior, please check out the [Custom Selection section](#custom-selection-state) and/or `CustomSelectionSample`.
+
+### Calendar with custom components
 For the customization you should pass your own composable functions as day content, moth header etc.:
 ```kotlin
 
@@ -24,7 +59,7 @@ For the customization you should pass your own composable functions as day conte
 
   @Composable
   fun MainScreen() {
-     Calendar(
+     StaticCalendar(
         dayContent = { dayState -> MyDay(dayState) }
      )
   }
@@ -37,36 +72,53 @@ The same you can do for every customizable element:
 - Month container - wrapping the month content, it defaults to a plain `Box`, but can be any layout.
 
 The `Calendar` composable accepts a `Modifier` for simple customization of the overall appearance.
+See the `CustomComponentsSample` for a full example.
 
-## Calendar customization
+## Custom selection
+As the selection state is represented by an interface, you can provide your own implementation, to suit your
+use-case. E.g:
+```kotlin
+  class MonthSelectionState(
+    initialSelection: YearMonth? = null,
+  ) : SelectionState {
+    private var selection by mutableStateOf(initialSelection)
+  
+    override fun isDateSelected(date: LocalDate): Boolean =
+      date.yearMonth == selection
+  
+    override fun onDateSelected(date: LocalDate) {
+      selection = if (date.yearMonth == selection) null else date.yearMonth
+    }
+  }
+```
+This chunk is an implementation that will select all days in a clicked day's month. For a full example
+please check out `CustomSelectionSample` file.
+
+## Calendar properties customization
 Apart from rendering your own components inside the calendar, you can modify it by passing different properties.:
 - `showAdjacentMonths` - whenever to render days from adjacent months. Defaults to `true`.
 - `firstDayOfWeek` - you can pass the `DayOfWeek` which you want you week to start with. It defaults to the first day of week of the `Locale.default()`.
 
-Apart from that, `Calendar` accepts a `Modifier` object like any other composable.
+Apart from this, `Calendar` you can pass a `Modifier` object like in any other composable.
 
 ## State
 Calendar composable holds its state as an `CalendarState` object, which consists of 2 properties.
 - `MonthState` - current value of the presented month.
-- `SelectionState` - current value and mode of the selection.
+- `SelectionState` - current value of the selection.
 
 Both properties are represented by interfaces, so the default implementation can be overwritten if needed.
-The calendar state is leveraging Compose saving mechanism, so that the state will survive any configuration change, or
-process death.
+The calendar state is leveraging Compose saving mechanism, so that the state will survive any configuration change, or the process death.
 
 ### Initial state
-Initial state is provided by the `rememberCalendarState()` function. If you need to change the initial conditions,
-you can pass the params to it:
+Initial state is provided by the `rememberCalendarState()` function. If you need to change the initial conditions, you can pass the params to it:
 
 ```kotlin
 
   @Composable
   fun MainScreen() {
-    Calendar(
+    StaticCalendar(
       calendarState = rememberCalendarState(
         initialDate = LocalDate.now().plusYears(1),
-        initialSelection = SelectionValue.Single(LocalDate.now()),
-        initialSelectionMode = SelectionMode.Single,
       )
     )
   }
@@ -82,28 +134,22 @@ you need to hoist the state out of the `Calendar` composable:
   @Composable
   fun MainScreen() {
     val calendarState = rememberCalendarState()
-    Calendar(calendarState = calendarState)
+    StaticCalendar(calendarState = calendarState)
    
     // now you can manipulate the state from scope of this composable
     calendarState.monthState.currentMonth = MonthYear.of(2020, 5)
-    // or extract Calendar's current state: 
-    Text("Current selection of the calendar is: ${calendarState.selectionState.selection}")
   }
 
 ```
 
-## Selection
-The selection is always represented by a list of dates. The specific behavior of the selection is dependent on the currently active selection mode.
-The library allows for 4 selection modes, represented by an enum class:
+### Dynamic Selection State
+By default, the `SelectableCalendar` is using a `DynamicSelectionState` implementation of `SelectionState`. The selection is kept as a list of `LocalDate` objects. For a purpose of flexibility, `DynamicSelectionState` allows for 4 different selection modes, each one varying how the selection is changing after interacting with the calendar. Furthermore, selection mode can be changed in the runtime, for some specific use-cases.
+Selection modes are represented by `SelectionMode` enum, with following values:
 - `None` - no selection allowed - selection will always be an empty list.
-- `Single` - only single day is selectable - selection will have 0/1 elements.
+- `Single` - only single day is selectable - selection will contain one or zero days selected.
 - `Multiple` - a list of dates can be selected.
 - `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
 
-The mode is a mutable property of the `SelectionState`, thus you can change the selection mode in the
-runtime.
-
-##### By default, changing selection mode will clear your selection. If you want different behavior, you have to create your `SelectionState` implementation and pass it into the `CalendarState`.
 ## License
 
     Copyright 2021 Bogusz Pawłowski

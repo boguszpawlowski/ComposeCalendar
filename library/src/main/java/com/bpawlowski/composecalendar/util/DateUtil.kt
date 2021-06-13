@@ -4,7 +4,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 
-internal val LocalDate.yearMonth: YearMonth
+public val LocalDate.yearMonth: YearMonth
   get() = YearMonth.of(year, month)
 
 internal fun Collection<LocalDate>.addOrRemoveIfExists(date: LocalDate) =

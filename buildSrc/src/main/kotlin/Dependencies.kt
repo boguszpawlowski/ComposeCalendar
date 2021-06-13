@@ -31,10 +31,10 @@ object AndroidSdk {
 }
 
 object Kotlin {
-  const val Version = "1.4.32"
+  const val Version = "1.5.10"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
-  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:$Version"
+  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.4.32"
 
   const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
   const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
@@ -142,7 +142,7 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.0-beta07"
+  const val Version = "1.0.0-beta08"
   const val AccompanistVersion = "0.10.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
@@ -154,7 +154,7 @@ object Compose {
   const val UiTooling = "androidx.compose.ui:ui-tooling:$Version"
   const val MaterialIconsExtended = "androidx.compose.material:material-icons-extended:$Version"
   const val AccompanistCoil = "dev.chrisbanes.accompanist:accompanist-coil:$AccompanistVersion"
-  const val Navigation = "androidx.navigation:navigation-compose:1.0.0-alpha09"
+  const val Navigation = "androidx.navigation:navigation-compose:2.4.0-alpha02"
   const val Testing = "androidx.compose.ui:ui-test:$Version"
   const val JunitTesting = "androidx.compose.ui:ui-test-junit4:$Version"
 }
