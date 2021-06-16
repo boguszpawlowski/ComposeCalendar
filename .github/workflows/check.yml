@@ -1,6 +1,9 @@
 name: Check
 on:
-  [pull_request]
+  pull_request:
+  push:
+    branches:
+      - main
 jobs:
   detekt:
     name: Detekt Check
