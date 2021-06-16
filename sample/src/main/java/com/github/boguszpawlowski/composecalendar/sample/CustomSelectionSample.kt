@@ -11,7 +11,6 @@ import com.github.boguszpawlowski.composecalendar.Calendar
 import com.github.boguszpawlowski.composecalendar.CalendarState
 import com.github.boguszpawlowski.composecalendar.header.MonthState
 import com.github.boguszpawlowski.composecalendar.selection.SelectionState
-import com.github.boguszpawlowski.composecalendar.util.yearMonth
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -47,12 +46,15 @@ private class MonthSelectionState(
 
 @Composable
 private fun rememberMonthSelectionState(
-  initialDate: LocalDate = LocalDate.now(),
+  initialMonth: YearMonth = YearMonth.now(),
   initialSelection: YearMonth? = null,
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialDate.yearMonth)
+    MonthState(initialMonth = initialMonth)
   },
   selectionState: MonthSelectionState = rememberSaveable(saver = MonthSelectionState.Saver()) {
     MonthSelectionState(initialSelection = initialSelection)
   }
 ): CalendarState<MonthSelectionState> = remember { CalendarState(monthState, selectionState) }
+
+private val LocalDate.yearMonth: YearMonth
+  get() = YearMonth.of(year, month)
