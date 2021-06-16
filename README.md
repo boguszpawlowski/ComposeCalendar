@@ -3,6 +3,8 @@
 Compose Calendar is a composable handling all complexity of rendering calendar component and date selection.
 Due to flexibility provided by slot API's, you can decide how the calendar will look like, the library will handle proper calendar elements arrangement and it's state.
 
+![Github Actions](https://github.com/boguszpawlowski/composecalendar/actions/workflows/check.yml/badge.svg?branch=main)
+
 ## Setup
 As the library is currently in early development, in order to install it, you have to access current snapshot via `Jitpack`.
 ```kotlin
