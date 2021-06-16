@@ -31,7 +31,9 @@ To show the basic version of the calendar, without any kind of selection mechani
 
 ```
 This chunk will render the calendar with default components for each day, and also month and week headers.
-See the `StaticCalendarSample` file for a full example.
+See the `StaticCalendarSample` file for a full example. 
+
+> ℹ️ By default, at first the calendar will show current month. If you want to start with some different date, you have to pass an `initialMonth` parameter to the initial state of the calendar. See [Initial State section](#initial-state)
 
 ### Selectable calendar
 Calendar with a mechanism for selection. The default implementation uses `DynamicSelectionState` (see [Dynamic Selection section](#dynamic-selection-state)) which allows to change `SelectionMode` in the runtime.
@@ -39,14 +41,14 @@ Calendar with a mechanism for selection. The default implementation uses `Dynami
 
   @Composable
   fun MainScreen() {
-    StaticCalendar()
+    SelectableCalendar()
   }
 
 ```
 By the default, after changing the selection mode, selection is cleared.
 See the `SelectableCalendarSample` file for a full example
 
-> ℹ️ If you want to define your own selection behavior, please check out the [Custom Selection section](#custom-selection-state) and/or `CustomSelectionSample`.
+> ℹ️ If you want to define your own selection behavior, please check out the [Custom Selection section](#custom-selection) and/or `CustomSelectionSample`.
 
 ### Calendar with custom components
 For the customization you should pass your own composable functions as day content, moth header etc.:
@@ -74,7 +76,7 @@ The same you can do for every customizable element:
 The `Calendar` composable accepts a `Modifier` for simple customization of the overall appearance.
 See the `CustomComponentsSample` for a full example.
 
-## Custom selection
+### Custom selection
 As the selection state is represented by an interface, you can provide your own implementation, to suit your
 use-case. E.g:
 ```kotlin
@@ -91,10 +93,11 @@ use-case. E.g:
     }
   }
 ```
+To use the defined selection state, you have to pass it into a generic version of `Calendar` composable.
 This chunk is an implementation that will select all days in a clicked day's month. For a full example
 please check out `CustomSelectionSample` file.
 
-## Calendar properties customization
+### Calendar properties customization
 Apart from rendering your own components inside the calendar, you can modify it by passing different properties.:
 - `showAdjacentMonths` - whenever to render days from adjacent months. Defaults to `true`.
 - `firstDayOfWeek` - you can pass the `DayOfWeek` which you want you week to start with. It defaults to the first day of week of the `Locale.default()`.
@@ -110,7 +113,7 @@ Both properties are represented by interfaces, so the default implementation can
 The calendar state is leveraging Compose saving mechanism, so that the state will survive any configuration change, or the process death.
 
 ### Initial state
-Initial state is provided by the `rememberCalendarState()` function. If you need to change the initial conditions, you can pass the params to it:
+Initial state for the static calendar is provided by the `rememberCalendarState()` function. If you need to change the initial conditions, you can pass the params to it:
 
 ```kotlin
 
@@ -118,12 +121,29 @@ Initial state is provided by the `rememberCalendarState()` function. If you need
   fun MainScreen() {
     StaticCalendar(
       calendarState = rememberCalendarState(
-        initialDate = LocalDate.now().plusYears(1),
+        initialDate = YearMonth.now().plusYears(1),
       )
     )
   }
 
 ```
+In case of the selectable calendar, the state has additional parameters, used to calculate initial selection:
+
+```kotlin
+
+  @Composable
+  fun MainScreen() {
+    SelectableCalendar(
+      calendarState = rememberSelectableCalendarState(
+        initialDate = YearMonth.now().plusYears(1),
+        initialSelection = listOf(LocalDate.parse("20-01-2020")),
+        initialSelectionMode = SelectionMode.Period,
+      )
+    )
+  }
+
+```
+
 
 ### State hoisting
 In case you need to react to the state changes, or change the state from the outside of the composable,

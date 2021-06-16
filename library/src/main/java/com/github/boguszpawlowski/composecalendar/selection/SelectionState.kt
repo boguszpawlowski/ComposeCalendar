@@ -50,7 +50,7 @@ public class DynamicSelectionState(
   }
 
   internal companion object {
-    @Suppress("FunctionNaming")
+    @Suppress("FunctionName")
     fun Saver(): Saver<DynamicSelectionState, Any> = listSaver(
       save = {
         listOf(it.selectionMode, it.selection.map { it.toString() })

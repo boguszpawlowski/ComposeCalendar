@@ -62,22 +62,22 @@ fun MainMenu(navController: NavController) {
     verticalArrangement = Arrangement.Center
   ) {
     Button(onClick = { navController.navigate("static") }) {
-      Text(text = "Static Calendar Sample")
+      Text(text = "Static Calendar")
     }
     Spacer(modifier = Modifier.height(16.dp))
 
     Button(onClick = { navController.navigate("selection") }) {
-      Text(text = "Selectable Calendar Sample")
+      Text(text = "Selectable Calendar")
     }
     Spacer(modifier = Modifier.height(16.dp))
 
     Button(onClick = { navController.navigate("components") }) {
-      Text(text = "Custom Components Sample")
+      Text(text = "Custom Components")
     }
     Spacer(modifier = Modifier.height(16.dp))
 
     Button(onClick = { navController.navigate("custom_selection") }) {
-      Text(text = "Custom Selection Sample")
+      Text(text = "Custom Selection")
     }
   }
 }

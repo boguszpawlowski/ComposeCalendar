@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
-import java.util.Locale
 
 @Composable
 public fun DefaultMonthHeader(
@@ -35,7 +34,7 @@ public fun DefaultMonthHeader(
       )
     }
     Text(
-      text = monthState.currentMonth.month.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT),
+      text = monthState.currentMonth.month.name.lowercase().replaceFirstChar { it.titlecase() },
       style = MaterialTheme.typography.h4
     )
     Spacer(modifier = Modifier.width(8.dp))

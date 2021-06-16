@@ -20,10 +20,10 @@ import com.github.boguszpawlowski.composecalendar.selection.DynamicSelectionStat
 import com.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import com.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import com.github.boguszpawlowski.composecalendar.selection.SelectionState
-import com.github.boguszpawlowski.composecalendar.util.yearMonth
 import com.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.Locale
 
@@ -31,7 +31,7 @@ import java.util.Locale
 public fun SelectableCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
-  currentDate: LocalDate = LocalDate.now(),
+  today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
   dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
@@ -44,7 +44,7 @@ public fun SelectableCalendar(
   Calendar(
     modifier = modifier,
     firstDayOfWeek = firstDayOfWeek,
-    currentDate = currentDate,
+    today = today,
     showAdjacentMonths = showAdjacentMonths,
     calendarState = calendarState,
     dayContent = dayContent,
@@ -58,7 +58,7 @@ public fun SelectableCalendar(
 public fun StaticCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
-  currentDate: LocalDate = LocalDate.now(),
+  today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
@@ -71,7 +71,7 @@ public fun StaticCalendar(
   Calendar(
     modifier = modifier,
     firstDayOfWeek = firstDayOfWeek,
-    currentDate = currentDate,
+    today = today,
     showAdjacentMonths = showAdjacentMonths,
     calendarState = calendarState,
     dayContent = dayContent,
@@ -86,7 +86,7 @@ public fun <T : SelectionState> Calendar(
   calendarState: CalendarState<T>,
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
-  currentDate: LocalDate = LocalDate.now(),
+  today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
@@ -101,7 +101,7 @@ public fun <T : SelectionState> Calendar(
     monthHeader(calendarState.monthState)
     MonthContent(
       showAdjacentMonths = showAdjacentMonths,
-      month = Month(calendarState.monthState.currentMonth, currentDate = currentDate),
+      month = Month(calendarState.monthState.currentMonth, currentDate = today),
       selectionState = calendarState.selectionState,
       firstDayOfWeek = firstDayOfWeek,
       dayContent = dayContent,
@@ -119,11 +119,11 @@ public class CalendarState<T : SelectionState>(
 
 @Composable
 public fun rememberSelectableCalendarState(
-  initialDate: LocalDate = LocalDate.now(),
+  initialMonth: YearMonth = YearMonth.now(),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialDate.yearMonth)
+    MonthState(initialMonth = initialMonth)
   },
   selectionState: DynamicSelectionState = rememberSaveable(saver = DynamicSelectionState.Saver()) {
     DynamicSelectionState(initialSelection, initialSelectionMode)
@@ -132,8 +132,8 @@ public fun rememberSelectableCalendarState(
 
 @Composable
 public fun rememberCalendarState(
-  initialDate: LocalDate = LocalDate.now(),
+  initialMonth: YearMonth = YearMonth.now(),
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialDate.yearMonth)
+    MonthState(initialMonth = initialMonth)
   },
 ): CalendarState<EmptySelectionState> = remember { CalendarState(monthState, EmptySelectionState) }
