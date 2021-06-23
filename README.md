@@ -20,6 +20,14 @@ As the library is currently in early development, in order to install it, you ha
   }
 ```
 
+## Supported features
+- Selection (single, multiple or a range of days)
+- First day of week - supports every day as first day of week
+- Showing/hiding adjacent months
+- Month and week headers
+- Customizable month container  
+- Fully customizable day content
+
 ## Basic Usage
 
 ### Static calendar
@@ -35,7 +43,7 @@ To show the basic version of the calendar, without any kind of selection mechani
 This chunk will render the calendar with default components for each day, and also month and week headers.
 See the `StaticCalendarSample` file for a full example. 
 
-> ℹ️ By default, at first the calendar will show current month. If you want to start with some different date, you have to pass an `initialMonth` parameter to the initial state of the calendar. See [Initial State section](#initial-state)
+> :exclamation: By default, at first the calendar will show current month. If you want to start with some different date, you have to pass an `initialMonth` parameter to the initial state of the calendar. See [Initial State section](#initial-state)
 
 ### Selectable calendar
 Calendar with a mechanism for selection. The default implementation uses `DynamicSelectionState` (see [Dynamic Selection section](#dynamic-selection-state)) which allows to change `SelectionMode` in the runtime.
@@ -50,7 +58,7 @@ Calendar with a mechanism for selection. The default implementation uses `Dynami
 By the default, after changing the selection mode, selection is cleared.
 See the `SelectableCalendarSample` file for a full example
 
-> ℹ️ If you want to define your own selection behavior, please check out the [Custom Selection section](#custom-selection) and/or `CustomSelectionSample`.
+> :exclamation: If you want to define your own selection behavior, please check out the [Custom Selection section](#custom-selection) and/or `CustomSelectionSample`.
 
 ### Calendar with custom components
 For the customization you should pass your own composable functions as day content, moth header etc.:
@@ -129,7 +137,7 @@ Initial state for the static calendar is provided by the `rememberCalendarState(
   }
 
 ```
-In case of the selectable calendar, the state has additional parameters, used to calculate initial selection:
+In case of the selectable calendar, the state has additional parameters, used to calculate the initial selection:
 
 ```kotlin
 
@@ -145,7 +153,6 @@ In case of the selectable calendar, the state has additional parameters, used to
   }
 
 ```
-
 
 ### State hoisting
 In case you need to react to the state changes, or change the state from the outside of the composable,
