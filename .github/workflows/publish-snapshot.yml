@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-maven-snapshot:
-    name: Deploy Maven Snaphot
+    name: Deploy To Maven Snaphot
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -31,7 +31,8 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-        run: ./gradlew -p library publish --no-daemon --no-parallel --stacktrace
+        run: ./gradlew :library:publish --no-daemon --no-parallel --stacktrace
+
 
       - name: Stop Gradle
         run: ./gradlew --stop
