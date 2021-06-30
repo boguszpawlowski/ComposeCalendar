@@ -16,7 +16,7 @@ As the library is currently in early development, in order to install it, you ha
 
   // module-level build.gradle
   dependecies {
-    implementation "com.github.boguszpawlowski.ComposeCalendar:main-SNAPSHOT"
+    implementation "io.github.boguszpawlowski.ComposeCalendar:main-SNAPSHOT"
   }
 ```
 
