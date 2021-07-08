@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-maven:
-    name: Deploy to Maven
+    name: Deploy To Maven
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -33,7 +33,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SONATYPE_NEXUS_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SONATYPE_NEXUS_SIGNING_KEY_PASSWORD }}
-        run: ./gradlew -p library publish --no-daemon --no-parallel --stacktrace
+        run: ./gradlew :library:publish --no-daemon --no-parallel --stacktrace
 
       - name: Stop Gradle
         run: ./gradlew --stop
