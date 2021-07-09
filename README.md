@@ -11,7 +11,7 @@ Library and it's snapshots are available on Maven Central repository.
 ```kotlin
   // module-level build.gradle
   dependecies {
-    implementation "io.github.boguszpawlowski.ComposeCalendar:<latest-version>"
+    implementation "io.github.boguszpawlowski.composecalendar:composecalendar:<latest-version>"
   }
 ```
 
