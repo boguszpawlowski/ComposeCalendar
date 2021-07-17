@@ -36,7 +36,9 @@ To show the basic version of the calendar, without any kind of selection mechani
 
 ```
 This chunk will render the calendar with default components for each day, and also month and week headers.
-See the `StaticCalendarSample` file for a full example. 
+See the `StaticCalendarSample` file for a full example.
+
+<img src="https://github.com/boguszpawlowski/ComposeCalendar/blob/main/blob/screenshot_1.jpg" width="260">
 
 > :exclamation: By default, at first the calendar will show current month. If you want to start with some different date, you have to pass an `initialMonth` parameter to the initial state of the calendar. See [Initial State section](#initial-state)
 
