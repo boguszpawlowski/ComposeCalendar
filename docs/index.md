@@ -1,25 +1,24 @@
+Compose Calendar is a composable handling all complexity of rendering calendar component and date selection.
+Due to flexibility provided by slot API's, you can decide how the calendar will look like, the library will handle proper calendar elements arrangement and it's state.
 
+![Github Actions](https://github.com/boguszpawlowski/composecalendar/actions/workflows/check.yml/badge.svg?branch=main)
+[<img src="https://img.shields.io/maven-central/v/io.github.boguszpawlowski.composecalendar/composecalendar.svg?label=release%20version"/>](https://search.maven.org/search?q=g:io.github.boguszpawlowski.composecalendar)
+[<img src="https://img.shields.io/nexus/s/https/s01.oss.sonatype.org/io.github.boguszpawlowski.composecalendar/composecalendar.svg?label=snapshot%20version"/>](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/)
 ## Setup
-As the library is currently in early development, in order to install it, you have to access current snapshot via `Jitpack`.
+Library and it's snapshots are available on Maven Central repository.
 ```kotlin
-    
-  // top-level build.gradle
-  repositories {
-    maven { url "https://jitpack.io" }
-  }
-
   // module-level build.gradle
   dependecies {
-    implementation "io.github.boguszpawlowski.ComposeCalendar:main-SNAPSHOT"
+    implementation "io.github.boguszpawlowski.composecalendar:composecalendar:<latest-version>"
   }
 ```
 
 ## Supported features
 - Selection (single, multiple or a range of days)
-- First day of week - supports every day as first day of week
+- Every day as first day of week
 - Showing/hiding adjacent months
 - Month and week headers
-- Customizable month container  
+- Customizable month container
 - Fully customizable day content
 
 ## Basic Usage
@@ -35,7 +34,9 @@ To show the basic version of the calendar, without any kind of selection mechani
 
 ```
 This chunk will render the calendar with default components for each day, and also month and week headers.
-See the `StaticCalendarSample` file for a full example. 
+See the `StaticCalendarSample` file for a full example.
+
+<img src="https://github.com/boguszpawlowski/ComposeCalendar/blob/main/blob/screenshot_1.jpg" width="260">
 
 > :exclamation: By default, at first the calendar will show current month. If you want to start with some different date, you have to pass an `initialMonth` parameter to the initial state of the calendar. See [Initial State section](#initial-state)
 
@@ -51,6 +52,8 @@ Calendar with a mechanism for selection. The default implementation uses `Dynami
 ```
 By the default, after changing the selection mode, selection is cleared.
 See the `SelectableCalendarSample` file for a full example
+
+https://user-images.githubusercontent.com/36514058/126049987-685a7b81-1596-48a4-95a1-c342f6c796bf.mp4
 
 > :exclamation: If you want to define your own selection behavior, please check out the [Custom Selection section](#custom-selection) and/or `CustomSelectionSample`.
 
@@ -172,6 +175,9 @@ Selection modes are represented by `SelectionMode` enum, with following values:
 - `Single` - only single day is selectable - selection will contain one or zero days selected.
 - `Multiple` - a list of dates can be selected.
 - `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
+
+## Compose Version
+Library is currently build on top of Compose v1.0.0-rc2
 
 ## License
 
