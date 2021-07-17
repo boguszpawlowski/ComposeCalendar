@@ -17,10 +17,10 @@ Library and it's snapshots are available on Maven Central repository.
 
 ## Supported features
 - Selection (single, multiple or a range of days)
-- First day of week - supports every day as first day of week
+- Every day as first day of week
 - Showing/hiding adjacent months
 - Month and week headers
-- Customizable month container  
+- Customizable month container
 - Fully customizable day content
 
 ## Basic Usage
@@ -173,6 +173,9 @@ Selection modes are represented by `SelectionMode` enum, with following values:
 - `Single` - only single day is selectable - selection will contain one or zero days selected.
 - `Multiple` - a list of dates can be selected.
 - `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
+
+## Compose Version
+Library is currently build on top of Compose v1.0.0-rc2
 
 ## License
 

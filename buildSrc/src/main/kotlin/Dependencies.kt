@@ -1,4 +1,5 @@
 @file:Suppress("ObjectPropertyNaming", "ClassNaming", "UnderscoresInNumericLiterals")
+
 object App {
   private const val versionMajor = 0
   private const val versionMinor = 0
@@ -34,7 +35,7 @@ object Kotlin {
   const val Version = "1.5.10"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
-  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.4.32"
+  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.0"
 
   const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
   const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
@@ -44,11 +45,11 @@ object Kotlin {
   const val SafeArgsPluginId = "androidx.navigation.safeargs.kotlin"
   const val JvmPluginId = "jvm"
 
-  const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.0.9"
+  const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0-beta03"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0-beta05"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
@@ -90,7 +91,8 @@ object Retrofit {
   const val Version = "2.9.0"
 
   const val Core = "com.squareup.retrofit2:retrofit:$Version"
-  const val ConverterKotlinxSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+  const val ConverterKotlinxSerialization =
+    "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 }
 
 object KotlinXSerialization {
@@ -105,7 +107,7 @@ object AndroidX {
   const val AppCompat = "androidx.appcompat:appcompat:1.3.0"
   const val Activity = "androidx.activity:activity-ktx:1.1.0"
   const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
-  const val ComposeActivity = "androidx.activity:activity-compose:1.3.0-alpha08"
+  const val ComposeActivity = "androidx.activity:activity-compose:1.3.0-rc02"
   const val Lifecycle = "androidx.lifecycle:lifecycle-extensions:$LifecycleVersion"
   const val LifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:$LifecycleVersion"
   const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$LifecycleVersion"
@@ -142,7 +144,7 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.0-beta08"
+  const val Version = "1.0.0-rc02"
   const val AccompanistVersion = "0.10.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
@@ -154,7 +156,7 @@ object Compose {
   const val UiTooling = "androidx.compose.ui:ui-tooling:$Version"
   const val MaterialIconsExtended = "androidx.compose.material:material-icons-extended:$Version"
   const val AccompanistCoil = "dev.chrisbanes.accompanist:accompanist-coil:$AccompanistVersion"
-  const val Navigation = "androidx.navigation:navigation-compose:2.4.0-alpha02"
+  const val Navigation = "androidx.navigation:navigation-compose:2.4.0-alpha04"
   const val Testing = "androidx.compose.ui:ui-test:$Version"
   const val JunitTesting = "androidx.compose.ui:ui-test-junit4:$Version"
 }
