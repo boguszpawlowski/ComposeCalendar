@@ -55,7 +55,7 @@ Calendar with a mechanism for selection. The default implementation uses `Dynami
 By the default, after changing the selection mode, selection is cleared.
 See the `SelectableCalendarSample` file for a full example
 
-![Selection animation](https://github.com/boguszpawlowski/ComposeCalendar/blob/main/blob/selection_demo.mp4)
+https://user-images.githubusercontent.com/36514058/126049987-685a7b81-1596-48a4-95a1-c342f6c796bf.mp4
 
 > :exclamation: If you want to define your own selection behavior, please check out the [Custom Selection section](#custom-selection) and/or `CustomSelectionSample`.
 
