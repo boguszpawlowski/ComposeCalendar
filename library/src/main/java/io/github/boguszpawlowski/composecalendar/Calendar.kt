@@ -122,11 +122,12 @@ public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
+  onSelectionChanged: (List<LocalDate>) -> Unit = {},
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialMonth)
   },
-  selectionState: DynamicSelectionState = rememberSaveable(saver = DynamicSelectionState.Saver()) {
-    DynamicSelectionState(initialSelection, initialSelectionMode)
+  selectionState: DynamicSelectionState = rememberSaveable(saver = DynamicSelectionState.Saver(onSelectionChanged)) {
+    DynamicSelectionState(onSelectionChanged, initialSelection, initialSelectionMode)
   },
 ): CalendarState<DynamicSelectionState> = remember { CalendarState(monthState, selectionState) }
 

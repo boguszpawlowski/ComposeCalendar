@@ -49,6 +49,7 @@ fun MainScreen() {
         composable("selection") { SelectableCalendarSample() }
         composable("components") { CustomComponentsSample() }
         composable("custom_selection") { CustomSelectionSample() }
+        composable("viewmodel") { ViewModelSample() }
       }
     }
   }
@@ -78,6 +79,11 @@ fun MainMenu(navController: NavController) {
 
     Button(onClick = { navController.navigate("custom_selection") }) {
       Text(text = "Custom Selection")
+    }
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Button(onClick = { navController.navigate("viewmodel") }) {
+      Text(text = "ViewModel")
     }
   }
 }
