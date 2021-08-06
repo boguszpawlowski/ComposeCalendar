@@ -1,7 +1,9 @@
 package io.github.boguszpawlowski.composecalendar.sample
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +18,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
@@ -25,14 +26,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import io.github.boguszpawlowski.composecalendar.SelectableCalendar
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.rememberSelectableCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
+import io.github.boguszpawlowski.composecalendar.selection.SelectionMode.Period
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import java.time.LocalDate
@@ -40,16 +44,17 @@ import java.time.LocalDate
 /**
  * In this sample, calendar composable is wired with an ViewModel. It's purpose is to show how to use
  * the composable in real world use-case, by an example implementation of a calendar
- * with a couple of planned recipes.
+ * which can display planned recipes along with their prices
  */
 @Composable
 fun ViewModelSample() {
   val viewModel = remember { RecipeViewModel() }
   val recipes by viewModel.recipesFlow.collectAsState()
-  val price by viewModel.selectedRecipesPriceFlow.collectAsState(0)
+  val selectedPrice by viewModel.selectedRecipesPriceFlow.collectAsState(0)
 
   val state = rememberSelectableCalendarState(
-    onSelectionChanged = viewModel::onSelectionChanged
+    onSelectionChanged = viewModel::onSelectionChanged,
+    initialSelectionMode = Period,
   )
 
   Column(
@@ -57,18 +62,21 @@ fun ViewModelSample() {
   ) {
     SelectableCalendar(
       calendarState = state,
-      dayContent = {
+      dayContent = { dayState ->
         RecipeDay(
-          state = it,
-          hasPlannedRecipe = it.date in recipes.map { it.date })
+          state = dayState,
+          plannedRecipe = recipes.firstOrNull { it.date == dayState.date },
+        )
       }
     )
 
     Spacer(modifier = Modifier.height(20.dp))
-    Text(text = "Selected recipes price: $price")
+    Text(
+      text = "Selected recipes price: $selectedPrice",
+      style = MaterialTheme.typography.h6,
+    )
 
     Spacer(modifier = Modifier.height(20.dp))
-    SelectionControls(selectionState = state.selectionState)
   }
 }
 
@@ -78,7 +86,7 @@ fun ViewModelSample() {
 @Composable
 fun RecipeDay(
   state: DayState<DynamicSelectionState>,
-  hasPlannedRecipe: Boolean,
+  plannedRecipe: PlannedRecipe?,
   modifier: Modifier = Modifier,
 ) {
   val date = state.date
@@ -103,14 +111,17 @@ fun RecipeDay(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       Text(text = date.dayOfMonth.toString())
-      if (hasPlannedRecipe) {
-        Surface(
-          shape = CircleShape,
-          color = Color.Magenta,
-          modifier = Modifier.size(15.dp)
-        ) {
-
-        }
+      if (plannedRecipe != null) {
+        Box(
+          modifier = Modifier
+            .size(10.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colors.primary)
+        )
+        Text(
+          text = plannedRecipe.price.toString(),
+          fontSize = 8.sp,
+        )
       }
     }
   }
@@ -125,7 +136,7 @@ private fun SelectionControls(
 ) {
   Text(
     text = "Calendar Selection Mode",
-    style = MaterialTheme.typography.h5,
+    style = MaterialTheme.typography.h6,
   )
   SelectionMode.values().forEach { selectionMode ->
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -164,5 +175,13 @@ class RecipeViewModel : ViewModel() {
 
   fun onSelectionChanged(selection: List<LocalDate>) {
     selectionFlow.value = selection
+  }
+}
+
+@Preview
+@Composable
+fun ViewModelSamplePreview() {
+  MaterialTheme {
+    ViewModelSample()
   }
 }

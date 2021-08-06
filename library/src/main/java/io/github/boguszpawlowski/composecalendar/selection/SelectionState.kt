@@ -54,7 +54,7 @@ public class DynamicSelectionState(
   }
 
   internal companion object {
-    @Suppress("FunctionName")
+    @Suppress("FunctionName") // Factory function
     fun Saver(onSelectionChanged: (List<LocalDate>) -> Unit): Saver<DynamicSelectionState, Any> =
       listSaver(
         save = {

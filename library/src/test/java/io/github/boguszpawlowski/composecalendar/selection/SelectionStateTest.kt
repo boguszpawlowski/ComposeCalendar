@@ -16,7 +16,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.None") {
     should("not change selection after new value arrives") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.None)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.None)
 
       state.onDateSelected(LocalDate.now())
 
@@ -24,7 +24,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("be able to change if mode has been changed") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.None)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.None)
 
       state.selectionMode = SelectionMode.Single
       state.onDateSelected(today)
@@ -35,7 +35,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.Single") {
     should("change state to single after day is selected") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
 
       state.onDateSelected(today)
 
@@ -43,7 +43,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("change state to none when same day is selected") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
 
       state.onDateSelected(today)
       state.onDateSelected(today)
@@ -52,7 +52,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("change to other day when selected") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -61,7 +61,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("not be mutable after selection mode is changed to None") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
 
       state.selectionMode = SelectionMode.None
       state.onDateSelected(today)
@@ -72,7 +72,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.Multiple") {
     should("allow for multiple days selected") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Multiple)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Multiple)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -84,7 +84,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("switch selection off once day is selected second time") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Multiple)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Multiple)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -96,7 +96,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.Period") {
     should("allow for period of days selected") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -106,7 +106,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("switch selection off once start day is selected") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -115,7 +115,7 @@ internal class SelectionStateTest : ShouldSpec({
       state.selection shouldBe emptyList()
     }
     should("change end date once the date selected is between start and the end") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(yesterday)
       state.onDateSelected(tomorrow)
@@ -125,7 +125,7 @@ internal class SelectionStateTest : ShouldSpec({
       state.selection.last() shouldBe today
     }
     should("change start day once day before start is selected") {
-      val state = DynamicSelectionState(emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)

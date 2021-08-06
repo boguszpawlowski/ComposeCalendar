@@ -178,9 +178,6 @@ Selection modes are represented by `SelectionMode` enum, with following values:
 - `Multiple` - a list of dates can be selected.
 - `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
 
-## Compose Version
-Library is currently build on top of Compose v1.0.0-rc2
-
 ## License
 
     Copyright 2021 Bogusz Pawłowski

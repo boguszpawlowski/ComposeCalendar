@@ -32,7 +32,7 @@ object AndroidSdk {
 }
 
 object Kotlin {
-  const val Version = "1.5.10"
+  const val Version = "1.5.21"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
   const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.0"
@@ -144,7 +144,7 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.0"
+  const val Version = "1.0.1"
   const val AccompanistVersion = "0.10.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
