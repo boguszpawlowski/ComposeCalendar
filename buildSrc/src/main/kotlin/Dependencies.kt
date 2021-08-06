@@ -32,7 +32,7 @@ object AndroidSdk {
 }
 
 object Kotlin {
-  const val Version = "1.5.10"
+  const val Version = "1.5.21"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
   const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.0"
@@ -49,7 +49,7 @@ object Kotlin {
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0-beta05"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.0.0"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
@@ -107,7 +107,7 @@ object AndroidX {
   const val AppCompat = "androidx.appcompat:appcompat:1.3.0"
   const val Activity = "androidx.activity:activity-ktx:1.1.0"
   const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
-  const val ComposeActivity = "androidx.activity:activity-compose:1.3.0-rc02"
+  const val ComposeActivity = "androidx.activity:activity-compose:1.3.0"
   const val Lifecycle = "androidx.lifecycle:lifecycle-extensions:$LifecycleVersion"
   const val LifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:$LifecycleVersion"
   const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$LifecycleVersion"
@@ -144,7 +144,7 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.0-rc02"
+  const val Version = "1.0.1"
   const val AccompanistVersion = "0.10.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"

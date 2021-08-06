@@ -17,6 +17,14 @@ import androidx.compose.ui.unit.dp
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import java.time.LocalDate
 
+/**
+ * Default implementation for day content. It supports different appearance for days from
+ * current and adjacent month, as well as current day and selected day
+ *
+ * @param selectionColor color of the border, when day is selected
+ * @param currentDayColor color of content for the current date
+ * @param onClick callback for interacting with day clicks
+ */
 @Composable
 public fun <T : SelectionState> DefaultDay(
   state: DayState<T>,

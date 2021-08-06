@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
-import io.github.boguszpawlowski.composecalendar.day.SimpleDayState
+import io.github.boguszpawlowski.composecalendar.day.NonSelectableDayState
 import io.github.boguszpawlowski.composecalendar.header.MonthState
 import java.time.DayOfWeek
 import java.time.DayOfWeek.SUNDAY
@@ -44,7 +44,7 @@ fun CustomComponentsSample() {
 }
 
 @Composable
-private fun DayContent(dayState: SimpleDayState) {
+private fun DayContent(dayState: NonSelectableDayState) {
   Text(
     text = dayState.date.dayOfMonth.toString(),
     modifier = Modifier.fillMaxWidth(),

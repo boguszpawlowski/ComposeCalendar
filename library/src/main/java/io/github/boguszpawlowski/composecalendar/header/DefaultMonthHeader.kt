@@ -17,6 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 
+/**
+ * Default implementation of month header, shows current month and year, as well as
+ * 2 arrows for changing currently showed month
+ *
+ */
 @Composable
 public fun DefaultMonthHeader(
   monthState: MonthState,

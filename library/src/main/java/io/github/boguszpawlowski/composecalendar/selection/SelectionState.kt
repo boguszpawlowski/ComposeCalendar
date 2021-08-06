@@ -21,6 +21,7 @@ public interface SelectionState {
  */
 @Stable
 public class DynamicSelectionState(
+  private val onSelectionChanged: (List<LocalDate>) -> Unit,
   selection: List<LocalDate>,
   selectionMode: SelectionMode,
 ) : SelectionState {
@@ -31,7 +32,10 @@ public class DynamicSelectionState(
   public var selection: List<LocalDate>
     get() = _selection
     set(value) {
-      _selection = value
+      if (value != selection) {
+        _selection = value
+        onSelectionChanged(value)
+      }
     }
 
   public var selectionMode: SelectionMode
@@ -46,22 +50,24 @@ public class DynamicSelectionState(
   override fun isDateSelected(date: LocalDate): Boolean = selection.contains(date)
 
   override fun onDateSelected(date: LocalDate) {
-    selection = SelectionHandler.calculateNewSelection(date, selection, selectionMode)
+    selection = DynamicSelectionHandler.calculateNewSelection(date, selection, selectionMode)
   }
 
   internal companion object {
-    @Suppress("FunctionName")
-    fun Saver(): Saver<DynamicSelectionState, Any> = listSaver(
-      save = {
-        listOf(it.selectionMode, it.selection.map { it.toString() })
-      },
-      restore = { restored ->
-        DynamicSelectionState(
-          selectionMode = restored[0] as SelectionMode,
-          selection = (restored[1] as? List<String>)?.map { LocalDate.parse(it) }.orEmpty(),
-        )
-      }
-    )
+    @Suppress("FunctionName") // Factory function
+    fun Saver(onSelectionChanged: (List<LocalDate>) -> Unit): Saver<DynamicSelectionState, Any> =
+      listSaver(
+        save = {
+          listOf(it.selectionMode, it.selection.map { it.toString() })
+        },
+        restore = { restored ->
+          DynamicSelectionState(
+            onSelectionChanged = onSelectionChanged,
+            selectionMode = restored[0] as SelectionMode,
+            selection = (restored[1] as? List<String>)?.map { LocalDate.parse(it) }.orEmpty(),
+          )
+        }
+      )
   }
 }
 

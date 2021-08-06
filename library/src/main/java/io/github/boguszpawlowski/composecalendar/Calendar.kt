@@ -1,3 +1,4 @@
+@file:Suppress("MatchingDeclarationName")
 package io.github.boguszpawlowski.composecalendar
 
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,39 @@ import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.Locale
 
+/**
+ * State of the calendar composable
+ *
+ * @property monthState currently showed month
+ * @property selectionState handler for the calendar's selection
+ */
+@Stable
+public class CalendarState<T : SelectionState>(
+  public val monthState: MonthState,
+  public val selectionState: T,
+)
+
+/**
+ * [Calendar] implementation using a [DynamicSelectionState] as a selection handler.
+ *
+ *  * Basic usage:
+ * ```
+ *  @Composable
+ *  fun MainScreen() {
+ *    SelectableCalendar()
+ *  }
+ * ```
+ *
+ * @param modifier
+ * @param firstDayOfWeek first day of a week, defaults to current locale's
+ * @param today current day, defaults to [LocalDate.now]
+ * @param showAdjacentMonths whenever to show or hide the days from adjacent months
+ * @param calendarState state of the composable
+ * @param dayContent composable rendering the current day
+ * @param monthHeader header for showing the current month and controls for changing it
+ * @param weekHeader header for showing captions for each day of week
+ * @param monthContainer container composable for all the days in current month
+ */
 @Composable
 public fun SelectableCalendar(
   modifier: Modifier = Modifier,
@@ -54,6 +88,27 @@ public fun SelectableCalendar(
   )
 }
 
+/**
+ * [Calendar] implementation without any mechanism for the selection.
+ *
+ * Basic usage:
+ * ```
+ *  @Composable
+ *  fun MainScreen() {
+ *    StaticCalendar()
+ *  }
+ * ```
+ *
+ * @param modifier
+ * @param firstDayOfWeek first day of a week, defaults to current locale's
+ * @param today current day, defaults to [LocalDate.now]
+ * @param showAdjacentMonths whenever to show or hide the days from adjacent months
+ * @param calendarState state of the composable
+ * @param dayContent composable rendering the current day
+ * @param monthHeader header for showing the current month and controls for changing it
+ * @param weekHeader header for showing captions for each day of week
+ * @param monthContainer container composable for all the days in current month
+ */
 @Composable
 public fun StaticCalendar(
   modifier: Modifier = Modifier,
@@ -81,6 +136,22 @@ public fun StaticCalendar(
   )
 }
 
+/**
+ * Composable for showing a calendar. The calendar state has to be provided by the call site. If you
+ * want to use built-in implementation, check out:
+ * [SelectableCalendar] - calendar composable handling selection that can be changed at runtime
+ * [StaticCalendar] - calendar without any mechanism for selection
+ *
+ * @param modifier
+ * @param firstDayOfWeek first day of a week, defaults to current locale's
+ * @param today current day, defaults to [LocalDate.now]
+ * @param showAdjacentMonths whenever to show or hide the days from adjacent months
+ * @param calendarState state of the composable
+ * @param dayContent composable rendering the current day
+ * @param monthHeader header for showing the current month and controls for changing it
+ * @param weekHeader header for showing captions for each day of week
+ * @param monthContainer container composable for all the days in current month
+ */
 @Composable
 public fun <T : SelectionState> Calendar(
   calendarState: CalendarState<T>,
@@ -111,25 +182,33 @@ public fun <T : SelectionState> Calendar(
   }
 }
 
-@Stable
-public class CalendarState<T : SelectionState>(
-  public val monthState: MonthState,
-  public val selectionState: T,
-)
-
+/**
+ * Helper function for providing a [CalendarState] implementation with selection mechanism.
+ *
+ * @param initialMonth initially rendered month
+ * @param initialSelection initial selection of the composable
+ * @param initialSelectionMode initial mode of the selection
+ * @param onSelectionChanged callback for side effects triggered when the selection state changes
+ */
 @Composable
 public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
+  onSelectionChanged: (List<LocalDate>) -> Unit = {},
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialMonth)
   },
-  selectionState: DynamicSelectionState = rememberSaveable(saver = DynamicSelectionState.Saver()) {
-    DynamicSelectionState(initialSelection, initialSelectionMode)
+  selectionState: DynamicSelectionState = rememberSaveable(saver = DynamicSelectionState.Saver(onSelectionChanged)) {
+    DynamicSelectionState(onSelectionChanged, initialSelection, initialSelectionMode)
   },
 ): CalendarState<DynamicSelectionState> = remember { CalendarState(monthState, selectionState) }
 
+/**
+ * Helper function for providing a [CalendarState] implementation without a selection mechanism.
+ *
+ * @param initialMonth initially rendered month
+ */
 @Composable
 public fun rememberCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
