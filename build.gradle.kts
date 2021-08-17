@@ -6,6 +6,9 @@ plugins {
   id(DetektLib.PluginId) version DetektLib.Version
   id(GradleVersions.PluginId) version GradleVersions.Version
   id(GrGit.PluginId) version GrGit.Version
+  id(Shipkit.AutoVersion.PluginId) version Shipkit.AutoVersion.Version
+  id(Shipkit.Changelog.PluginId) version Shipkit.Changelog.Version
+  id(Shipkit.GithubRelease.PluginId) version Shipkit.GithubRelease.Version
 }
 
 buildscript {
@@ -62,30 +65,46 @@ dependencies {
   detekt(DetektLib.Cli)
 }
 
-tasks.withType<Detekt> {
-  parallel = true
-  config.setFrom(rootProject.file("detekt-config.yml"))
-  setSource(files(projectDir))
-  exclude(subprojects.map { "${it.buildDir.relativeTo(rootDir).path}/" })
-  exclude("**/.gradle/**")
-  reports {
-    xml {
-      enabled = true
-      destination = file("build/reports/detekt/detekt-results.xml")
+tasks {
+  withType<Detekt> {
+    parallel = true
+    config.setFrom(rootProject.file("detekt-config.yml"))
+    setSource(files(projectDir))
+    exclude(subprojects.map { "${it.buildDir.relativeTo(rootDir).path}/" })
+    exclude("**/.gradle/**")
+    reports {
+      xml {
+        enabled = true
+        destination = file("build/reports/detekt/detekt-results.xml")
+      }
+      html.enabled = false
+      txt.enabled = false
     }
-    html.enabled = false
-    txt.enabled = false
   }
-}
 
-tasks.register("check") {
-  group = "Verification"
-  description = "Allows to attach Detekt to the root project."
-}
+  register("check") {
+    group = "Verification"
+    description = "Allows to attach Detekt to the root project."
+  }
 
-tasks.withType<DependencyUpdatesTask> {
-  rejectVersionIf {
-    isNonStable(candidate.version) && !isNonStable(currentVersion)
+  withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+      isNonStable(candidate.version) && !isNonStable(currentVersion)
+    }
+  }
+
+  withType(org.shipkit.changelog.GenerateChangelogTask::class) {
+    previousRevision = project.ext["shipkit-auto-version.previous-tag"] as String?
+    githubToken = System.getenv("GITHUB_TOKEN")
+    repository = "boguszpawlowski/composecalendar"
+  }
+
+  withType(org.shipkit.github.release.GithubReleaseTask::class) {
+    dependsOn(named("generateChangelog"))
+    repository = "boguszpawlowski/composecalendar"
+    changelog = named("generateChangelog").get().outputs.files.singleFile
+    githubToken = System.getenv("GITHUB_TOKEN")
+    newTagRevision = System.getenv("GITHUB_SHA")
   }
 }
 
