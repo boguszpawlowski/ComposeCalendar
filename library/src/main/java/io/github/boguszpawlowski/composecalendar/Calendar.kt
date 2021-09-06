@@ -15,8 +15,7 @@ import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.DefaultDay
 import io.github.boguszpawlowski.composecalendar.header.DefaultMonthHeader
 import io.github.boguszpawlowski.composecalendar.header.MonthState
-import io.github.boguszpawlowski.composecalendar.month.Month
-import io.github.boguszpawlowski.composecalendar.month.MonthContent
+import io.github.boguszpawlowski.composecalendar.month.MonthsContent
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
@@ -166,14 +165,16 @@ public fun <T : SelectionState> Calendar(
     Box { content(PaddingValues()) }
   },
 ) {
+
   Column(
     modifier = modifier,
   ) {
     monthHeader(calendarState.monthState)
-    MonthContent(
+    MonthsContent(
       showAdjacentMonths = showAdjacentMonths,
-      month = Month(calendarState.monthState.currentMonth, currentDate = today),
+      monthState = calendarState.monthState,
       selectionState = calendarState.selectionState,
+      today = today,
       firstDayOfWeek = firstDayOfWeek,
       dayContent = dayContent,
       weekHeader = weekHeader,

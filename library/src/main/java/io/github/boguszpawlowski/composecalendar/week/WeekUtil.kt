@@ -11,6 +11,7 @@ private const val DaysInAWeek = 7
 internal fun YearMonth.getWeeks(
   includeAdjacentMonths: Boolean,
   firstDayOfTheWeek: DayOfWeek,
+  today: LocalDate = LocalDate.now(),
 ): List<Week> {
   val daysLength = lengthOfMonth()
 
@@ -41,7 +42,7 @@ internal fun YearMonth.getWeeks(
         WeekDay(
           date = date,
           isFromCurrentMonth = isFromCurrentMonth,
-          isCurrentDay = date.equals(LocalDate.now()),
+          isCurrentDay = date.equals(today),
         )
       }
     )

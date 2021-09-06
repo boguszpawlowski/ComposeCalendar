@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 /**
@@ -31,7 +32,10 @@ public fun DefaultMonthHeader(
     modifier = modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.Center,
   ) {
-    IconButton(onClick = { monthState.currentMonth = monthState.currentMonth.minusMonths(1) }) {
+    IconButton(
+      modifier = Modifier.testTag("Decrement"),
+      onClick = { monthState.currentMonth = monthState.currentMonth.minusMonths(1) }
+    ) {
       Image(
         imageVector = Icons.Default.KeyboardArrowLeft,
         colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
@@ -39,12 +43,16 @@ public fun DefaultMonthHeader(
       )
     }
     Text(
+      modifier = Modifier.testTag("MonthLabel"),
       text = monthState.currentMonth.month.name.lowercase().replaceFirstChar { it.titlecase() },
       style = MaterialTheme.typography.h4
     )
     Spacer(modifier = Modifier.width(8.dp))
     Text(text = monthState.currentMonth.year.toString(), style = MaterialTheme.typography.h4)
-    IconButton(onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }) {
+    IconButton(
+      modifier = Modifier.testTag("Increment"),
+      onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }
+    ) {
       Image(
         imageVector = Icons.Default.KeyboardArrowRight,
         colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
