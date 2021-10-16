@@ -22,6 +22,7 @@ Library and it's snapshots are available on Maven Central repository.
 - Month and week headers
 - Customizable month container
 - Fully customizable day content
+- Horizontal swipe for changing a current month
 
 ## Basic Usage
 
@@ -110,6 +111,7 @@ please check out `CustomSelectionSample` file.
 Apart from rendering your own components inside the calendar, you can modify it by passing different properties.:
 - `showAdjacentMonths` - whenever to render days from adjacent months. Defaults to `true`.
 - `firstDayOfWeek` - you can pass the `DayOfWeek` which you want you week to start with. It defaults to the first day of week of the `Locale.default()`.
+- `horizontalScrollEnabled` - a Boolean flag which enables month to be changed by a horizontal swipe. Defaults to `true`.
 
 Apart from this, `Calendar` you can pass a `Modifier` object like in any other composable.
 

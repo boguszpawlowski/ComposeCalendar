@@ -14,13 +14,16 @@ android {
       freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
     }
   }
+  packagingOptions {
+    exclude("META-INF/*")
+  }
 }
 
 dependencies {
   implementation(Kotlin.StdLib)
-  implementation(Compose.Runtime)
   implementation(Compose.Ui)
   implementation(Compose.UiTooling)
+  implementation(Compose.AccompanistPager)
   implementation(Compose.Foundation)
   implementation(Compose.FoundationLayout)
   implementation(Compose.Material)
@@ -28,6 +31,10 @@ dependencies {
 
   testImplementation(Kotest.Assertions)
   testImplementation(Kotest.RunnerJunit5)
+  testImplementation(Kotlin.Reflect)
+
+  debugImplementation(ComposeTest.Manifest)
+  androidTestImplementation(ComposeTest.Core)
 }
 
 plugins.withId("com.vanniktech.maven.publish") {

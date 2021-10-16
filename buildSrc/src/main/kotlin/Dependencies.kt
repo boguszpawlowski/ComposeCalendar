@@ -25,7 +25,7 @@ object MavenPublish {
 }
 
 object AndroidSdk {
-  const val Min = 24
+  const val Min = 23
   const val Compile = 30
   const val Target = Compile
   const val BuildTools = "30.0.2"
@@ -38,6 +38,7 @@ object Kotlin {
   const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.0"
 
   const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
+  const val Reflect = "org.jetbrains.kotlin:kotlin-reflect:$Version"
   const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
 
   const val AndroidPluginId = "android"
@@ -149,15 +150,6 @@ object DetektLib {
   const val Cli = "io.gitlab.arturbosch.detekt:detekt-cli:$Version"
 }
 
-object Koin {
-  const val Version = "2.2.2"
-
-  const val Core = "org.koin:koin-core:$Version"
-  const val Android = "org.koin:koin-android:$Version"
-  const val ViewModel = "org.koin:koin-androidx-viewmodel:$Version"
-  const val Compose = "org.koin:koin-androidx-compose:$Version"
-}
-
 object Timber {
   const val Version = "4.7.1"
   const val Core = "com.jakewharton.timber:timber:$Version"
@@ -165,7 +157,7 @@ object Timber {
 
 object Compose {
   const val Version = "1.0.1"
-  const val AccompanistVersion = "0.10.0"
+  const val AccompanistVersion = "0.17.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
   const val Compiler = "androidx.compose.compiler:compiler:$Version"
@@ -175,25 +167,10 @@ object Compose {
   const val Ui = "androidx.compose.ui:ui:$Version"
   const val UiTooling = "androidx.compose.ui:ui-tooling:$Version"
   const val MaterialIconsExtended = "androidx.compose.material:material-icons-extended:$Version"
-  const val AccompanistCoil = "dev.chrisbanes.accompanist:accompanist-coil:$AccompanistVersion"
+  const val AccompanistPager = "com.google.accompanist:accompanist-pager:$AccompanistVersion"
   const val Navigation = "androidx.navigation:navigation-compose:2.4.0-alpha04"
   const val Testing = "androidx.compose.ui:ui-test:$Version"
   const val JunitTesting = "androidx.compose.ui:ui-test-junit4:$Version"
-}
-
-object Firebase {
-  const val CrashlyticsPlugin = "com.google.firebase:firebase-crashlytics-gradle:2.5.2"
-  const val GoogleServicesPlugin = "com.google.gms:google-services:4.3.5"
-  const val AppDistributionPlugin = "com.google.firebase:firebase-appdistribution-gradle:1.3.1"
-
-  const val CrashlyticsPluginId = "com.google.firebase.crashlytics"
-  const val GoogleServicesPluginId = "com.google.gms.google-services"
-  const val AppDistributionPluginId = "com.google.firebase.appdistribution"
-
-  const val Bom = "com.google.firebase:firebase-bom:26.8.0"
-
-  const val Analytics = "com.google.firebase:firebase-analytics-ktx"
-  const val Crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
 }
 
 object Debug {
@@ -224,4 +201,5 @@ object AndroidXTest {
 
 object ComposeTest {
   const val Core = "androidx.compose.ui:ui-test-junit4:${Compose.Version}"
+  const val Manifest = "androidx.compose.ui:ui-test-manifest:${Compose.Version}"
 }
