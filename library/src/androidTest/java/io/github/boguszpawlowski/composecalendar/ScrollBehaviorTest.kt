@@ -9,7 +9,6 @@ import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
 import org.junit.Rule
 import org.junit.Test
-import java.time.LocalDate
 import java.time.YearMonth
 
 internal class ScrollBehaviorTest {
@@ -20,7 +19,7 @@ internal class ScrollBehaviorTest {
   val composeTestRule = createComposeRule()
 
   @Test
-  fun MonthChangeTest() {
+  fun monthChangeTest() {
     composeTestRule.setContent {
       StaticCalendar(
         calendarState = rememberCalendarState(initialMonth = initialMonth)
@@ -34,7 +33,7 @@ internal class ScrollBehaviorTest {
   }
 
   @Test
-  fun ScrollMonthChangeTest() {
+  fun scrollMonthChangeTest() {
     composeTestRule.setContent {
       StaticCalendar(
         calendarState = rememberCalendarState(initialMonth = initialMonth)

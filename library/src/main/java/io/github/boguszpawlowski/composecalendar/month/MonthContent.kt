@@ -22,7 +22,6 @@ import io.github.boguszpawlowski.composecalendar.header.MonthState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.week.WeekContent
 import io.github.boguszpawlowski.composecalendar.week.getWeeks
-import io.github.boguszpawlowski.composecalendar.week.rotateRight
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -31,11 +30,11 @@ internal const val DaysOfWeek = 7
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-internal fun <T : SelectionState> MonthsContent(
+internal fun <T : SelectionState> MonthPager(
   showAdjacentMonths: Boolean,
   selectionState: T,
   monthState: MonthState,
-  firstDayOfWeek: DayOfWeek,
+  daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
@@ -51,10 +50,6 @@ internal fun <T : SelectionState> MonthsContent(
       monthState = monthState,
       pagerState = pagerState,
     )
-  }
-
-  val daysOfWeek = remember(firstDayOfWeek) {
-    DayOfWeek.values().rotateRight(DaysOfWeek - firstDayOfWeek.ordinal)
   }
 
   HorizontalPager(
