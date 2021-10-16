@@ -1,4 +1,4 @@
-@file:Suppress("MatchingDeclarationName")
+@file:Suppress("MatchingDeclarationName", "LongParameterList")
 
 package io.github.boguszpawlowski.composecalendar
 
@@ -58,7 +58,7 @@ public class CalendarState<T : SelectionState>(
  * @param firstDayOfWeek first day of a week, defaults to current locale's
  * @param today current day, defaults to [LocalDate.now]
  * @param showAdjacentMonths whenever to show or hide the days from adjacent months
- * @param horizontalScrollEnabled whenever user is able to change the month by horizontal swipe
+ * @param horizontalSwipeEnabled whenever user is able to change the month by horizontal swipe
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
@@ -71,7 +71,7 @@ public fun SelectableCalendar(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
-  horizontalScrollEnabled: Boolean = true,
+  horizontalSwipeEnabled: Boolean = true,
   calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
   dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
@@ -85,7 +85,7 @@ public fun SelectableCalendar(
     firstDayOfWeek = firstDayOfWeek,
     today = today,
     showAdjacentMonths = showAdjacentMonths,
-    horizontalScrollEnabled = horizontalScrollEnabled,
+    horizontalSwipeEnabled = horizontalSwipeEnabled,
     calendarState = calendarState,
     dayContent = dayContent,
     monthHeader = monthHeader,
@@ -109,7 +109,7 @@ public fun SelectableCalendar(
  * @param firstDayOfWeek first day of a week, defaults to current locale's
  * @param today current day, defaults to [LocalDate.now]
  * @param showAdjacentMonths whenever to show or hide the days from adjacent months
- * @param horizontalScrollEnabled whenever user is able to change the month by horizontal swipe
+ * @param horizontalSwipeEnabled whenever user is able to change the month by horizontal swipe
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
@@ -122,7 +122,7 @@ public fun StaticCalendar(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
-  horizontalScrollEnabled: Boolean = true,
+  horizontalSwipeEnabled: Boolean = true,
   calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
@@ -136,7 +136,7 @@ public fun StaticCalendar(
     firstDayOfWeek = firstDayOfWeek,
     today = today,
     showAdjacentMonths = showAdjacentMonths,
-    horizontalScrollEnabled = horizontalScrollEnabled,
+    horizontalSwipeEnabled = horizontalSwipeEnabled,
     calendarState = calendarState,
     dayContent = dayContent,
     monthHeader = monthHeader,
@@ -155,7 +155,7 @@ public fun StaticCalendar(
  * @param firstDayOfWeek first day of a week, defaults to current locale's
  * @param today current day, defaults to [LocalDate.now]
  * @param showAdjacentMonths whenever to show or hide the days from adjacent months
- * @param horizontalScrollEnabled whenever user is able to change the month by horizontal swipe
+ * @param horizontalSwipeEnabled whenever user is able to change the month by horizontal swipe
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
@@ -169,7 +169,7 @@ public fun <T : SelectionState> Calendar(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
-  horizontalScrollEnabled: Boolean = true,
+  horizontalSwipeEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
@@ -186,7 +186,7 @@ public fun <T : SelectionState> Calendar(
     modifier = modifier,
   ) {
     monthHeader(calendarState.monthState)
-    if (horizontalScrollEnabled) {
+    if (horizontalSwipeEnabled) {
       MonthPager(
         showAdjacentMonths = showAdjacentMonths,
         monthState = calendarState.monthState,

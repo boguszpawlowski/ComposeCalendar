@@ -2,6 +2,7 @@ package io.github.boguszpawlowski.composecalendar.month
 
 import android.annotation.SuppressLint
 import androidx.annotation.IntRange
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,7 @@ import java.time.YearMonth
 private const val PageCount = 3
 
 @OptIn(ExperimentalPagerApi::class)
+@Stable
 internal class MonthPagerState(
   coroutineScope: CoroutineScope,
   private val monthState: MonthState,
@@ -64,8 +66,29 @@ internal class MonthPagerState(
         monthProvider.cache[newIndex]!!.dec()
     }
   }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as MonthPagerState
+
+    if (monthState != other.monthState) return false
+    if (pagerState != other.pagerState) return false
+    if (monthProvider != other.monthProvider) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = monthState.hashCode()
+    result = 31 * result + pagerState.hashCode()
+    result = 31 * result + monthProvider.hashCode()
+    return result
+  }
 }
 
+@Stable
 internal class MonthProvider(initialMonth: YearMonth, currentIndex: Int) {
   val cache = mutableStateMapOf<Int, YearMonth>()
 
@@ -73,6 +96,21 @@ internal class MonthProvider(initialMonth: YearMonth, currentIndex: Int) {
     cache[(currentIndex - 1 + PageCount) % PageCount] = initialMonth.dec()
     cache[currentIndex] = initialMonth
     cache[(currentIndex + 1) % PageCount] = initialMonth.inc()
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as MonthProvider
+
+    if (cache != other.cache) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return cache.hashCode()
   }
 }
 
