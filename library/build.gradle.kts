@@ -14,9 +14,6 @@ android {
       freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
     }
   }
-  packagingOptions {
-    exclude("META-INF/*")
-  }
 }
 
 dependencies {
