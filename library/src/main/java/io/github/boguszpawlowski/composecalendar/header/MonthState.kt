@@ -5,6 +5,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
+import io.github.boguszpawlowski.composecalendar.util.dec
+import io.github.boguszpawlowski.composecalendar.util.inc
+import java.time.LocalDate
 import java.time.YearMonth
 
 @Suppress("FunctionName") // Factory function
@@ -35,4 +38,28 @@ private class MonthStateImpl(
     set(value) {
       _currentMonth = value
     }
+}
+
+public sealed interface CurrentDatePeriod {
+
+  public fun inc(): CurrentDatePeriod
+  public fun dec(): CurrentDatePeriod
+
+  @JvmInline
+  public value class Month(public val date: YearMonth) : CurrentDatePeriod {
+    override fun inc(): Month = Month(date.inc())
+
+    override fun dec(): Month = Month(date.dec())
+  }
+
+  @JvmInline
+  public value class Week(public val days: List<LocalDate>) : CurrentDatePeriod {
+    init {
+      check(days.size == 7)
+    }
+
+    override fun inc(): Week = Week(days = days.map { it.plusDays(7) })
+
+    override fun dec(): Week = Week(days = days.map { it.minusDays(7) })
+  }
 }
