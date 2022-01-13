@@ -138,7 +138,7 @@ naming:
     active: true
     enumEntryPattern: '^[A-Z][a-z]+(?:[A-Z][a-z]+)*$'
   FunctionNaming:
-    active: true
+    active: false
     functionPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
   FunctionParameterNaming:
     active: true

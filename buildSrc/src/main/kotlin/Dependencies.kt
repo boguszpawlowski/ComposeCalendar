@@ -79,23 +79,16 @@ object AndroidX {
   const val Version = "1.0.0"
   const val LifecycleVersion = "2.2.0"
 
-  const val AppCompat = "androidx.appcompat:appcompat:1.3.0"
-  const val Activity = "androidx.activity:activity-ktx:1.1.0"
-  const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
+  const val AppCompat = "androidx.appcompat:appcompat:1.4.1"
   const val ComposeActivity = "androidx.activity:activity-compose:1.3.1"
-  const val Lifecycle = "androidx.lifecycle:lifecycle-extensions:$LifecycleVersion"
-  const val LifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:$LifecycleVersion"
-  const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$LifecycleVersion"
-  const val Startup = "androidx.startup:startup-runtime:1.0.0"
-  const val ComposeLifecycle = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
 }
 
 object Material {
-  const val Core = "com.google.android.material:material:1.3.0"
+  const val Core = "com.google.android.material:material:1.5.0"
 }
 
 object DetektLib {
-  const val Version = "1.18.1"
+  const val Version = "1.19.0"
 
   const val PluginId = "io.gitlab.arturbosch.detekt"
   const val Plugin = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$Version"
@@ -110,7 +103,7 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.4"
+  const val Version = "1.0.5"
   const val AccompanistVersion = "0.17.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
@@ -133,24 +126,11 @@ object Debug {
 }
 
 object Kotest {
-  const val Version = "4.6.3"
+  const val Version = "5.0.3"
 
   const val RunnerJunit5 = "io.kotest:kotest-runner-junit5-jvm:$Version"
 
   const val Assertions = "io.kotest:kotest-assertions-core-jvm:$Version"
-}
-
-object JUnit {
-  const val Core = "junit:junit:4.13.2"
-}
-
-object CoroutineTest {
-  const val Turbine = "app.cash.turbine:turbine:0.4.1"
-}
-
-object AndroidXTest {
-  const val Runner = "androidx.test:runner:1.3.0"
-  const val Rules = "androidx.test:rules:1.3.0"
 }
 
 object ComposeTest {
