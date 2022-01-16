@@ -6,6 +6,7 @@ Due to flexibility provided by slot API's, you can decide how the calendar will 
 ![Github Actions](https://github.com/boguszpawlowski/composecalendar/actions/workflows/check.yml/badge.svg?branch=main)
 [<img src="https://img.shields.io/maven-central/v/io.github.boguszpawlowski.composecalendar/composecalendar.svg?label=release%20version"/>](https://search.maven.org/search?q=g:io.github.boguszpawlowski.composecalendar)
 [<img src="https://img.shields.io/nexus/s/https/s01.oss.sonatype.org/io.github.boguszpawlowski.composecalendar/composecalendar.svg?label=snapshot%20version"/>](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/)
+[<img src="https://androidweekly.net/issues/issue-501/badge"/>](https://androidweekly.net/issues/issue-501/)
 ## Setup
 Library and it's snapshots are available on Maven Central repository.
 ```kotlin
