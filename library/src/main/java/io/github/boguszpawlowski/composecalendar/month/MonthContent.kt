@@ -22,9 +22,9 @@ import io.github.boguszpawlowski.composecalendar.header.MonthState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.week.WeekContent
 import io.github.boguszpawlowski.composecalendar.week.getWeeks
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.YearMonth
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDate
+import java.time.YearMonth /*TODO()*/
 
 internal const val DaysOfWeek = 7
 

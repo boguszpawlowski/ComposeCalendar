@@ -2,16 +2,17 @@ package io.github.boguszpawlowski.composecalendar.week
 
 import io.github.boguszpawlowski.composecalendar.day.WeekDay
 import io.github.boguszpawlowski.composecalendar.util.daysUntil
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.YearMonth
+import kotlinx.datetime.*
+import kotlinx.datetime.DayOfWeek
+import java.time.YearMonth /*TODO()*/
 
 private const val DaysInAWeek = 7
+
 
 internal fun YearMonth.getWeeks(
   includeAdjacentMonths: Boolean,
   firstDayOfTheWeek: DayOfWeek,
-  today: LocalDate = LocalDate.now(),
+  today: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()),
 ): List<Week> {
   val daysLength = lengthOfMonth()
 
@@ -40,7 +41,7 @@ internal fun YearMonth.getWeeks(
         }
 
         WeekDay(
-          date = date,
+          date = date.toKotlinLocalDate(),
           isFromCurrentMonth = isFromCurrentMonth,
           isCurrentDay = date.equals(today),
         )

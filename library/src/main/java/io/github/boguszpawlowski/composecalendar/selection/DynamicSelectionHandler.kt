@@ -1,7 +1,7 @@
 package io.github.boguszpawlowski.composecalendar.selection
 
 import io.github.boguszpawlowski.composecalendar.util.addOrRemoveIfExists
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 /**
  * Helper class for calculating new selection, when using a [DynamicSelectionState] approach.
@@ -24,10 +24,13 @@ public object DynamicSelectionHandler {
     }
     SelectionMode.Multiple -> selection.addOrRemoveIfExists(date)
     SelectionMode.Period -> when {
-      date.isBefore(selection.startOrMax()) -> listOf(date)
-      date.isAfter(selection.startOrMax()) -> selection.fillUpTo(date)
+      date.compareTo(selection.startOrMax()) < 0 -> listOf(date)
+      //isBefore(selection.startOrMax()) -> listOf(date)
+      date.compareTo(selection.startOrMax()) > 0 -> selection.fillUpTo(date)
+      //date.isAfter(selection.startOrMax()) -> selection.fillUpTo(date)
       date == selection.startOrMax() -> emptyList()
       else -> selection
     }
+
   }
 }

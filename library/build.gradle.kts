@@ -25,6 +25,7 @@ dependencies {
   implementation(Compose.FoundationLayout)
   implementation(Compose.Material)
   implementation(Timber.Core)
+  implementation(DateTime.KotlinxDatetime)
 
   testImplementation(Kotest.Assertions)
   testImplementation(Kotest.RunnerJunit5)

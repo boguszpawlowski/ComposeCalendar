@@ -11,7 +11,7 @@ import io.github.boguszpawlowski.composecalendar.Calendar
 import io.github.boguszpawlowski.composecalendar.CalendarState
 import io.github.boguszpawlowski.composecalendar.header.MonthState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import java.time.YearMonth
 
 @Composable

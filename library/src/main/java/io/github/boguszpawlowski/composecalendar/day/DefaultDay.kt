@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 /**
  * Default implementation for day content. It supports different appearance for days from

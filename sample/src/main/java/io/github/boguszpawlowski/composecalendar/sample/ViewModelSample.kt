@@ -39,7 +39,7 @@ import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode.Period
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import java.time.LocalDate
+import kotlinx.datetime.*
 
 /**
  * In this sample, calendar composable is wired with an ViewModel. It's purpose is to show how to use
@@ -161,12 +161,18 @@ data class PlannedRecipe(
 class RecipeViewModel : ViewModel() {
 
   private val selectionFlow = MutableStateFlow(emptyList<LocalDate>())
+
+  private val localDateNow = Clock.System.todayAt(TimeZone.currentSystemDefault())
   val recipesFlow = MutableStateFlow(
     listOf(
-      PlannedRecipe(LocalDate.now().plusDays(1), 20.0),
-      PlannedRecipe(LocalDate.now().plusDays(3), 20.0),
-      PlannedRecipe(LocalDate.now().plusDays(5), 10.0),
-      PlannedRecipe(LocalDate.now().plusDays(-2), 25.0),
+      PlannedRecipe(localDateNow.plus(1, DateTimeUnit.DAY), 20.0),
+      PlannedRecipe(localDateNow.plus(3, DateTimeUnit.DAY), 20.0),
+      PlannedRecipe(localDateNow.plus(5, DateTimeUnit.DAY), 10.0),
+      PlannedRecipe(localDateNow.plus(-2, DateTimeUnit.DAY), 25.0),
+//      PlannedRecipe(LocalDate.now().plusDays(1), 20.0),
+//      PlannedRecipe(LocalDate.now().plusDays(3), 20.0),
+//      PlannedRecipe(LocalDate.now().plusDays(5), 10.0),
+//      PlannedRecipe(LocalDate.now().plusDays(-2), 25.0),
     )
   )
   val selectedRecipesPriceFlow = recipesFlow.combine(selectionFlow) { recipes, selection ->

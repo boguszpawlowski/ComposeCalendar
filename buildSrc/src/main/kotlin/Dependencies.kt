@@ -133,6 +133,12 @@ object Kotest {
   const val Assertions = "io.kotest:kotest-assertions-core-jvm:$Version"
 }
 
+object DateTime {
+  const val Version = "0.3.2"
+
+  const val KotlinxDatetime = "org.jetbrains.kotlinx:kotlinx-datetime:$Version"
+}
+
 object ComposeTest {
   const val Core = "androidx.compose.ui:ui-test-junit4:${Compose.Version}"
   const val Manifest = "androidx.compose.ui:ui-test-manifest:${Compose.Version}"

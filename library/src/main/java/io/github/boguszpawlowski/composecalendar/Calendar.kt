@@ -25,9 +25,9 @@ import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
 import io.github.boguszpawlowski.composecalendar.week.rotateRight
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.YearMonth
+import kotlinx.datetime.*
+import kotlinx.datetime.DayOfWeek
+import java.time.YearMonth /*TODO()*/
 import java.time.temporal.WeekFields
 import java.util.Locale
 
@@ -69,7 +69,7 @@ public class CalendarState<T : SelectionState>(
 public fun SelectableCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
-  today: LocalDate = LocalDate.now(),
+  today: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
   calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
@@ -120,7 +120,7 @@ public fun SelectableCalendar(
 public fun StaticCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
-  today: LocalDate = LocalDate.now(),
+  today: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
   calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
@@ -167,7 +167,7 @@ public fun <T : SelectionState> Calendar(
   calendarState: CalendarState<T>,
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
-  today: LocalDate = LocalDate.now(),
+  today: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },

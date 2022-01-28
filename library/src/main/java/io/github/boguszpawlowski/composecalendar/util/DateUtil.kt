@@ -1,7 +1,7 @@
 package io.github.boguszpawlowski.composecalendar.util
 
-import java.time.DayOfWeek
-import java.time.LocalDate
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDate
 
 internal fun Collection<LocalDate>.addOrRemoveIfExists(date: LocalDate) =
   if (contains(date)) {
