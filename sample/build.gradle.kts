@@ -35,5 +35,8 @@ dependencies {
   implementation(Timber.Core)
 
   debugImplementation(Debug.LeakCanary)
-  debugImplementation(Debug.FoQA)
+  debugImplementation(Hyperion.Core)
+  debugImplementation(Hyperion.Crash)
+  debugImplementation(Hyperion.GeigerCounter)
+  debugImplementation(Hyperion.Measurement)
 }

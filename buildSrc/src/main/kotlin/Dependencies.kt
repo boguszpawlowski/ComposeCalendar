@@ -30,7 +30,7 @@ object Kotlin {
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.0.3"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.1.0"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
@@ -122,11 +122,18 @@ object Compose {
 
 object Debug {
   const val LeakCanary = "com.squareup.leakcanary:leakcanary-android:2.7"
-  const val FoQA = "pl.droidsonroids.foqa:foqa:0.2.1"
+}
+
+object Hyperion {
+  private const val Version = "0.9.34"
+  const val Core = "com.willowtreeapps.hyperion:hyperion-core:$Version"
+  const val Crash = "com.willowtreeapps.hyperion:hyperion-crash:$Version"
+  const val GeigerCounter = "com.willowtreeapps.hyperion:hyperion-geiger-counter:$Version"
+  const val Measurement = "com.willowtreeapps.hyperion:hyperion-measurement:$Version"
 }
 
 object Kotest {
-  const val Version = "5.0.3"
+  const val Version = "5.1.0"
 
   const val RunnerJunit5 = "io.kotest:kotest-runner-junit5-jvm:$Version"
 
