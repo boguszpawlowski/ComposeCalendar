@@ -31,8 +31,6 @@ allprojects {
   repositories {
     mavenCentral()
     google()
-    maven("https://jitpack.io")
-    jcenter() // required by detekt
   }
 
   tasks.withType<JavaCompile> {
@@ -74,11 +72,11 @@ tasks {
     exclude("**/.gradle/**")
     reports {
       xml {
-        enabled = true
-        destination = file("build/reports/detekt/detekt-results.xml")
+        required.set(true)
+        outputLocation.set(file("build/reports/detekt/detekt-results.xml"))
       }
-      html.enabled = false
-      txt.enabled = false
+      html.required.set(false)
+      txt.required.set(false)
     }
   }
 
