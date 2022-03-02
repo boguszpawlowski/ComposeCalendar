@@ -50,7 +50,7 @@ fun MainScreen() {
         composable("components") { CustomComponentsSample() }
         composable("custom_selection") { CustomSelectionSample() }
         composable("viewmodel") { ViewModelSample() }
-        composable("week"){ WeekModeCalendar()}
+        composable("week") { WeekModeCalendar() }
       }
     }
   }

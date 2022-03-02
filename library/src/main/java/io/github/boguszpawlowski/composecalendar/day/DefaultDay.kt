@@ -2,7 +2,11 @@ package io.github.boguszpawlowski.composecalendar.day
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -59,8 +63,6 @@ public fun <T : SelectionState> DefaultDay(
     }
   }
 }
-
-
 /**
  * Default implementation for day content week mode calendar. It supports different appearance for days from
  * current and adjacent month, as well as current day and selected day
@@ -109,7 +111,6 @@ public fun <T : SelectionState> DefaultDayWeekMode(
         )
         Text(text = date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH))
       }
-
     }
   }
 }

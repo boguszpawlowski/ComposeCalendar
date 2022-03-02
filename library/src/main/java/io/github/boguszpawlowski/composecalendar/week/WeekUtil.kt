@@ -11,16 +11,13 @@ private const val DaysInAWeek = 7
 internal fun YearMonth.getWeeks(
   includeAdjacentMonths: Boolean,
   firstDayOfTheWeek: DayOfWeek,
-  today: LocalDate = LocalDate.now(),
-  splitWeek:Boolean = false,
+  today: LocalDate = LocalDate.now()
 ): List<Week> {
   val daysLength = lengthOfMonth()
 
   val starOffset = atDay(1).dayOfWeek daysUntil firstDayOfTheWeek
   val endOffset =
     DaysInAWeek - (atDay(daysLength).dayOfWeek daysUntil firstDayOfTheWeek) - 1
-
-
 
   return (1 - starOffset..daysLength + endOffset).chunked(DaysInAWeek).mapIndexed { index, days ->
     Week(
@@ -79,10 +76,10 @@ internal fun YearMonth.getDays(
       }
     }
 
-    val days = if(isFromCurrentMonth) listOf(
+    val days = if (isFromCurrentMonth) listOf(
       WeekDay(
-        date=date,
-        isFromCurrentMonth=isFromCurrentMonth,
+        date = date,
+        isFromCurrentMonth = isFromCurrentMonth,
         isCurrentDay = date.equals(today)
       )
     ) else emptyList()
@@ -92,6 +89,4 @@ internal fun YearMonth.getDays(
       days = days
     )
   }
-
 }
-

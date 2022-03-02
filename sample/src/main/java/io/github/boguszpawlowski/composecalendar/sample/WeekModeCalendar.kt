@@ -5,12 +5,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.boguszpawlowski.composecalendar.WeekCalendar
 
 @Composable
-fun WeekModeCalendar() {
-    WeekCalendar()
-}
+fun WeekModeCalendar() { WeekCalendar() }
 
 @Preview
 @Composable
-fun PreviewWeekModeCalendar() {
-    WeekModeCalendar()
-}
+fun PreviewWeekModeCalendar() { WeekModeCalendar() }

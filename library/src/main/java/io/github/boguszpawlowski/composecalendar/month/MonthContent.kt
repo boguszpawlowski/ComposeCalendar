@@ -1,8 +1,20 @@
 package io.github.boguszpawlowski.composecalendar.month
 
-import androidx.compose.foundation.layout.*
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.YearMonth
+import java.time.temporal.WeekFields
+import java.util.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -16,15 +28,9 @@ import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.DefaultDay
 import io.github.boguszpawlowski.composecalendar.header.MonthState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import io.github.boguszpawlowski.composecalendar.week.*
 import io.github.boguszpawlowski.composecalendar.week.WeekContent
 import io.github.boguszpawlowski.composecalendar.week.getDays
 import io.github.boguszpawlowski.composecalendar.week.getWeeks
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.YearMonth
-import java.time.temporal.WeekFields
-import java.util.*
 
 internal const val DaysOfWeek = 7
 
@@ -118,18 +124,16 @@ internal fun <T : SelectionState> MonthContent(
  * */
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-internal fun <T : SelectionState>  WeekModeContent(
-  modifier: Modifier=Modifier,
+internal fun <T : SelectionState> WeekModeContent(
+  modifier: Modifier = Modifier,
   selectionState: T,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
-  currentMonth:YearMonth,
-  today:LocalDate= LocalDate.now(),
+  currentMonth: YearMonth,
+  today: LocalDate = LocalDate.now(),
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
-  ){
-
-  val weeks = currentMonth.getDays(firstDayOfTheWeek=firstDayOfWeek,today=today)
-
+) {
+  val weeks = currentMonth.getDays(firstDayOfTheWeek = firstDayOfWeek, today = today)
   Column(
     modifier = modifier
   ) {
@@ -141,6 +145,4 @@ internal fun <T : SelectionState>  WeekModeContent(
       })
     }
   }
-
-
 }

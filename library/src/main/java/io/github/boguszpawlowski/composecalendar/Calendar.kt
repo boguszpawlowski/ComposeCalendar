@@ -25,7 +25,7 @@ import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import io.github.boguszpawlowski.composecalendar.week.*
+import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
 import io.github.boguszpawlowski.composecalendar.week.rotateRight
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -179,7 +179,7 @@ public fun WeekCalendar(
   Column {
     monthHeader(calendarState.monthState)
     WeekModeContent(
-      modifier=modifier,
+      modifier = modifier,
       selectionState = calendarState.selectionState,
       currentMonth = calendarState.monthState.currentMonth,
       dayContent = dayContent,
@@ -214,7 +214,6 @@ public fun <T : SelectionState> Calendar(
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
-  weekMode:Boolean = false,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
@@ -232,32 +231,30 @@ public fun <T : SelectionState> Calendar(
   ) {
     monthHeader(calendarState.monthState)
 
-      if (horizontalSwipeEnabled) {
-        MonthPager(
-          showAdjacentMonths = showAdjacentMonths,
-          monthState = calendarState.monthState,
-          selectionState = calendarState.selectionState,
-          today = today,
-          daysOfWeek = daysOfWeek,
-          dayContent = dayContent,
-          weekHeader = weekHeader,
-          monthContainer = monthContainer,
-        )
-      } else {
-        MonthContent(
-          currentMonth = calendarState.monthState.currentMonth,
-          showAdjacentMonths = showAdjacentMonths,
-          selectionState = calendarState.selectionState,
-          today = today,
-          daysOfWeek = daysOfWeek,
-          dayContent = dayContent,
-          weekHeader = weekHeader,
-          monthContainer = monthContainer,
-        )
-      }
+    if (horizontalSwipeEnabled) {
+      MonthPager(
+        showAdjacentMonths = showAdjacentMonths,
+        monthState = calendarState.monthState,
+        selectionState = calendarState.selectionState,
+        today = today,
+        daysOfWeek = daysOfWeek,
+        dayContent = dayContent,
+        weekHeader = weekHeader,
+        monthContainer = monthContainer,
+      )
+    } else {
+      MonthContent(
+        currentMonth = calendarState.monthState.currentMonth,
+        showAdjacentMonths = showAdjacentMonths,
+        selectionState = calendarState.selectionState,
+        today = today,
+        daysOfWeek = daysOfWeek,
+        dayContent = dayContent,
+        weekHeader = weekHeader,
+        monthContainer = monthContainer,
+      )
     }
-
-
+  }
 }
 
 /**
