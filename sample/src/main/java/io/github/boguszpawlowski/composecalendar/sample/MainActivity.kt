@@ -43,13 +43,14 @@ fun MainScreen() {
     ) {
       val navController = rememberNavController()
 
-      NavHost(navController = navController, startDestination = "main") {
+      NavHost(navController = navController, startDestination = "week") {
         composable("main") { MainMenu(navController = navController) }
         composable("static") { StaticCalendarSample() }
         composable("selection") { SelectableCalendarSample() }
         composable("components") { CustomComponentsSample() }
         composable("custom_selection") { CustomSelectionSample() }
         composable("viewmodel") { ViewModelSample() }
+        composable("week"){ WeekModeCalendar()}
       }
     }
   }

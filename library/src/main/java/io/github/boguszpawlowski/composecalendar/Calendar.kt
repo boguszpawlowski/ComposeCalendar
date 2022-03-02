@@ -14,16 +14,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.DefaultDay
+import io.github.boguszpawlowski.composecalendar.day.DefaultDayWeekMode
 import io.github.boguszpawlowski.composecalendar.header.DefaultMonthHeader
 import io.github.boguszpawlowski.composecalendar.header.MonthState
 import io.github.boguszpawlowski.composecalendar.month.DaysOfWeek
 import io.github.boguszpawlowski.composecalendar.month.MonthContent
 import io.github.boguszpawlowski.composecalendar.month.MonthPager
+import io.github.boguszpawlowski.composecalendar.month.WeekModeContent
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
+import io.github.boguszpawlowski.composecalendar.week.*
 import io.github.boguszpawlowski.composecalendar.week.rotateRight
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -146,6 +148,48 @@ public fun StaticCalendar(
 }
 
 /**
+ * [Calendar] implementation without any mechanism for the selection.
+ *
+ * Basic usage:
+ * ```
+ *  @Composable
+ *  fun MainScreen() {
+ *    WeekCalendar()
+ *  }
+ * ```
+ *
+ * @param modifier
+ * @param today current day, defaults to [LocalDate.now]
+ * @param calendarState state of the composable
+ * @param dayContent composable rendering the current day
+ * @param monthHeader header for showing the current month and controls for changing it
+ * @param monthContainer container composable for all the days in current month
+ */
+@Composable
+public fun WeekCalendar(
+  modifier: Modifier = Modifier,
+  today: LocalDate = LocalDate.now(),
+  calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
+  dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDayWeekMode(it) },
+  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
+  monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
+    Box { content(PaddingValues()) }
+  },
+) {
+  Column {
+    monthHeader(calendarState.monthState)
+    WeekModeContent(
+      modifier=modifier,
+      selectionState = calendarState.selectionState,
+      currentMonth = calendarState.monthState.currentMonth,
+      dayContent = dayContent,
+      today = today,
+      monthContainer = monthContainer
+    )
+  }
+}
+
+/**
  * Composable for showing a calendar. The calendar state has to be provided by the call site. If you
  * want to use built-in implementation, check out:
  * [SelectableCalendar] - calendar composable handling selection that can be changed at runtime
@@ -170,6 +214,7 @@ public fun <T : SelectionState> Calendar(
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
+  weekMode:Boolean = false,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
@@ -186,30 +231,33 @@ public fun <T : SelectionState> Calendar(
     modifier = modifier,
   ) {
     monthHeader(calendarState.monthState)
-    if (horizontalSwipeEnabled) {
-      MonthPager(
-        showAdjacentMonths = showAdjacentMonths,
-        monthState = calendarState.monthState,
-        selectionState = calendarState.selectionState,
-        today = today,
-        daysOfWeek = daysOfWeek,
-        dayContent = dayContent,
-        weekHeader = weekHeader,
-        monthContainer = monthContainer,
-      )
-    } else {
-      MonthContent(
-        currentMonth = calendarState.monthState.currentMonth,
-        showAdjacentMonths = showAdjacentMonths,
-        selectionState = calendarState.selectionState,
-        today = today,
-        daysOfWeek = daysOfWeek,
-        dayContent = dayContent,
-        weekHeader = weekHeader,
-        monthContainer = monthContainer,
-      )
+
+      if (horizontalSwipeEnabled) {
+        MonthPager(
+          showAdjacentMonths = showAdjacentMonths,
+          monthState = calendarState.monthState,
+          selectionState = calendarState.selectionState,
+          today = today,
+          daysOfWeek = daysOfWeek,
+          dayContent = dayContent,
+          weekHeader = weekHeader,
+          monthContainer = monthContainer,
+        )
+      } else {
+        MonthContent(
+          currentMonth = calendarState.monthState.currentMonth,
+          showAdjacentMonths = showAdjacentMonths,
+          selectionState = calendarState.selectionState,
+          today = today,
+          daysOfWeek = daysOfWeek,
+          dayContent = dayContent,
+          weekHeader = weekHeader,
+          monthContainer = monthContainer,
+        )
+      }
     }
-  }
+
+
 }
 
 /**

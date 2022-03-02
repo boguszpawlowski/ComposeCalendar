@@ -12,12 +12,15 @@ internal fun YearMonth.getWeeks(
   includeAdjacentMonths: Boolean,
   firstDayOfTheWeek: DayOfWeek,
   today: LocalDate = LocalDate.now(),
+  splitWeek:Boolean = false,
 ): List<Week> {
   val daysLength = lengthOfMonth()
 
   val starOffset = atDay(1).dayOfWeek daysUntil firstDayOfTheWeek
   val endOffset =
     DaysInAWeek - (atDay(daysLength).dayOfWeek daysUntil firstDayOfTheWeek) - 1
+
+
 
   return (1 - starOffset..daysLength + endOffset).chunked(DaysInAWeek).mapIndexed { index, days ->
     Week(
@@ -48,3 +51,47 @@ internal fun YearMonth.getWeeks(
     )
   }
 }
+
+/**
+ * get all days from current month
+ * */
+internal fun YearMonth.getDays(
+  firstDayOfTheWeek: DayOfWeek,
+  today: LocalDate = LocalDate.now(),
+): List<Week> {
+  val daysLength = lengthOfMonth()
+
+  val starOffset = atDay(1).dayOfWeek daysUntil firstDayOfTheWeek
+  val endOffset =
+    DaysInAWeek - (atDay(daysLength).dayOfWeek daysUntil firstDayOfTheWeek) - 1
+
+  return (1 - starOffset..daysLength + endOffset).mapIndexed { index, dayOfMonth ->
+
+    val (date, isFromCurrentMonth) = when (dayOfMonth) {
+      in 1..daysLength -> atDay(dayOfMonth) to true
+      in Int.MIN_VALUE..0 -> {
+        val previousMonth = this.minusMonths(1)
+        previousMonth.atDay(previousMonth.lengthOfMonth() + dayOfMonth) to false
+      }
+      else -> {
+        val previousMonth = this.plusMonths(1)
+        previousMonth.atDay(dayOfMonth - daysLength) to false
+      }
+    }
+
+    val days = if(isFromCurrentMonth) listOf(
+      WeekDay(
+        date=date,
+        isFromCurrentMonth=isFromCurrentMonth,
+        isCurrentDay = date.equals(today)
+      )
+    ) else emptyList()
+
+    Week(
+      isFirstWeekOfTheMonth = index == 0,
+      days = days
+    )
+  }
+
+}
+

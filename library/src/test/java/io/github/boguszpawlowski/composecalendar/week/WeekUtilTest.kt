@@ -159,6 +159,30 @@ internal class WeekUtilTest : ShouldSpec({
       weeks shouldHaveSize 5
     }
   }
+
+  context("Extracting day of month for week mode calendar"){
+    should("return days only from current month"){
+      val weeks = month.getDays(MONDAY)
+      val days = weeks.flatMap { it.days }
+
+      days.map { it.date }.forEach {
+        it.isFromMonth(month) shouldBe true
+        it.isFromMonth(previousMonth) shouldBe false
+        it.isFromMonth(nextMonth) shouldBe false
+      }
+
+    }
+    should("return all days from the month") {
+      val weeks = month.getDays(MONDAY)
+      val days = weeks.flatMap { it.days }.map { it.date }
+
+      val daysLength = month.lengthOfMonth()
+      val daysFromCurrentMonth = (1..daysLength).map { month.atDay(it) }
+
+      days shouldContainExactly daysFromCurrentMonth
+    }
+  }
+
 })
 
 private fun LocalDate.isFromMonth(yearMonth: YearMonth) =
