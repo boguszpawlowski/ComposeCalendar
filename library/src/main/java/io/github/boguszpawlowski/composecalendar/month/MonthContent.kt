@@ -2,8 +2,8 @@ package io.github.boguszpawlowski.composecalendar.month
 
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.YearMonth
 import java.time.temporal.WeekFields
+import java.time.YearMonth
 import java.util.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items

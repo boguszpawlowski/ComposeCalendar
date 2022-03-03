@@ -90,7 +90,7 @@ formatting:
   CommentSpacing:
     active: true
   ImportOrdering:
-    active: true
+    active: false
   Indentation:
     active: true
     indentSize: 2
@@ -255,7 +255,7 @@ style:
     active: true
   UnderscoresInNumericLiterals:
     active: false
-    acceptableDecimalLength: 3
+    acceptableLength: 3
   UnnecessaryAbstractClass:
     active: true
   UnnecessaryApply:
