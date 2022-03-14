@@ -19,6 +19,8 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.header.MonthState
+import io.github.boguszpawlowski.composecalendar.pager.PagerItemCount
+import io.github.boguszpawlowski.composecalendar.pager.toIndex
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.week.WeekContent
 import io.github.boguszpawlowski.composecalendar.week.getWeeks
@@ -41,7 +43,8 @@ internal fun <T : SelectionState> MonthPager(
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
 ) {
-  val pagerState = rememberPagerState(pageCount = 3, initialPage = 1, infiniteLoop = true)
+  val startIndex = PagerItemCount / 2
+  val pagerState = rememberPagerState(initialPage = startIndex)
   val coroutineScope = rememberCoroutineScope()
 
   val monthPagerState = remember {
@@ -53,14 +56,15 @@ internal fun <T : SelectionState> MonthPager(
   }
 
   HorizontalPager(
+    count = PagerItemCount,
     modifier = modifier.testTag("MonthPager"),
     state = pagerState,
     verticalAlignment = Alignment.Top,
-  ) { pageIndex ->
+  ) { index ->
     MonthContent(
       showAdjacentMonths = showAdjacentMonths,
       selectionState = selectionState,
-      currentMonth = monthPagerState.getMonthForIndex(pageIndex),
+      currentMonth = monthPagerState.getMonthForPage(index.toIndex()),
       today = today,
       daysOfWeek = daysOfWeek,
       dayContent = dayContent,
