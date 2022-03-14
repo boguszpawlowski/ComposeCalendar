@@ -11,7 +11,6 @@ class CommonAndroidPlugin : Plugin<Project> {
 
     (androidExtension as? BaseExtension)?.apply {
       compileSdkVersion(AndroidSdk.Compile)
-      buildToolsVersion(AndroidSdk.BuildTools)
       defaultConfig {
         minSdk = AndroidSdk.Min
         targetSdk = AndroidSdk.Target

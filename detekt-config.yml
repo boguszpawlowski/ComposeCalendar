@@ -279,7 +279,7 @@ style:
   UseCheckOrError:
     active: true
   UseIfInsteadOfWhen:
-    active: true
+    active: false
   UseRequire:
     active: true
   UselessCallOnNotNull:

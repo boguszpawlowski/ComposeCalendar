@@ -8,11 +8,10 @@ object AndroidSdk {
   const val Min = 21
   const val Compile = 31
   const val Target = Compile
-  const val BuildTools = "30.0.2"
 }
 
 object Kotlin {
-  const val Version = "1.5.31"
+  const val Version = "1.6.10"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
   const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.0"
@@ -30,21 +29,21 @@ object Kotlin {
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.1.0"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.1.2"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
 }
 
 object GradleVersions {
-  const val Version = "0.39.0"
+  const val Version = "0.42.0"
 
   const val PluginId = "com.github.ben-manes.versions"
   const val Plugin = "com.github.ben-manes:gradle-versions-plugin:$Version"
 }
 
 object GrGit {
-  const val Version = "4.1.0"
+  const val Version = "5.0.0"
 
   const val PluginId = "org.ajoberstar.grgit"
 }
@@ -80,7 +79,7 @@ object AndroidX {
   const val LifecycleVersion = "2.2.0"
 
   const val AppCompat = "androidx.appcompat:appcompat:1.4.1"
-  const val ComposeActivity = "androidx.activity:activity-compose:1.3.1"
+  const val ComposeActivity = "androidx.activity:activity-compose:1.4.0"
 }
 
 object Material {
@@ -103,8 +102,8 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.0.5"
-  const val AccompanistVersion = "0.17.0"
+  const val Version = "1.1.1"
+  const val AccompanistVersion = "0.23.1"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
   const val Compiler = "androidx.compose.compiler:compiler:$Version"
@@ -115,7 +114,7 @@ object Compose {
   const val UiTooling = "androidx.compose.ui:ui-tooling:$Version"
   const val MaterialIconsExtended = "androidx.compose.material:material-icons-extended:$Version"
   const val AccompanistPager = "com.google.accompanist:accompanist-pager:$AccompanistVersion"
-  const val Navigation = "androidx.navigation:navigation-compose:2.4.0-alpha10"
+  const val Navigation = "androidx.navigation:navigation-compose:2.5.0-alpha03"
   const val Testing = "androidx.compose.ui:ui-test:$Version"
   const val JunitTesting = "androidx.compose.ui:ui-test-junit4:$Version"
 }

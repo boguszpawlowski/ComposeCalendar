@@ -4,7 +4,7 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performGesture
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
 import org.junit.Rule
@@ -40,9 +40,9 @@ internal class ScrollBehaviorTest {
       )
     }
 
-    composeTestRule.onNodeWithTag("MonthPager").performGesture { swipeLeft() }
+    composeTestRule.onNodeWithTag("MonthPager").performTouchInput { swipeLeft() }
     composeTestRule.onNodeWithTag("MonthLabel", true).assertTextEquals("June")
-    composeTestRule.onNodeWithTag("MonthPager").performGesture { swipeRight() }
+    composeTestRule.onNodeWithTag("MonthPager").performTouchInput { swipeRight() }
     composeTestRule.onNodeWithTag("MonthLabel", true).assertTextEquals("May")
   }
 }

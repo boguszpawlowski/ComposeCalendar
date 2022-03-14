@@ -11,6 +11,7 @@ import androidx.compose.runtime.snapshotFlow
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import io.github.boguszpawlowski.composecalendar.header.MonthState
+import io.github.boguszpawlowski.composecalendar.pager.currentIndex
 import io.github.boguszpawlowski.composecalendar.util.dec
 import io.github.boguszpawlowski.composecalendar.util.inc
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.runningFold
 import java.time.YearMonth
 
-private const val PageCount = 3
+internal const val PageCount = 3
 
 @OptIn(ExperimentalPagerApi::class)
 @Stable
@@ -33,29 +34,29 @@ internal class MonthPagerState(
   private var monthProvider by mutableStateOf(
     MonthProvider(
       initialMonth = monthState.currentMonth,
-      currentIndex = pagerState.currentPage,
+      currentIndex = pagerState.currentIndex,
     )
   )
-
-  fun getMonthForIndex(@IntRange(from = 0, to = 2) index: Int) = monthProvider.cache[index]!!
 
   init {
     snapshotFlow { monthState.currentMonth }.onEach { month ->
       moveToMonth(month)
     }.launchIn(coroutineScope)
 
-    snapshotFlow { pagerState.currentPage }.runningFold(1 to 1) { oldIndices, newIndex ->
+    snapshotFlow { pagerState.currentIndex }.runningFold(1 to 1) { oldIndices, newIndex ->
       oldIndices.second to newIndex
     }.distinctUntilChanged().onEach { (oldIndex, newIndex) ->
       onScrolled(oldIndex, newIndex)
-      monthState.currentMonth = getMonthForIndex(newIndex)
+      monthState.currentMonth = getMonthForPage(newIndex)
     }.launchIn(coroutineScope)
   }
 
+  fun getMonthForPage(@IntRange(from = 0, to = 2) index: Int) = monthProvider.cache[index]!!
+
   @SuppressLint("Range")
   private fun moveToMonth(month: YearMonth) {
-    if (month - getMonthForIndex(pagerState.currentPage) == 0) return
-    monthProvider = MonthProvider(monthState.currentMonth, pagerState.currentPage)
+    if (month - getMonthForPage(pagerState.currentIndex) == 0) return
+    monthProvider = MonthProvider(monthState.currentMonth, pagerState.currentIndex)
   }
 
   private fun onScrolled(oldIndex: Int, newIndex: Int) {
