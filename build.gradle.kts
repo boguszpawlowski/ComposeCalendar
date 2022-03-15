@@ -33,14 +33,10 @@ allprojects {
     google()
   }
 
-  tasks.withType<JavaCompile> {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-  }
 
   tasks.withType<KotlinCompile> {
     kotlinOptions {
-      jvmTarget = "1.8"
+      jvmTarget = JavaVersion.VERSION_11.toString()
       freeCompilerArgs = freeCompilerArgs + listOf(
         "-progressive",
         "-Xopt-in=kotlin.RequiresOptIn",
