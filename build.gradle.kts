@@ -35,7 +35,7 @@ allprojects {
 
   tasks.withType<KotlinCompile> {
     kotlinOptions {
-      jvmTarget = JavaVersion.VERSION_11.toString()
+      jvmTarget = "1.8"
       freeCompilerArgs = freeCompilerArgs + listOf(
         "-progressive",
         "-Xopt-in=kotlin.RequiresOptIn",
