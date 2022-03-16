@@ -15,7 +15,7 @@ Library is available on Maven Central repository.
     implementation "io.github.boguszpawlowski.composecalendar:composecalendar:<latest-version>"
   }
 ```
-Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/composecalendar/).
+Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/).
 
 ## Supported features
 - Selection (single, multiple or a range of days)
