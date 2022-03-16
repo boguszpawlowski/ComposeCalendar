@@ -19,7 +19,7 @@ public fun DefaultWeekHeader(
     daysOfWeek.forEach { dayOfWeek ->
       Text(
         textAlign = TextAlign.Center,
-        text = dayOfWeek.getDisplayName(SHORT, Locale.ROOT),
+        text = dayOfWeek.getDisplayName(SHORT, Locale.getDefault()),
         modifier = modifier
           .weight(1f)
           .wrapContentHeight()
