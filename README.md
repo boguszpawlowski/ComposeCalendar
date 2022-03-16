@@ -8,13 +8,14 @@ Due to flexibility provided by slot API's, you can decide how the calendar will 
 [<img src="https://img.shields.io/nexus/s/https/s01.oss.sonatype.org/io.github.boguszpawlowski.composecalendar/composecalendar.svg?label=snapshot%20version"/>](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/)
 [<img src="https://androidweekly.net/issues/issue-501/badge"/>](https://androidweekly.net/issues/issue-501/)
 ## Setup
-Library and it's snapshots are available on Maven Central repository.
+Library is available on Maven Central repository.
 ```kotlin
   // module-level build.gradle
   dependecies {
     implementation "io.github.boguszpawlowski.composecalendar:composecalendar:<latest-version>"
   }
 ```
+Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/).
 
 ## Supported features
 - Selection (single, multiple or a range of days)
