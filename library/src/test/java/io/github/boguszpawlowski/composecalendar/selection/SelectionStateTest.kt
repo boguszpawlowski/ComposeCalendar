@@ -2,6 +2,7 @@
 
 package io.github.boguszpawlowski.composecalendar.selection
 
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -133,6 +134,20 @@ internal class SelectionStateTest : ShouldSpec({
 
       state.selection.first() shouldBe yesterday
       state.selection.endOrNull() shouldBe null
+    }
+  }
+
+  context("Selection State interface default values") {
+    val myInterfaceWithNoMethods = object : SelectionState {}
+
+    should("Default isDateSelected to false") {
+      myInterfaceWithNoMethods.isDateSelected(today) shouldBe false
+    }
+
+    should("Have a default implementation that doesn't throw an exception for onDateSelected") {
+      shouldNotThrowAny {
+        myInterfaceWithNoMethods.onDateSelected(today)
+      }
     }
   }
 })

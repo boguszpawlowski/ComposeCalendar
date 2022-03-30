@@ -11,8 +11,8 @@ import java.time.LocalDate
 
 @Stable
 public interface SelectionState {
-  public fun isDateSelected(date: LocalDate): Boolean
-  public fun onDateSelected(date: LocalDate)
+  public fun isDateSelected(date: LocalDate): Boolean = false
+  public fun onDateSelected(date: LocalDate) { }
 }
 
 /**
