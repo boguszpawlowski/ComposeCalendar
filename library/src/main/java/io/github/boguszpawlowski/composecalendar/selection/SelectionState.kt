@@ -54,11 +54,11 @@ public class DynamicSelectionState(
   }
 
   internal companion object {
-    @Suppress("FunctionName") // Factory function
+    @Suppress("FunctionName", "UNCHECKED_CAST") // Factory function
     fun Saver(onSelectionChanged: (List<LocalDate>) -> Unit): Saver<DynamicSelectionState, Any> =
       listSaver(
-        save = {
-          listOf(it.selectionMode, it.selection.map { it.toString() })
+        save = { raw ->
+          listOf(raw.selectionMode, raw.selection.map { it.toString() })
         },
         restore = { restored ->
           DynamicSelectionState(

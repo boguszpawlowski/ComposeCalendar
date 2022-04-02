@@ -26,6 +26,7 @@ object Kotlin {
   const val JvmPluginId = "jvm"
 
   const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
+  const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.3.2"
 }
 
 object Android {
