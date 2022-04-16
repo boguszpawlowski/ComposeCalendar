@@ -73,10 +73,10 @@ public data class YearMonth private constructor(
     public fun parse(value: String): YearMonth =
       java.time.YearMonth.parse(value).toKotlinYearMonth()
 
-    public fun now(): LocalDate {
+    public fun now(): YearMonth {
       val today = LocalDate.now()
 
-      return /*of(today.year, today.month.value)*/ today
+      return of(today.year, today.month.value)
     }
   }
 }
