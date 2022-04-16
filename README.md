@@ -13,6 +13,9 @@ Library is available on Maven Central repository.
   // module-level build.gradle
   dependecies {
     implementation "io.github.boguszpawlowski.composecalendar:composecalendar:<latest-version>"
+    
+    // separate artifact with utilities for working with kotlinx-datetime
+    implementation "io.github.boguszpawlowski.composecalendar:kotlinx-datetime:<latest-version>"
   }
 ```
 Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/).
@@ -182,9 +185,13 @@ Selection modes are represented by `SelectionMode` enum, with following values:
 - `Multiple` - a list of dates can be selected.
 - `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
 
+## KotlinX DateTime
+As the core of the library is built on `java.time` library, on Android it requires to use [core libary desugaring](https://developer.android.com/studio/write/java8-support) to be able to access it's API.
+As a result library may be unavailable to some project built around different date libraries. Although the library wont be migrating from `java.time`, as it's the best suited for this project, there is a separate `kotlinx-datetime` artifact for those who need to use the library from a codebase based on it. It doesn't consist of a separate version of `ComposeCalendar` features, but offers a small bunch of utilities, that will enable you to create your own wrapper, as briefly presented in `KotlinDateTimeSample`.
+
 ## License
 
-    Copyright 2021 Bogusz Pawłowski
+    Copyright 2022 Bogusz Pawłowski
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

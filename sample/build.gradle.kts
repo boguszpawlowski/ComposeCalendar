@@ -17,6 +17,7 @@ android {
 
 dependencies {
   implementation(project(autoModules.library))
+  implementation(project(autoModules.kotlinxDatetime))
 
   implementation(Kotlin.StdLib)
 
