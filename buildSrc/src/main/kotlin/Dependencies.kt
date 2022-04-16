@@ -12,12 +12,11 @@ object AndroidSdk {
 
 object Kotlin {
   const val Version = "1.6.10"
+  const val CompatibilityPluginVersion = "0.8.0"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
   const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.0"
 
-  const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
-  const val Reflect = "org.jetbrains.kotlin:kotlin-reflect:$Version"
   const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
 
   const val AndroidPluginId = "android"
@@ -25,7 +24,12 @@ object Kotlin {
   const val SafeArgsPluginId = "androidx.navigation.safeargs.kotlin"
   const val JvmPluginId = "jvm"
 
+  const val CompatibilityPlugin = "org.jetbrains.kotlinx.binary-compatibility-validator"
+  const val CompatibilityPluginId = "binary-compatibility-validator"
+
   const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
+  const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
+  const val Reflect = "org.jetbrains.kotlin:kotlin-reflect:$Version"
   const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.3.2"
 }
 

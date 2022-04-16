@@ -1,0 +1,146 @@
+public final class com/boguszpawlowski/composecalendar/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class io/github/boguszpawlowski/composecalendar/CalendarKt {
+	public static final fun Calendar (Lio/github/boguszpawlowski/composecalendar/CalendarState;Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZZLkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun SelectableCalendar (Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZZLio/github/boguszpawlowski/composecalendar/CalendarState;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun StaticCalendar (Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZZLio/github/boguszpawlowski/composecalendar/CalendarState;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun rememberCalendarState (Ljava/time/YearMonth;Lio/github/boguszpawlowski/composecalendar/header/MonthState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/CalendarState;
+	public static final fun rememberSelectableCalendarState (Ljava/time/YearMonth;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;Lkotlin/jvm/functions/Function1;Lio/github/boguszpawlowski/composecalendar/header/MonthState;Lio/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/CalendarState;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/CalendarState {
+	public fun <init> (Lio/github/boguszpawlowski/composecalendar/header/MonthState;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;)V
+	public final fun getMonthState ()Lio/github/boguszpawlowski/composecalendar/header/MonthState;
+	public final fun getSelectionState ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/ComposableSingletons$CalendarKt {
+	public static final field INSTANCE Lio/github/boguszpawlowski/composecalendar/ComposableSingletons$CalendarKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function4;
+	public static field lambda-10 Lkotlin/jvm/functions/Function4;
+	public static field lambda-11 Lkotlin/jvm/functions/Function4;
+	public static field lambda-12 Lkotlin/jvm/functions/Function3;
+	public static field lambda-2 Lkotlin/jvm/functions/Function4;
+	public static field lambda-3 Lkotlin/jvm/functions/Function4;
+	public static field lambda-4 Lkotlin/jvm/functions/Function3;
+	public static field lambda-5 Lkotlin/jvm/functions/Function4;
+	public static field lambda-6 Lkotlin/jvm/functions/Function4;
+	public static field lambda-7 Lkotlin/jvm/functions/Function4;
+	public static field lambda-8 Lkotlin/jvm/functions/Function3;
+	public static field lambda-9 Lkotlin/jvm/functions/Function4;
+	public fun <init> ()V
+	public final fun getLambda-1$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-10$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-11$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-12$library_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-2$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-3$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-4$library_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-5$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-6$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-7$library_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda-8$library_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-9$library_release ()Lkotlin/jvm/functions/Function4;
+}
+
+public abstract interface class io/github/boguszpawlowski/composecalendar/day/Day {
+	public abstract fun getDate ()Ljava/time/LocalDate;
+	public abstract fun isCurrentDay ()Z
+	public abstract fun isFromCurrentMonth ()Z
+}
+
+public final class io/github/boguszpawlowski/composecalendar/day/DayState : io/github/boguszpawlowski/composecalendar/day/Day {
+	public fun <init> (Lio/github/boguszpawlowski/composecalendar/day/Day;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;)V
+	public final fun component2 ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;
+	public final fun copy (Lio/github/boguszpawlowski/composecalendar/day/Day;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;)Lio/github/boguszpawlowski/composecalendar/day/DayState;
+	public static synthetic fun copy$default (Lio/github/boguszpawlowski/composecalendar/day/DayState;Lio/github/boguszpawlowski/composecalendar/day/Day;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;ILjava/lang/Object;)Lio/github/boguszpawlowski/composecalendar/day/DayState;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getDate ()Ljava/time/LocalDate;
+	public final fun getSelectionState ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;
+	public fun hashCode ()I
+	public fun isCurrentDay ()Z
+	public fun isFromCurrentMonth ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/day/DefaultDayKt {
+	public static final fun DefaultDay-t6yy7ic (Lio/github/boguszpawlowski/composecalendar/day/DayState;Landroidx/compose/ui/Modifier;JJLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/boguszpawlowski/composecalendar/header/ComposableSingletons$DefaultMonthHeaderKt {
+	public static final field INSTANCE Lio/github/boguszpawlowski/composecalendar/header/ComposableSingletons$DefaultMonthHeaderKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$library_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$library_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/header/DefaultMonthHeaderKt {
+	public static final fun DefaultMonthHeader (Lio/github/boguszpawlowski/composecalendar/header/MonthState;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract interface class io/github/boguszpawlowski/composecalendar/header/MonthState {
+	public static final field Companion Lio/github/boguszpawlowski/composecalendar/header/MonthState$Companion;
+	public abstract fun getCurrentMonth ()Ljava/time/YearMonth;
+	public abstract fun setCurrentMonth (Ljava/time/YearMonth;)V
+}
+
+public final class io/github/boguszpawlowski/composecalendar/header/MonthState$Companion {
+	public final fun Saver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/header/MonthStateKt {
+	public static final fun MonthState (Ljava/time/YearMonth;)Lio/github/boguszpawlowski/composecalendar/header/MonthState;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSelectionHandler {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/boguszpawlowski/composecalendar/selection/DynamicSelectionHandler;
+	public final fun calculateNewSelection (Ljava/time/LocalDate;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;)Ljava/util/List;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState : io/github/boguszpawlowski/composecalendar/selection/SelectionState {
+	public fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;)V
+	public final fun getSelection ()Ljava/util/List;
+	public final fun getSelectionMode ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+	public fun isDateSelected (Ljava/time/LocalDate;)Z
+	public fun onDateSelected (Ljava/time/LocalDate;)V
+	public final fun setSelection (Ljava/util/List;)V
+	public final fun setSelectionMode (Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;)V
+}
+
+public final class io/github/boguszpawlowski/composecalendar/selection/EmptySelectionState : io/github/boguszpawlowski/composecalendar/selection/SelectionState {
+	public static final field INSTANCE Lio/github/boguszpawlowski/composecalendar/selection/EmptySelectionState;
+	public fun isDateSelected (Ljava/time/LocalDate;)Z
+	public fun onDateSelected (Ljava/time/LocalDate;)V
+}
+
+public final class io/github/boguszpawlowski/composecalendar/selection/SelectionMode : java/lang/Enum {
+	public static final field Multiple Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+	public static final field None Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+	public static final field Period Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+	public static final field Single Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+	public static fun values ()[Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+}
+
+public abstract interface class io/github/boguszpawlowski/composecalendar/selection/SelectionState {
+	public abstract fun isDateSelected (Ljava/time/LocalDate;)Z
+	public abstract fun onDateSelected (Ljava/time/LocalDate;)V
+}
+
+public final class io/github/boguszpawlowski/composecalendar/selection/SelectionState$DefaultImpls {
+	public static fun isDateSelected (Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;Ljava/time/LocalDate;)Z
+	public static fun onDateSelected (Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;Ljava/time/LocalDate;)V
+}
+
+public final class io/github/boguszpawlowski/composecalendar/week/DefaultWeekHeaderKt {
+	public static final fun DefaultWeekHeader (Ljava/util/List;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+
