@@ -77,8 +77,7 @@ jobs:
           java-version: '15'
 
       - name: Check API compatibility
-        run: ./gradlew checkApi --stacktrace
-        continue-on-error: true
+        run: ./gradlew apiCheck
 
       - name: Stop Gradle
         run: ./gradlew --stop
