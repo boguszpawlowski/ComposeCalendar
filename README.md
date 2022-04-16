@@ -187,7 +187,7 @@ Selection modes are represented by `SelectionMode` enum, with following values:
 
 ## KotlinX DateTime
 As the core of the library is built on `java.time` library, on Android it requires to use [core libary desugaring](https://developer.android.com/studio/write/java8-support) to be able to access it's API.
-As a result library may be unavailable to some project built around different date libraries. Although the library wont be migrating from `java.time`, as it's the best suited for this project, there is a separate `kotlinx-datetime` artifact for those who need to use the library from a codebase based on it. It doesn't consist of a separate version of `ComposeCalendar` features, but offers a small bunch of utilities, that will enable you to create your own wrapper, as briefly presented in `KotlinDateTimeSample`.
+As a result it's features may be unavailable to some project built around different date-time libraries (e.g. kotlinx-datetime). Although the project wont be migrating from `java.time`, as it's the best suited for it, there is a separate `kotlinx-datetime` artifact for those who need to use the library from a codebase based on it. It doesn't consist of a separate version of `ComposeCalendar` features, but offers a small bunch of utilities, that will enable you to create your own wrapper, as briefly presented in `KotlinDateTimeSample`. If the provided functionality, doesn't match your use-case, please submit an issue.
 
 ## License
 
