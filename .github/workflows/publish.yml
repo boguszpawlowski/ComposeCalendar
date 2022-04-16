@@ -35,7 +35,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SONATYPE_NEXUS_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SONATYPE_NEXUS_SIGNING_KEY_PASSWORD }}
-        run: ./gradlew :library:publish --no-daemon --no-parallel --stacktrace
+        run: ./gradlew publish --no-daemon --no-parallel --stacktrace
 
       - name: Publish release
         env:

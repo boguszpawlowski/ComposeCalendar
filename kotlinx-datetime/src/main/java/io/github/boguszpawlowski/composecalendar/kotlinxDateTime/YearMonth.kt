@@ -7,27 +7,48 @@ import java.time.Month.DECEMBER
 import java.time.Month.JANUARY
 import java.time.temporal.ChronoField.YEAR
 
+/**
+ * Kotlin implementation of `YearMonth` available in java.time, since `KotlinxDateTime` doesn't
+ * include a substitute for it: https://github.com/Kotlin/kotlinx-datetime/issues/168
+ *
+ * For construction use factory methods 'of' provided in companion object
+ */
 @Suppress("DataClassPrivateConstructor")
 public data class YearMonth private constructor(
   val year: Int,
   val month: Month,
 ) {
 
+  /**
+   * Increment by one month
+   */
   public operator fun inc(): YearMonth = when (month.value) {
     in 1..11 -> YearMonth(year, month)
     else -> YearMonth(year + 1, JANUARY)
   }
 
+  /**
+   * Decrement by one month
+   */
   public operator fun dec(): YearMonth = when (month.value) {
     in 2..12 -> YearMonth(year, month)
     else -> YearMonth(year - 1, DECEMBER)
   }
 
+  /**
+   * Add specified amount of months to current date
+   */
   public fun plus(value: Int, unit: DateTimeUnit.MonthBased): YearMonth =
     plus(value.toLong(), unit)
 
+  /**
+   * Subtract specified amount of months from current date
+   */
   public fun minus(value: Int, unit: DateTimeUnit.MonthBased): YearMonth =
     plus(-value.toLong(), unit)
+
+  public fun minus(value: Long, unit: DateTimeUnit.MonthBased): YearMonth =
+    plus(-value, unit)
 
   public fun plus(value: Long, unit: DateTimeUnit.MonthBased): YearMonth {
     val monthsToAdd = value * unit.months

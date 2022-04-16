@@ -50,6 +50,7 @@ fun MainScreen() {
         composable("components") { CustomComponentsSample() }
         composable("custom_selection") { CustomSelectionSample() }
         composable("viewmodel") { ViewModelSample() }
+        composable("kotlinx_datetime") { KotlinXDateTimeSample() }
       }
     }
   }
@@ -84,6 +85,11 @@ fun MainMenu(navController: NavController) {
 
     Button(onClick = { navController.navigate("viewmodel") }) {
       Text(text = "ViewModel")
+    }
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Button(onClick = { navController.navigate("kotlinx_datetime") }) {
+      Text(text = "Kotlinx DateTime")
     }
   }
 }
