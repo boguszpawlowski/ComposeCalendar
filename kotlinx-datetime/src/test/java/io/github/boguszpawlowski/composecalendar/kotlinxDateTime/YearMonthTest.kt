@@ -88,5 +88,41 @@ internal class YearMonthTest : ShouldSpec({
         result shouldBe expectedYear
       }
     }
+    context("when decrementing") {
+      should("subtract one month") {
+        val yearMonth = YearMonth.of(2002, 11)
+        val expectedResult = YearMonth.of(2002, 10)
+
+        val result = yearMonth.dec()
+
+        result shouldBe expectedResult
+      }
+      should("overflow the year when january") {
+        val yearMonth = YearMonth.of(2002, 1)
+        val expectedResult = YearMonth.of(2001, 12)
+
+        val result = yearMonth.dec()
+
+        result shouldBe expectedResult
+      }
+    }
+    context("when incrementing") {
+      should("add one month") {
+        val yearMonth = YearMonth.of(2002, 11)
+        val expectedResult = YearMonth.of(2002, 12)
+
+        val result = yearMonth.inc()
+
+        result shouldBe expectedResult
+      }
+      should("overflow the year when december") {
+        val yearMonth = YearMonth.of(2002, 12)
+        val expectedResult = YearMonth.of(2003, 1)
+
+        val result = yearMonth.inc()
+
+        result shouldBe expectedResult
+      }
+    }
   }
 })

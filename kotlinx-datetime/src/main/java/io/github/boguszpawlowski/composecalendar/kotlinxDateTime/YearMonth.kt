@@ -3,8 +3,6 @@ package io.github.boguszpawlowski.composecalendar.kotlinxDateTime
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
-import java.time.Month.DECEMBER
-import java.time.Month.JANUARY
 import java.time.temporal.ChronoField.YEAR
 
 /**
@@ -22,18 +20,12 @@ public data class YearMonth private constructor(
   /**
    * Increment by one month
    */
-  public operator fun inc(): YearMonth = when (month.value) {
-    in 1..11 -> YearMonth(year, month)
-    else -> YearMonth(year + 1, JANUARY)
-  }
+  public operator fun inc(): YearMonth = plus(1, DateTimeUnit.MONTH)
 
   /**
    * Decrement by one month
    */
-  public operator fun dec(): YearMonth = when (month.value) {
-    in 2..12 -> YearMonth(year, month)
-    else -> YearMonth(year - 1, DECEMBER)
-  }
+  public operator fun dec(): YearMonth = minus(1, DateTimeUnit.MONTH)
 
   /**
    * Add specified amount of months to current date
