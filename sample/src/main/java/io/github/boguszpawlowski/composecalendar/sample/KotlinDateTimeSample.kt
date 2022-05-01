@@ -76,7 +76,7 @@ fun DateTimeCalendar(
 ) {
   SelectableCalendar(
     calendarState = rememberSelectableCalendarState(
-      onSelectionChanged = { selection -> onSelectionChanged(selection.map { it.toKotlinLocalDate() }) },
+      confirmSelectionChange = { selection -> onSelectionChanged(selection.map { it.toKotlinLocalDate() }); true },
       initialSelectionMode = Multiple,
     ),
     today = today.toJavaLocalDate(),

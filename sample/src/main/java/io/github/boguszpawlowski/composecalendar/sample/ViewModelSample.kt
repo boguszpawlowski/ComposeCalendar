@@ -53,7 +53,7 @@ fun ViewModelSample() {
   val selectedPrice by viewModel.selectedRecipesPriceFlow.collectAsState(0)
 
   val state = rememberSelectableCalendarState(
-    onSelectionChanged = viewModel::onSelectionChanged,
+    confirmSelectionChange = { viewModel.onSelectionChanged(it); true },
     initialSelectionMode = Period,
   )
 
