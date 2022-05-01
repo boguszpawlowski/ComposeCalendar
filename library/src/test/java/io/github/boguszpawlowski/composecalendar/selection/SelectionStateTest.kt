@@ -2,6 +2,7 @@
 
 package io.github.boguszpawlowski.composecalendar.selection
 
+import io.github.boguszpawlowski.composecalendar.selection.SelectionMode.Multiple
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.collections.shouldContainExactly
@@ -17,7 +18,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.None") {
     should("not change selection after new value arrives") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.None)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.None)
 
       state.onDateSelected(LocalDate.now())
 
@@ -25,7 +26,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("be able to change if mode has been changed") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.None)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.None)
 
       state.selectionMode = SelectionMode.Single
       state.onDateSelected(today)
@@ -36,7 +37,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.Single") {
     should("change state to single after day is selected") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Single)
 
       state.onDateSelected(today)
 
@@ -44,7 +45,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("change state to none when same day is selected") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Single)
 
       state.onDateSelected(today)
       state.onDateSelected(today)
@@ -53,7 +54,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("change to other day when selected") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Single)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -62,7 +63,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("not be mutable after selection mode is changed to None") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Single)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Single)
 
       state.selectionMode = SelectionMode.None
       state.onDateSelected(today)
@@ -73,7 +74,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.Multiple") {
     should("allow for multiple days selected") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Multiple)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Multiple)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -85,7 +86,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("switch selection off once day is selected second time") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Multiple)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Multiple)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -97,7 +98,7 @@ internal class SelectionStateTest : ShouldSpec({
 
   context("Selection state with SelectionMode.Period") {
     should("allow for period of days selected") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -107,7 +108,7 @@ internal class SelectionStateTest : ShouldSpec({
     }
 
     should("switch selection off once start day is selected") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -116,7 +117,7 @@ internal class SelectionStateTest : ShouldSpec({
       state.selection shouldBe emptyList()
     }
     should("change end date once the date selected is between start and the end") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(yesterday)
       state.onDateSelected(tomorrow)
@@ -126,7 +127,7 @@ internal class SelectionStateTest : ShouldSpec({
       state.selection.last() shouldBe today
     }
     should("change start day once day before start is selected") {
-      val state = DynamicSelectionState({}, emptyList(), SelectionMode.Period)
+      val state = DynamicSelectionState({ true }, emptyList(), SelectionMode.Period)
 
       state.onDateSelected(today)
       state.onDateSelected(tomorrow)
@@ -148,6 +149,29 @@ internal class SelectionStateTest : ShouldSpec({
       shouldNotThrowAny {
         myInterfaceWithNoMethods.onDateSelected(today)
       }
+    }
+  }
+  context("Selection State with confirm state change callback") {
+    var nextVetoResult = false
+    val initialSelection = LocalDate.of(1999, 10, 12)
+    val newSelection = initialSelection.plusDays(1)
+
+    val selectionState = DynamicSelectionState(
+      confirmSelectionChange = { nextVetoResult },
+      selection = listOf(initialSelection),
+      selectionMode = Multiple,
+    )
+    should("Not change the selection when change is vetoed") {
+      selectionState.onDateSelected(newSelection)
+
+      selectionState.selection shouldBe listOf(initialSelection)
+    }
+    should("Change the selection when change is not vetoed") {
+      nextVetoResult = true
+
+      selectionState.onDateSelected(newSelection)
+
+      selectionState.selection shouldBe listOf(initialSelection, newSelection)
     }
   }
 })

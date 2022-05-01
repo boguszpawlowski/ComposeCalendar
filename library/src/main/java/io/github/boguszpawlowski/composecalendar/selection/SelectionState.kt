@@ -21,7 +21,7 @@ public interface SelectionState {
  */
 @Stable
 public class DynamicSelectionState(
-  private val onSelectionChanged: (List<LocalDate>) -> Unit,
+  private val confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   selection: List<LocalDate>,
   selectionMode: SelectionMode,
 ) : SelectionState {
@@ -32,9 +32,8 @@ public class DynamicSelectionState(
   public var selection: List<LocalDate>
     get() = _selection
     set(value) {
-      if (value != selection) {
+      if (value != selection && confirmSelectionChange(value)) {
         _selection = value
-        onSelectionChanged(value)
       }
     }
 
@@ -55,14 +54,16 @@ public class DynamicSelectionState(
 
   internal companion object {
     @Suppress("FunctionName", "UNCHECKED_CAST") // Factory function
-    fun Saver(onSelectionChanged: (List<LocalDate>) -> Unit): Saver<DynamicSelectionState, Any> =
+    fun Saver(
+      confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean,
+    ): Saver<DynamicSelectionState, Any> =
       listSaver(
         save = { raw ->
           listOf(raw.selectionMode, raw.selection.map { it.toString() })
         },
         restore = { restored ->
           DynamicSelectionState(
-            onSelectionChanged = onSelectionChanged,
+            confirmSelectionChange = confirmSelectionChange,
             selectionMode = restored[0] as SelectionMode,
             selection = (restored[1] as? List<String>)?.map { LocalDate.parse(it) }.orEmpty(),
           )

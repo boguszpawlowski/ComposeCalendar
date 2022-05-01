@@ -218,23 +218,21 @@ public fun <T : SelectionState> Calendar(
  * @param initialMonth initially rendered month
  * @param initialSelection initial selection of the composable
  * @param initialSelectionMode initial mode of the selection
- * @param onSelectionChanged callback for side effects triggered when the selection state changes
+ * @param confirmSelectionChange callback for optional side-effects handling and vetoing the state change
  */
 @Composable
 public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
-  onSelectionChanged: (List<LocalDate>) -> Unit = {},
+  confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialMonth)
   },
   selectionState: DynamicSelectionState = rememberSaveable(
-    saver = DynamicSelectionState.Saver(
-      onSelectionChanged
-    )
+    saver = DynamicSelectionState.Saver(confirmSelectionChange),
   ) {
-    DynamicSelectionState(onSelectionChanged, initialSelection, initialSelectionMode)
+    DynamicSelectionState(confirmSelectionChange, initialSelection, initialSelectionMode)
   },
 ): CalendarState<DynamicSelectionState> = remember { CalendarState(monthState, selectionState) }
 
