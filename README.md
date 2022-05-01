@@ -184,6 +184,7 @@ Selection modes are represented by `SelectionMode` enum, with following values:
 - `Single` - only single day is selectable - selection will contain one or zero days selected.
 - `Multiple` - a list of dates can be selected.
 - `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
+This implementation of SelectionState also allows for handling side-effects and vetoing the state change via `confirmSelectionChange` callback.
 
 ## KotlinX DateTime
 As the core of the library is built on `java.time` library, on Android it requires to use [core libary desugaring](https://developer.android.com/studio/write/java8-support) to be able to access it's API.

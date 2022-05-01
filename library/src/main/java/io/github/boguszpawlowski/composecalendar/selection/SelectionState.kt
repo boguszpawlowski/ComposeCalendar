@@ -18,6 +18,7 @@ public interface SelectionState {
 /**
  * Class that enables for dynamically changing selection modes in the runtime. Depending on the mode, selection changes differently.
  * Mode can be varied by setting desired [SelectionMode] in the [selectionMode] mutable property.
+ * @param confirmSelectionChange return false from this callback to veto the selection change
  */
 @Stable
 public class DynamicSelectionState(
