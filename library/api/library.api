@@ -107,6 +107,7 @@ public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSe
 
 public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState : io/github/boguszpawlowski/composecalendar/selection/SelectionState {
 	public fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;)V
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getSelection ()Ljava/util/List;
 	public final fun getSelectionMode ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
 	public fun isDateSelected (Ljava/time/LocalDate;)Z
