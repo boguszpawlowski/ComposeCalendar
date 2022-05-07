@@ -14,10 +14,6 @@ android {
       freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
     }
   }
-  packagingOptions {
-    exclude("META-INF/AL2.0")
-    exclude("META-INF/LGPL2.1")
-  }
 }
 
 dependencies {
@@ -33,9 +29,6 @@ dependencies {
   testImplementation(Kotest.Assertions)
   testImplementation(Kotest.RunnerJunit5)
   testImplementation(Kotlin.Reflect)
-
-  debugImplementation(ComposeTest.Manifest)
-  androidTestImplementation(ComposeTest.Core)
 }
 
 plugins.withId("com.vanniktech.maven.publish") {

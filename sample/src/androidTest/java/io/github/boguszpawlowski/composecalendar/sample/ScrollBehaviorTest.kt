@@ -1,4 +1,4 @@
-package io.github.boguszpawlowski.composecalendar
+package io.github.boguszpawlowski.composecalendar.sample
 
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -7,6 +7,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
+import io.github.boguszpawlowski.composecalendar.StaticCalendar
+import io.github.boguszpawlowski.composecalendar.rememberCalendarState
 import org.junit.Rule
 import org.junit.Test
 import java.time.YearMonth

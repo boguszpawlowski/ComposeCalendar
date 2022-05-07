@@ -25,6 +25,7 @@ buildscript {
     classpath(DetektLib.Plugin)
     classpath(GradleVersions.Plugin)
     classpath(MavenPublish.GradlePlugin)
+    classpath(Firebase.GoogleServicesPlugin)
   }
 }
 
