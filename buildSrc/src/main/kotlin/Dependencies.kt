@@ -148,3 +148,8 @@ object ComposeTest {
   const val Core = "androidx.compose.ui:ui-test-junit4:${Compose.Version}"
   const val Manifest = "androidx.compose.ui:ui-test-manifest:${Compose.Version}"
 }
+
+object Firebase {
+  const val Bom = "com.google.firebase:firebase-bom:30.0.0"
+  const val GoogleServicesPlugin = "com.google.gms:google-services:4.3.10"
+}

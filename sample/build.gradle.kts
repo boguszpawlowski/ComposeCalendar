@@ -12,6 +12,12 @@ android {
   defaultConfig {
     versionCode = commitsCount
     versionName = "0.0.1"
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  packagingOptions {
+    exclude("META-INF/AL2.0")
+    exclude("META-INF/LGPL2.1")
   }
 }
 
@@ -40,4 +46,7 @@ dependencies {
   debugImplementation(Hyperion.Crash)
   debugImplementation(Hyperion.GeigerCounter)
   debugImplementation(Hyperion.Measurement)
+  debugImplementation(ComposeTest.Manifest)
+
+  androidTestImplementation(ComposeTest.Core)
 }
