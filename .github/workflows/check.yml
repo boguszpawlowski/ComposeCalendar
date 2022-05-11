@@ -55,7 +55,8 @@ jobs:
       - name: Stop Gradle
         run: ./gradlew --stop
   ui-tests:
-    name: Run UI tests with Firebase Test Lab
+    name: FTL UI Tests
+    needs: [unit-tests, detekt]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
