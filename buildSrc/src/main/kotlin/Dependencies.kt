@@ -6,16 +6,16 @@ object MavenPublish {
 
 object AndroidSdk {
   const val Min = 21
-  const val Compile = 31
+  const val Compile = 32
   const val Target = Compile
 }
 
 object Kotlin {
-  const val Version = "1.6.10"
-  const val CompatibilityPluginVersion = "0.8.0"
+  const val Version = "1.7.10"
+  const val CompatibilityPluginVersion = "0.11.0"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
-  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.0"
+  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:$Version"
 
   const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
 
@@ -30,11 +30,11 @@ object Kotlin {
   const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
   const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
   const val Reflect = "org.jetbrains.kotlin:kotlin-reflect:$Version"
-  const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.3.2"
+  const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.1.2"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.2.1"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
@@ -73,12 +73,6 @@ object Shipkit {
   }
 }
 
-object Coroutines {
-  const val Version = "1.4.3"
-
-  const val Core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$Version"
-}
-
 object AndroidX {
   const val Version = "1.0.0"
   const val LifecycleVersion = "2.2.0"
@@ -92,7 +86,7 @@ object Material {
 }
 
 object DetektLib {
-  const val Version = "1.19.0"
+  const val Version = "1.21.0"
 
   const val PluginId = "io.gitlab.arturbosch.detekt"
   const val Plugin = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$Version"
@@ -107,8 +101,8 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.1.1"
-  const val AccompanistVersion = "0.23.1"
+  const val Version = "1.2.0"
+  const val AccompanistVersion = "0.25.0"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
   const val Compiler = "androidx.compose.compiler:compiler:$Version"
@@ -137,7 +131,7 @@ object Hyperion {
 }
 
 object Kotest {
-  const val Version = "5.1.0"
+  const val Version = "5.4.1"
 
   const val RunnerJunit5 = "io.kotest:kotest-runner-junit5-jvm:$Version"
 
