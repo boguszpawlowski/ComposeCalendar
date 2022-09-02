@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
@@ -32,6 +33,7 @@ public fun DefaultMonthHeader(
   Row(
     modifier = modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.Center,
+    verticalAlignment = Alignment.CenterVertically,
   ) {
     IconButton(
       modifier = Modifier.testTag("Decrement"),
