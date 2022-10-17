@@ -26,7 +26,7 @@ class CommonAndroidPlugin : Plugin<Project> {
       buildFeatures.compose = true
 
       composeOptions {
-        kotlinCompilerExtensionVersion = Compose.Version
+        kotlinCompilerExtensionVersion = Compose.CompilerVersion
       }
 
       target.dependencies.add("coreLibraryDesugaring", Kotlin.DesugarJdkLibs)

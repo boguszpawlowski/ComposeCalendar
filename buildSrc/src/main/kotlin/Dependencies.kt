@@ -1,7 +1,7 @@
 @file:Suppress("ObjectPropertyNaming", "ClassNaming", "UnderscoresInNumericLiterals")
 object MavenPublish {
   const val PluginId = "com.vanniktech.maven.publish"
-  const val GradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.18.0"
+  const val GradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.19.0"
 }
 
 object AndroidSdk {
@@ -11,7 +11,7 @@ object AndroidSdk {
 }
 
 object Kotlin {
-  const val Version = "1.7.10"
+  const val Version = "1.7.20"
   const val CompatibilityPluginVersion = "0.11.0"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
@@ -78,7 +78,7 @@ object AndroidX {
   const val LifecycleVersion = "2.2.0"
 
   const val AppCompat = "androidx.appcompat:appcompat:1.4.1"
-  const val ComposeActivity = "androidx.activity:activity-compose:1.4.0"
+  const val ComposeActivity = "androidx.activity:activity-compose:1.5.1"
 }
 
 object Material {
@@ -101,11 +101,12 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.2.0"
-  const val AccompanistVersion = "0.25.0"
+  const val Version = "1.2.1"
+  const val CompilerVersion = "1.3.2"
+  const val AccompanistVersion = "0.25.1"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
-  const val Compiler = "androidx.compose.compiler:compiler:$Version"
+  const val Compiler = "androidx.compose.compiler:compiler:$CompilerVersion"
   const val Foundation = "androidx.compose.foundation:foundation:$Version"
   const val FoundationLayout = "androidx.compose.foundation:foundation-layout:$Version"
   const val Material = "androidx.compose.material:material:$Version"
@@ -131,7 +132,7 @@ object Hyperion {
 }
 
 object Kotest {
-  const val Version = "5.4.1"
+  const val Version = "5.4.2"
 
   const val RunnerJunit5 = "io.kotest:kotest-runner-junit5-jvm:$Version"
 
