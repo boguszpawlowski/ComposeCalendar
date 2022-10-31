@@ -23,7 +23,7 @@ Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.s
 ## Compose versions
 | Compose Version 	 | Compose Calendar Version 	 |
 |-------------------|----------------------------|
-| 1.0.0           	 | 0.3.0                    	 |
+| 1.0.1           	 | 0.3.0                    	 |
 | 1.1.0           	 | 0.5.1                    	 |
 | 1.2.0           	 | 0.6.0                    	 |
 | 1.2.1           	 | 1.0.0                    	 |
