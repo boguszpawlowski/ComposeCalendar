@@ -2,16 +2,15 @@ package io.github.boguszpawlowski.composecalendar.month
 
 import android.annotation.SuppressLint
 import androidx.annotation.IntRange
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
 import io.github.boguszpawlowski.composecalendar.header.MonthState
-import io.github.boguszpawlowski.composecalendar.pager.currentIndex
+import io.github.boguszpawlowski.composecalendar.pager.toIndex
 import io.github.boguszpawlowski.composecalendar.util.dec
 import io.github.boguszpawlowski.composecalendar.util.inc
 import kotlinx.coroutines.CoroutineScope
@@ -23,18 +22,17 @@ import java.time.YearMonth
 
 internal const val PageCount = 3
 
-@OptIn(ExperimentalPagerApi::class)
 @Stable
-internal class MonthPagerState(
+internal class MonthListState(
   coroutineScope: CoroutineScope,
   private val monthState: MonthState,
-  private val pagerState: PagerState,
+  private val listState: LazyListState,
 ) {
 
   private var monthProvider by mutableStateOf(
     MonthProvider(
       initialMonth = monthState.currentMonth,
-      currentIndex = pagerState.currentIndex,
+      currentIndex = listState.currentIndex,
     )
   )
 
@@ -43,7 +41,7 @@ internal class MonthPagerState(
       moveToMonth(month)
     }.launchIn(coroutineScope)
 
-    snapshotFlow { pagerState.currentIndex }.runningFold(1 to 1) { oldIndices, newIndex ->
+    snapshotFlow { listState.currentIndex }.runningFold(1 to 1) { oldIndices, newIndex ->
       oldIndices.second to newIndex
     }.distinctUntilChanged().onEach { (oldIndex, newIndex) ->
       onScrolled(oldIndex, newIndex)
@@ -55,8 +53,8 @@ internal class MonthPagerState(
 
   @SuppressLint("Range")
   private fun moveToMonth(month: YearMonth) {
-    if (month - getMonthForPage(pagerState.currentIndex) == 0) return
-    monthProvider = MonthProvider(monthState.currentMonth, pagerState.currentIndex)
+    if (month - getMonthForPage(listState.currentIndex) == 0) return
+    monthProvider = MonthProvider(monthState.currentMonth, listState.currentIndex)
   }
 
   private fun onScrolled(oldIndex: Int, newIndex: Int) {
@@ -72,10 +70,10 @@ internal class MonthPagerState(
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
 
-    other as MonthPagerState
+    other as MonthListState
 
     if (monthState != other.monthState) return false
-    if (pagerState != other.pagerState) return false
+    if (listState != other.listState) return false
     if (monthProvider != other.monthProvider) return false
 
     return true
@@ -83,7 +81,7 @@ internal class MonthPagerState(
 
   override fun hashCode(): Int {
     var result = monthState.hashCode()
-    result = 31 * result + pagerState.hashCode()
+    result = 31 * result + listState.hashCode()
     result = 31 * result + monthProvider.hashCode()
     return result
   }
@@ -117,3 +115,5 @@ internal class MonthProvider(initialMonth: YearMonth, currentIndex: Int) {
 
 private operator fun YearMonth.minus(other: YearMonth) =
   year - other.year + month.value - other.month.value
+
+private val LazyListState.currentIndex get() = firstVisibleItemIndex.toIndex()

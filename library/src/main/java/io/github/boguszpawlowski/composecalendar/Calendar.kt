@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -199,6 +200,7 @@ public fun <T : SelectionState> Calendar(
       )
     } else {
       MonthContent(
+        modifier = Modifier.fillMaxWidth(),
         currentMonth = calendarState.monthState.currentMonth,
         showAdjacentMonths = showAdjacentMonths,
         selectionState = calendarState.selectionState,

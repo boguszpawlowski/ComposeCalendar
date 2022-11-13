@@ -23,10 +23,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import io.github.boguszpawlowski.composecalendar.BuildConfig
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    if (BuildConfig.DEBUG) {
+      Timber.plant(DebugTree())
+    }
     setContent {
       MainScreen()
     }
