@@ -178,7 +178,7 @@ public fun <T : SelectionState> Calendar(
     Box { content(PaddingValues()) }
   },
 ) {
-
+  val initialMonth = remember { calendarState.monthState.currentMonth }
   val daysOfWeek = remember(firstDayOfWeek) {
     DayOfWeek.values().rotateRight(DaysOfWeek - firstDayOfWeek.ordinal)
   }
@@ -189,6 +189,7 @@ public fun <T : SelectionState> Calendar(
     monthHeader(calendarState.monthState)
     if (horizontalSwipeEnabled) {
       MonthPager(
+        initialMonth = initialMonth,
         showAdjacentMonths = showAdjacentMonths,
         monthState = calendarState.monthState,
         selectionState = calendarState.selectionState,
