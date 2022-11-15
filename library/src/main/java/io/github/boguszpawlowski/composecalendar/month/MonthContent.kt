@@ -22,8 +22,6 @@ import dev.chrisbanes.snapper.SnapperLayoutInfo
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.header.MonthState
-import io.github.boguszpawlowski.composecalendar.pager.PagerItemCount
-import io.github.boguszpawlowski.composecalendar.pager.toIndex
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.week.WeekContent
 import io.github.boguszpawlowski.composecalendar.week.getWeeks
@@ -35,8 +33,9 @@ internal const val DaysOfWeek = 7
 
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
-@Suppress("LongMethod")
+@Suppress("LongMethod", "LongParameterList")
 internal fun <T : SelectionState> MonthPager(
+  initialMonth: YearMonth,
   showAdjacentMonths: Boolean,
   selectionState: T,
   monthState: MonthState,
@@ -47,11 +46,10 @@ internal fun <T : SelectionState> MonthPager(
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
 ) {
-  val startIndex = PagerItemCount / 2
   val coroutineScope = rememberCoroutineScope()
 
   val listState = rememberLazyListState(
-    initialFirstVisibleItemIndex = startIndex,
+    initialFirstVisibleItemIndex = StartIndex,
   )
   val flingBehavior = rememberSnapperFlingBehavior(
     lazyListState = listState,
@@ -64,6 +62,7 @@ internal fun <T : SelectionState> MonthPager(
   val monthListState = remember {
     MonthListState(
       coroutineScope = coroutineScope,
+      initialMonth = initialMonth,
       monthState = monthState,
       listState = listState,
     )
@@ -80,7 +79,7 @@ internal fun <T : SelectionState> MonthPager(
         modifier = Modifier.fillParentMaxWidth(),
         showAdjacentMonths = showAdjacentMonths,
         selectionState = selectionState,
-        currentMonth = monthListState.getMonthForPage(index.toIndex()),
+        currentMonth = monthListState.getMonthForPage(index),
         today = today,
         daysOfWeek = daysOfWeek,
         dayContent = dayContent,
