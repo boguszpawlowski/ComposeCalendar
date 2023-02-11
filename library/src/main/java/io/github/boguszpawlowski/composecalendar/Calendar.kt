@@ -51,7 +51,7 @@ public class CalendarState<T : SelectionState>(
  * ```
  *  @Composable
  *  fun MainScreen() {
- *    SelectableCalenda()
+ *    SelectableCalendar()
  *  }
  * ```
  *
@@ -67,7 +67,7 @@ public class CalendarState<T : SelectionState>(
  * @param monthContainer container composable for all the days in current month
  */
 @Composable
-public fun SelectableCalenda(
+public fun SelectableCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   today: LocalDate = LocalDate.now(),
