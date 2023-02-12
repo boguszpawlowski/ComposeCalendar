@@ -17,6 +17,7 @@ import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.DefaultDay
 import io.github.boguszpawlowski.composecalendar.header.DefaultMonthHeader
 import io.github.boguszpawlowski.composecalendar.header.MonthState
+import io.github.boguszpawlowski.composecalendar.header.WeekState
 import io.github.boguszpawlowski.composecalendar.month.DaysOfWeek
 import io.github.boguszpawlowski.composecalendar.month.MonthContent
 import io.github.boguszpawlowski.composecalendar.month.MonthPager
@@ -36,11 +37,13 @@ import java.util.Locale
  * State of the calendar composable
  *
  * @property monthState currently showed month
+ * @property weekState showed first day of currently week
  * @property selectionState handler for the calendar's selection
  */
 @Stable
 public class CalendarState<T : SelectionState>(
   public val monthState: MonthState,
+  public val weekState: WeekState,
   public val selectionState: T,
 )
 
@@ -226,18 +229,26 @@ public fun <T : SelectionState> Calendar(
 @Composable
 public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
+  initialFirstDayOfWeek: LocalDate = LocalDate.now().minusDays(LocalDate.now().dayOfWeek.value.toLong() - 1),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialMonth)
   },
+  weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
+    WeekState(initialFirstDayOfWeek = initialFirstDayOfWeek)
+  },
   selectionState: DynamicSelectionState = rememberSaveable(
     saver = DynamicSelectionState.Saver(confirmSelectionChange),
   ) {
     DynamicSelectionState(confirmSelectionChange, initialSelection, initialSelectionMode)
   },
-): CalendarState<DynamicSelectionState> = remember { CalendarState(monthState, selectionState) }
+): CalendarState<DynamicSelectionState> = remember { CalendarState(
+  monthState,
+  weekState,
+  selectionState
+) }
 
 /**
  * Helper function for providing a [CalendarState] implementation without a selection mechanism.
@@ -250,4 +261,12 @@ public fun rememberCalendarState(
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(initialMonth = initialMonth)
   },
-): CalendarState<EmptySelectionState> = remember { CalendarState(monthState, EmptySelectionState) }
+  initialFirstDayOfWeek: LocalDate = LocalDate.now().minusDays(LocalDate.now().dayOfWeek.value.toLong() - 1),
+  weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
+    WeekState(initialFirstDayOfWeek = initialFirstDayOfWeek)
+  },
+): CalendarState<EmptySelectionState> = remember { CalendarState(
+  monthState,
+  weekState,
+  EmptySelectionState
+) }
