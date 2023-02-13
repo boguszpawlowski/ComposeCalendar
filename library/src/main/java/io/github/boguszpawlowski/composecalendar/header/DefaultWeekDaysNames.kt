@@ -1,4 +1,4 @@
-package io.github.boguszpawlowski.composecalendar.week
+package io.github.boguszpawlowski.composecalendar.header
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -11,7 +11,7 @@ import java.time.format.TextStyle.SHORT
 import java.util.Locale
 
 @Composable
-public fun DefaultWeekHeader(
+public fun DefaultWeekDaysNames(
   daysOfWeek: List<DayOfWeek>,
   modifier: Modifier = Modifier,
 ) {

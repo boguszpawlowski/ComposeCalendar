@@ -3,11 +3,14 @@ package io.github.boguszpawlowski.composecalendar.sample
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -24,7 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
 import io.github.boguszpawlowski.composecalendar.day.NonSelectableDayState
-import io.github.boguszpawlowski.composecalendar.header.MonthState
+import io.github.boguszpawlowski.composecalendar.header.DefaultWeekDaysNames
+import io.github.boguszpawlowski.composecalendar.rememberCalendarState
+import io.github.boguszpawlowski.composecalendar.states.CurrentState
 import java.time.DayOfWeek
 import java.time.DayOfWeek.SUNDAY
 import java.time.format.TextStyle.NARROW
@@ -32,15 +37,24 @@ import java.util.Locale
 
 @Composable
 fun CustomComponentsSample() {
-  StaticCalendar(
-    modifier = Modifier.animateContentSize(),
-    showAdjacentMonths = false,
-    firstDayOfWeek = SUNDAY,
-    monthContainer = { MonthContainer(it) },
-    dayContent = { DayContent(dayState = it) },
-    weekHeader = { WeekHeader(daysOfWeek = it) },
-    monthHeader = { MonthHeader(monthState = it) },
-  )
+  val scrollState = rememberScrollState()
+  Column(modifier = Modifier
+    .fillMaxWidth()
+    .verticalScroll(scrollState)
+  ) {
+    val calendarState = rememberCalendarState()
+    ModeControls(modeState = calendarState.modeState)
+    StaticCalendar(
+      modifier = Modifier.animateContentSize(),
+      showAdjacentMonths = false,
+      firstDayOfWeek = SUNDAY,
+      monthContainer = { MonthContainer(it) },
+      dayContent = { DayContent(dayState = it) },
+      weekDaysNames = { DefaultWeekDaysNames(daysOfWeek = it) },
+      monthHeader = { MonthHeader(currentState = it) },
+      calendarState = calendarState
+    )
+  }
 }
 
 @Composable
@@ -69,11 +83,11 @@ private fun WeekHeader(daysOfWeek: List<DayOfWeek>) {
 }
 
 @Composable
-private fun MonthHeader(monthState: MonthState) {
+private fun MonthHeader(currentState: CurrentState) {
   Row {
-    Text(monthState.currentMonth.year.toString(), style = MaterialTheme.typography.h3)
-    Text(monthState.currentMonth.month.name, style = MaterialTheme.typography.h3)
-    IconButton(onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }) {
+    Text(currentState.day.year.toString(), style = MaterialTheme.typography.h3)
+    Text(currentState.day.month.name, style = MaterialTheme.typography.h3)
+    IconButton(onClick = { currentState.day = currentState.day.plusMonths(1) }) {
       Image(
         imageVector = Icons.Default.Star,
         colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),

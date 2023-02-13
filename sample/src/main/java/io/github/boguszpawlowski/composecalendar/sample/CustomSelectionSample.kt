@@ -1,5 +1,11 @@
 package io.github.boguszpawlowski.composecalendar.sample
 
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,17 +13,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import io.github.boguszpawlowski.composecalendar.Calendar
 import io.github.boguszpawlowski.composecalendar.CalendarState
-import io.github.boguszpawlowski.composecalendar.header.MonthState
-import io.github.boguszpawlowski.composecalendar.header.WeekState
+import io.github.boguszpawlowski.composecalendar.states.ModeState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
+import io.github.boguszpawlowski.composecalendar.states.CurrentState
 import java.time.LocalDate
 import java.time.YearMonth
 
 @Composable
 fun CustomSelectionSample() {
-  Calendar(calendarState = rememberMonthSelectionState())
+  val scrollState = rememberScrollState()
+  Column(modifier = Modifier
+    .fillMaxWidth()
+    .verticalScroll(scrollState)
+  ) {
+    val calendarState = rememberMonthSelectionState()
+    ModeControls(modeState = calendarState.modeState)
+    Calendar(calendarState = calendarState)
+  }
 }
 
 private class MonthSelectionState(
@@ -47,19 +62,23 @@ private class MonthSelectionState(
 
 @Composable
 private fun rememberMonthSelectionState(
-  initialMonth: YearMonth = YearMonth.now(),
-  initialFirstDayOfWeek: LocalDate = LocalDate.now().minusDays(LocalDate.now().dayOfWeek.value.toLong() - 1),
+  initialDay: LocalDate = LocalDate.now(),
   initialSelection: YearMonth? = null,
-  monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
-  },
-  weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
-    WeekState(initialFirstDayOfWeek = initialFirstDayOfWeek)
+  initialMonthMode: Boolean = true,
+  currentState: CurrentState = rememberSaveable(saver = CurrentState.Saver()) {
+    CurrentState(initialDay = initialDay)
   },
   selectionState: MonthSelectionState = rememberSaveable(saver = MonthSelectionState.Saver()) {
     MonthSelectionState(initialSelection = initialSelection)
-  }
-): CalendarState<MonthSelectionState> = remember { CalendarState(monthState, weekState, selectionState) }
+  },
+  modeState: ModeState = rememberSaveable(saver = ModeState.Saver()) {
+    ModeState(initialMonthMode = initialMonthMode)
+  },
+): CalendarState<MonthSelectionState> = remember { CalendarState(
+  currentState = currentState,
+  modeState = modeState,
+  selectionState = selectionState,
+) }
 
 private val LocalDate.yearMonth: YearMonth
   get() = YearMonth.of(year, month)

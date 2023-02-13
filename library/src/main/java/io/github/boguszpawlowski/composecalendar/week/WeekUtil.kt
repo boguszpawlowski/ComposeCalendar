@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.week
 
+import io.github.boguszpawlowski.composecalendar.day.Day
 import io.github.boguszpawlowski.composecalendar.day.WeekDay
 import io.github.boguszpawlowski.composecalendar.util.daysUntil
 import java.time.DayOfWeek
@@ -47,4 +48,22 @@ internal fun YearMonth.getWeeks(
       }
     )
   }
+}
+
+internal fun LocalDate.getWeek(
+  today: LocalDate = LocalDate.now(),
+): Week {
+  val firstDayOfWeek = minusDays(this.dayOfWeek.value.toLong() - 1)
+  val dayList = mutableListOf<Day>()
+  for(i in 0L..6L) {
+    dayList.add(WeekDay(
+      date = firstDayOfWeek.plusDays(i),
+      isCurrentDay = firstDayOfWeek.plusDays(i) == today,
+      isFromCurrentMonth = true
+    ))
+  }
+  return Week(
+    isFirstWeekOfTheMonth = false,
+    days = dayList
+  )
 }

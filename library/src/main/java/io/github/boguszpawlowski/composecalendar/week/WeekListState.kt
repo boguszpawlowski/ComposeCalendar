@@ -1,4 +1,4 @@
-package io.github.boguszpawlowski.composecalendar.month
+package io.github.boguszpawlowski.composecalendar.week
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
@@ -11,40 +11,37 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
 @Stable
-internal class MonthListState(
+internal class WeekListState(
   private val coroutineScope: CoroutineScope,
-  private val initialMonth: YearMonth,
+  private val initialDay: LocalDate,
   private val currentState: CurrentState,
-  private val listState: LazyListState
+  private val listState: LazyListState,
 ) {
 
-  private val currentlyVisibleMonth by derivedStateOf {
-    getMonthForPage(listState.firstVisibleItemIndex)
+  private val currentlyVisibleWeek by derivedStateOf {
+    getWeekForPage(listState.firstVisibleItemIndex)
   }
 
   init {
-    snapshotFlow { YearMonth.of(
-      currentState.day.year,
-      currentState.day.month
-    ) }.onEach { month ->
-      moveToMonth(month)
+    snapshotFlow { currentState.day }.onEach { day ->
+      moveToWeek(day)
     }.launchIn(coroutineScope)
 
-    snapshotFlow { currentlyVisibleMonth }.onEach { newMonth ->
-      currentState.day = newMonth.atDay(1)
+    snapshotFlow { currentlyVisibleWeek }.onEach { newDay ->
+      currentState.day = newDay
     }.launchIn(coroutineScope)
   }
 
-  fun getMonthForPage(index: Int): YearMonth =
-    initialMonth.plusMonths((index - StartIndex).toLong())
+  fun getWeekForPage(index: Int): LocalDate =
+    initialDay.plusDays((index - StartIndex).toLong() * 7)
 
-  private fun moveToMonth(month: YearMonth) {
-    if (month == currentlyVisibleMonth) return
-    initialMonth.minus(month).let { offset ->
+  private fun moveToWeek(day: LocalDate) {
+    if (day.toEpochDay() >= currentlyVisibleWeek.toEpochDay() &&
+      day.toEpochDay() < currentlyVisibleWeek.toEpochDay() + 7) return
+    initialDay.minus(day).let { offset ->
       coroutineScope.launch {
         listState.animateScrollToItem((StartIndex - offset).toInt())
       }
@@ -55,7 +52,7 @@ internal class MonthListState(
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
 
-    other as MonthListState
+    other as WeekListState
 
     if (currentState != other.currentState) return false
     if (listState != other.listState) return false
@@ -65,13 +62,13 @@ internal class MonthListState(
 
   override fun hashCode(): Int {
     var result = currentState.hashCode()
-    result = 31 * result + listState.hashCode()
+    result = 7 * result + listState.hashCode()
     return result
   }
 }
 
-private operator fun YearMonth.minus(other: YearMonth) =
-  ChronoUnit.MONTHS.between(other, this)
+private operator fun LocalDate.minus(other: LocalDate) =
+  ChronoUnit.WEEKS.between(other, this)
 
 internal const val PagerItemCount = 20_000
 internal const val StartIndex = PagerItemCount / 2

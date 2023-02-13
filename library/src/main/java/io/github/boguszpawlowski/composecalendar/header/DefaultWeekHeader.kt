@@ -22,12 +22,8 @@ import io.github.boguszpawlowski.composecalendar.states.CurrentState
 import java.time.format.TextStyle.FULL
 import java.util.Locale
 
-/**
- * Default implementation of month header, shows current month and year, as well as
- * 2 arrows for changing currently showed month
- */
 @Composable
-public fun DefaultMonthHeader(
+public fun DefaultWeekHeader(
   currentState: CurrentState,
   modifier: Modifier = Modifier,
 ) {
@@ -38,7 +34,7 @@ public fun DefaultMonthHeader(
   ) {
     IconButton(
       modifier = Modifier.testTag("Decrement"),
-      onClick = { currentState.day = currentState.day.minusMonths(1L) }
+      onClick = { currentState.day = currentState.day.minusDays(7L) }
     ) {
       Image(
         imageVector = Icons.Default.KeyboardArrowLeft,
@@ -58,7 +54,7 @@ public fun DefaultMonthHeader(
     Text(text = currentState.day.year.toString(), style = MaterialTheme.typography.h4)
     IconButton(
       modifier = Modifier.testTag("Increment"),
-      onClick = { currentState.day = currentState.day.plusMonths(1L) }
+      onClick = { currentState.day = currentState.day.plusDays(7L) }
     ) {
       Image(
         imageVector = Icons.Default.KeyboardArrowRight,

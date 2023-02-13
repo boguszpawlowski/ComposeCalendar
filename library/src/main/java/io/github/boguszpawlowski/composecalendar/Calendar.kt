@@ -2,6 +2,9 @@
 
 package io.github.boguszpawlowski.composecalendar
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -16,8 +19,7 @@ import androidx.compose.ui.Modifier
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.DefaultDay
 import io.github.boguszpawlowski.composecalendar.header.DefaultMonthHeader
-import io.github.boguszpawlowski.composecalendar.header.MonthState
-import io.github.boguszpawlowski.composecalendar.header.WeekState
+import io.github.boguszpawlowski.composecalendar.header.DefaultWeekHeader
 import io.github.boguszpawlowski.composecalendar.month.DaysOfWeek
 import io.github.boguszpawlowski.composecalendar.month.MonthContent
 import io.github.boguszpawlowski.composecalendar.month.MonthPager
@@ -25,8 +27,12 @@ import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
-import io.github.boguszpawlowski.composecalendar.week.rotateRight
+import io.github.boguszpawlowski.composecalendar.header.DefaultWeekDaysNames
+import io.github.boguszpawlowski.composecalendar.week.WeekContent
+import io.github.boguszpawlowski.composecalendar.header.rotateRight
+import io.github.boguszpawlowski.composecalendar.states.CurrentState
+import io.github.boguszpawlowski.composecalendar.states.ModeState
+import io.github.boguszpawlowski.composecalendar.week.WeekPager
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -42,8 +48,8 @@ import java.util.Locale
  */
 @Stable
 public class CalendarState<T : SelectionState>(
-  public val monthState: MonthState,
-  public val weekState: WeekState,
+  public val currentState: CurrentState,
+  public val modeState: ModeState,
   public val selectionState: T,
 )
 
@@ -78,9 +84,13 @@ public fun SelectableCalendar(
   horizontalSwipeEnabled: Boolean = true,
   calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
   dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
-  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  monthHeader: @Composable ColumnScope.(CurrentState) -> Unit = { DefaultMonthHeader(it) },
+  weekHeader: @Composable ColumnScope.(CurrentState) -> Unit = { DefaultWeekHeader(it) },
+  weekDaysNames: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekDaysNames(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
+    Box { content(PaddingValues()) }
+  },
+  weekContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
 ) {
@@ -94,7 +104,9 @@ public fun SelectableCalendar(
     dayContent = dayContent,
     monthHeader = monthHeader,
     weekHeader = weekHeader,
-    monthContainer = monthContainer
+    weekDaysNames = weekDaysNames,
+    monthContainer = monthContainer,
+    weekContainer = weekContainer,
   )
 }
 
@@ -129,9 +141,13 @@ public fun StaticCalendar(
   horizontalSwipeEnabled: Boolean = true,
   calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
-  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  monthHeader: @Composable ColumnScope.(CurrentState) -> Unit = { DefaultMonthHeader(it) },
+  weekHeader: @Composable ColumnScope.(CurrentState) -> Unit = { DefaultWeekHeader(it) },
+  weekDaysNames: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekDaysNames(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
+    Box { content(PaddingValues()) }
+  },
+  weekContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
 ) {
@@ -145,7 +161,9 @@ public fun StaticCalendar(
     dayContent = dayContent,
     monthHeader = monthHeader,
     weekHeader = weekHeader,
-    monthContainer = monthContainer
+    weekDaysNames = weekDaysNames,
+    monthContainer = monthContainer,
+    weekContainer = weekContainer,
   )
 }
 
@@ -175,45 +193,83 @@ public fun <T : SelectionState> Calendar(
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
-  monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  monthHeader: @Composable ColumnScope.(CurrentState) -> Unit = { DefaultMonthHeader(it) },
+  weekHeader: @Composable ColumnScope.(CurrentState) -> Unit = { DefaultWeekHeader(it) },
+  weekDaysNames: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekDaysNames(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
+  weekContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
+    Box { content(PaddingValues()) }
+  },
 ) {
-  val initialMonth = remember { calendarState.monthState.currentMonth }
+
   val daysOfWeek = remember(firstDayOfWeek) {
     DayOfWeek.values().rotateRight(DaysOfWeek - firstDayOfWeek.ordinal)
   }
 
   Column(
-    modifier = modifier,
+    modifier = modifier
+      .animateContentSize(),
   ) {
-    monthHeader(calendarState.monthState)
-    if (horizontalSwipeEnabled) {
-      MonthPager(
-        initialMonth = initialMonth,
-        showAdjacentMonths = showAdjacentMonths,
-        monthState = calendarState.monthState,
-        selectionState = calendarState.selectionState,
-        today = today,
-        daysOfWeek = daysOfWeek,
-        dayContent = dayContent,
-        weekHeader = weekHeader,
-        monthContainer = monthContainer,
-      )
+    if (!calendarState.modeState.isMonthMode) {
+      weekHeader(calendarState.currentState)
+      if (horizontalSwipeEnabled) {
+        val initialDay = remember { calendarState.currentState.day }
+        WeekPager(
+          initialDay = initialDay,
+          selectionState = calendarState.selectionState,
+          currentState = calendarState.currentState,
+          daysOfWeek = daysOfWeek,
+          today = today,
+          dayContent = dayContent,
+          weekDaysNames = weekDaysNames,
+          weekContainer = weekContainer,
+        )
+      } else {
+        WeekContent(
+          selectionState = calendarState.selectionState,
+          currentDay = calendarState.currentState.day,
+          daysOfWeek = daysOfWeek,
+          today = today,
+          dayContent = dayContent,
+          weekDaysNames = weekDaysNames,
+          weekContainer = weekContainer,
+        )
+      }
     } else {
-      MonthContent(
-        modifier = Modifier.fillMaxWidth(),
-        currentMonth = calendarState.monthState.currentMonth,
-        showAdjacentMonths = showAdjacentMonths,
-        selectionState = calendarState.selectionState,
-        today = today,
-        daysOfWeek = daysOfWeek,
-        dayContent = dayContent,
-        weekHeader = weekHeader,
-        monthContainer = monthContainer,
-      )
+      monthHeader(calendarState.currentState)
+      if (horizontalSwipeEnabled) {
+        MonthPager(
+          initialMonth = YearMonth.of(
+            calendarState.currentState.day.year,
+            calendarState.currentState.day.month
+          ),
+          showAdjacentMonths = showAdjacentMonths,
+          currentState = calendarState.currentState,
+          selectionState = calendarState.selectionState,
+          today = today,
+          daysOfWeek = daysOfWeek,
+          dayContent = dayContent,
+          weekDaysNames = weekDaysNames,
+          monthContainer = monthContainer,
+        )
+      } else {
+        MonthContent(
+          modifier = Modifier.fillMaxWidth(),
+          currentMonth = YearMonth.of(
+            calendarState.currentState.day.year,
+            calendarState.currentState.day.month
+          ),
+          showAdjacentMonths = showAdjacentMonths,
+          selectionState = calendarState.selectionState,
+          today = today,
+          daysOfWeek = daysOfWeek,
+          dayContent = dayContent,
+          weekDaysNames = weekDaysNames,
+          monthContainer = monthContainer,
+        )
+      }
     }
   }
 }
@@ -228,16 +284,16 @@ public fun <T : SelectionState> Calendar(
  */
 @Composable
 public fun rememberSelectableCalendarState(
-  initialMonth: YearMonth = YearMonth.now(),
-  initialFirstDayOfWeek: LocalDate = LocalDate.now().minusDays(LocalDate.now().dayOfWeek.value.toLong() - 1),
+  initialDay: LocalDate = LocalDate.now(),
+  initialMonthMode: Boolean = true,
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
-  monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
-  },
-  weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
-    WeekState(initialFirstDayOfWeek = initialFirstDayOfWeek)
+  modeState: ModeState = rememberSaveable(saver = ModeState.Saver()) {
+  ModeState(initialMonthMode = initialMonthMode)
+},
+  currentState: CurrentState = rememberSaveable(saver = CurrentState.Saver()) {
+    CurrentState(initialDay)
   },
   selectionState: DynamicSelectionState = rememberSaveable(
     saver = DynamicSelectionState.Saver(confirmSelectionChange),
@@ -245,9 +301,9 @@ public fun rememberSelectableCalendarState(
     DynamicSelectionState(confirmSelectionChange, initialSelection, initialSelectionMode)
   },
 ): CalendarState<DynamicSelectionState> = remember { CalendarState(
-  monthState,
-  weekState,
-  selectionState
+  currentState = currentState,
+  selectionState = selectionState,
+  modeState = modeState
 ) }
 
 /**
@@ -257,16 +313,16 @@ public fun rememberSelectableCalendarState(
  */
 @Composable
 public fun rememberCalendarState(
-  initialMonth: YearMonth = YearMonth.now(),
-  monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
+  initialDay: LocalDate = LocalDate.now(),
+  initialMonthMode: Boolean = true,
+  modeState: ModeState = rememberSaveable(saver = ModeState.Saver()) {
+    ModeState(initialMonthMode = initialMonthMode)
   },
-  initialFirstDayOfWeek: LocalDate = LocalDate.now().minusDays(LocalDate.now().dayOfWeek.value.toLong() - 1),
-  weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
-    WeekState(initialFirstDayOfWeek = initialFirstDayOfWeek)
+  currentState: CurrentState = rememberSaveable(saver = CurrentState.Saver()) {
+    CurrentState(initialDay)
   },
 ): CalendarState<EmptySelectionState> = remember { CalendarState(
-  monthState,
-  weekState,
-  EmptySelectionState
+  currentState = currentState,
+  modeState = modeState,
+  selectionState = EmptySelectionState,
 ) }

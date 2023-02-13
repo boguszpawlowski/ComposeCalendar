@@ -21,9 +21,9 @@ import dev.chrisbanes.snapper.SnapperFlingBehaviorDefaults
 import dev.chrisbanes.snapper.SnapperLayoutInfo
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import io.github.boguszpawlowski.composecalendar.day.DayState
-import io.github.boguszpawlowski.composecalendar.header.MonthState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import io.github.boguszpawlowski.composecalendar.week.WeekContent
+import io.github.boguszpawlowski.composecalendar.states.CurrentState
+import io.github.boguszpawlowski.composecalendar.week.WeekContainer
 import io.github.boguszpawlowski.composecalendar.week.getWeeks
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -38,12 +38,12 @@ internal fun <T : SelectionState> MonthPager(
   initialMonth: YearMonth,
   showAdjacentMonths: Boolean,
   selectionState: T,
-  monthState: MonthState,
+  currentState: CurrentState,
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
+  weekDaysNames: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
 ) {
   val coroutineScope = rememberCoroutineScope()
@@ -63,8 +63,8 @@ internal fun <T : SelectionState> MonthPager(
     MonthListState(
       coroutineScope = coroutineScope,
       initialMonth = initialMonth,
-      monthState = monthState,
-      listState = listState,
+      currentState = currentState,
+      listState = listState
     )
   }
 
@@ -83,7 +83,7 @@ internal fun <T : SelectionState> MonthPager(
         today = today,
         daysOfWeek = daysOfWeek,
         dayContent = dayContent,
-        weekHeader = weekHeader,
+        weekDaysNames = weekDaysNames,
         monthContainer = monthContainer
       )
     }
@@ -99,14 +99,14 @@ internal fun <T : SelectionState> MonthContent(
   today: LocalDate,
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
+  weekDaysNames: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
 ) {
   Column {
     Box(
       modifier = modifier
         .wrapContentHeight(),
-      content = { weekHeader(daysOfWeek) },
+      content = { weekDaysNames(daysOfWeek) },
     )
 
     monthContainer { paddingValues ->
@@ -119,7 +119,7 @@ internal fun <T : SelectionState> MonthContent(
           firstDayOfTheWeek = daysOfWeek.first(),
           today = today,
         ).forEach { week ->
-          WeekContent(
+          WeekContainer(
             week = week,
             selectionState = selectionState,
             dayContent = dayContent,
