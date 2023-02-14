@@ -19,10 +19,24 @@ import io.github.boguszpawlowski.composecalendar.states.ModeState
 import io.github.boguszpawlowski.composecalendar.rememberSelectableCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
+import io.github.boguszpawlowski.composecalendar.states.DayEvent
+import io.github.boguszpawlowski.composecalendar.states.EventState
+import java.time.LocalDate
+
+internal val dayEventList = listOf(
+  DayEvent(LocalDate.now(), 3),
+  DayEvent(LocalDate.now().minusDays(3L), 3),
+  DayEvent(LocalDate.now().minusDays(5L), 4),
+  DayEvent(LocalDate.now().minusDays(7L), 5),
+  DayEvent(LocalDate.now().plusDays(3L), 3),
+  DayEvent(LocalDate.now().plusDays(7L), 3),
+)
 
 @Composable
 fun SelectableCalendarSample() {
-  val calendarState = rememberSelectableCalendarState()
+  val calendarState = rememberSelectableCalendarState(
+    eventState = EventState( dayEventList )
+  )
 
   Column(
     Modifier.verticalScroll(rememberScrollState())

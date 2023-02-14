@@ -29,6 +29,8 @@ import io.github.boguszpawlowski.composecalendar.header.DefaultWeekDaysNames
 import io.github.boguszpawlowski.composecalendar.week.WeekContent
 import io.github.boguszpawlowski.composecalendar.header.rotateRight
 import io.github.boguszpawlowski.composecalendar.states.CurrentState
+import io.github.boguszpawlowski.composecalendar.states.DayEvent
+import io.github.boguszpawlowski.composecalendar.states.EventState
 import io.github.boguszpawlowski.composecalendar.states.ModeState
 import io.github.boguszpawlowski.composecalendar.week.WeekPager
 import java.time.DayOfWeek
@@ -49,6 +51,7 @@ public class CalendarState<T : SelectionState>(
   public val currentState: CurrentState,
   public val modeState: ModeState,
   public val selectionState: T,
+  public val eventState: EventState,
 )
 
 /**
@@ -218,6 +221,7 @@ public fun <T : SelectionState> Calendar(
           initialDay = initialDay,
           selectionState = calendarState.selectionState,
           currentState = calendarState.currentState,
+          eventState = calendarState.eventState,
           daysOfWeek = daysOfWeek,
           today = today,
           dayContent = dayContent,
@@ -228,6 +232,7 @@ public fun <T : SelectionState> Calendar(
         WeekContent(
           selectionState = calendarState.selectionState,
           currentDay = calendarState.currentState.day,
+          eventState = calendarState.eventState,
           daysOfWeek = daysOfWeek,
           today = today,
           dayContent = dayContent,
@@ -246,6 +251,7 @@ public fun <T : SelectionState> Calendar(
           showAdjacentMonths = showAdjacentMonths,
           currentState = calendarState.currentState,
           selectionState = calendarState.selectionState,
+          eventState = calendarState.eventState,
           today = today,
           daysOfWeek = daysOfWeek,
           dayContent = dayContent,
@@ -261,6 +267,7 @@ public fun <T : SelectionState> Calendar(
           ),
           showAdjacentMonths = showAdjacentMonths,
           selectionState = calendarState.selectionState,
+          eventState = calendarState.eventState,
           today = today,
           daysOfWeek = daysOfWeek,
           dayContent = dayContent,
@@ -284,6 +291,7 @@ public fun <T : SelectionState> Calendar(
 public fun rememberSelectableCalendarState(
   initialDay: LocalDate = LocalDate.now(),
   initialMonthMode: Boolean = true,
+  initialEventList: List<DayEvent> = emptyList(),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
@@ -298,10 +306,14 @@ public fun rememberSelectableCalendarState(
   ) {
     DynamicSelectionState(confirmSelectionChange, initialSelection, initialSelectionMode)
   },
+  eventState: EventState = rememberSaveable(saver = EventState.Saver()) {
+    EventState(initialEventList)
+  },
 ): CalendarState<DynamicSelectionState> = remember { CalendarState(
   currentState = currentState,
   selectionState = selectionState,
-  modeState = modeState
+  modeState = modeState,
+  eventState = eventState,
 ) }
 
 /**
@@ -313,14 +325,19 @@ public fun rememberSelectableCalendarState(
 public fun rememberCalendarState(
   initialDay: LocalDate = LocalDate.now(),
   initialMonthMode: Boolean = true,
+  initialEventList: List<DayEvent> = emptyList(),
   modeState: ModeState = rememberSaveable(saver = ModeState.Saver()) {
     ModeState(initialMonthMode = initialMonthMode)
   },
   currentState: CurrentState = rememberSaveable(saver = CurrentState.Saver()) {
     CurrentState(initialDay)
   },
+  eventState: EventState = rememberSaveable(saver = EventState.Saver()) {
+    EventState(initialEventList)
+  },
 ): CalendarState<EmptySelectionState> = remember { CalendarState(
   currentState = currentState,
   modeState = modeState,
   selectionState = EmptySelectionState,
+  eventState = eventState,
 ) }

@@ -5,6 +5,8 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
+import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
+import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.states.CurrentState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
@@ -19,7 +21,8 @@ internal class MonthListState(
   private val coroutineScope: CoroutineScope,
   private val initialMonth: YearMonth,
   private val currentState: CurrentState,
-  private val listState: LazyListState
+  private val listState: LazyListState,
+  private val selectionState: DynamicSelectionState?
 ) {
 
   private val currentlyVisibleMonth by derivedStateOf {
@@ -35,7 +38,10 @@ internal class MonthListState(
     }.launchIn(coroutineScope)
 
     snapshotFlow { currentlyVisibleMonth }.onEach { newMonth ->
-      currentState.day = newMonth.atDay(1)
+      currentState.day = if (selectionState != null && selectionState.selection.isNotEmpty())
+        if (selectionState.selection[0].month == newMonth.month) newMonth.atDay(selectionState.selection[0].dayOfMonth)
+          else newMonth.atDay(1)
+      else newMonth.atDay(1)
     }.launchIn(coroutineScope)
   }
 

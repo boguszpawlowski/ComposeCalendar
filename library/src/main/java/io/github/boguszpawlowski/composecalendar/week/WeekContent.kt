@@ -27,6 +27,7 @@ import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.month.StartIndex
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.states.CurrentState
+import io.github.boguszpawlowski.composecalendar.states.EventState
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -36,6 +37,7 @@ import java.time.LocalDate
 internal fun <T : SelectionState> WeekPager(
   initialDay: LocalDate,
   selectionState: T,
+  eventState: EventState,
   currentState: CurrentState,
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
@@ -76,6 +78,7 @@ internal fun <T : SelectionState> WeekPager(
       WeekContent(
         modifier = Modifier.fillParentMaxWidth(),
         selectionState = selectionState,
+        eventState = eventState,
         currentDay = weekListState.getWeekForPage(index),
         today = today,
         daysOfWeek = daysOfWeek,
@@ -90,6 +93,7 @@ internal fun <T : SelectionState> WeekPager(
 @Composable
 internal fun <T : SelectionState> WeekContent(
   selectionState: T,
+  eventState: EventState,
   currentDay: LocalDate,
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
@@ -115,6 +119,7 @@ internal fun <T : SelectionState> WeekContent(
             today = today,
           ),
           selectionState = selectionState,
+          eventState = eventState,
           dayContent = dayContent,
         )
       }
@@ -126,6 +131,7 @@ internal fun <T : SelectionState> WeekContent(
 internal fun <T : SelectionState> WeekContainer(
   week: Week,
   selectionState: T,
+  eventState: EventState,
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit
 ) {
@@ -139,7 +145,7 @@ internal fun <T : SelectionState> WeekContainer(
       Box(
         modifier = Modifier.fillMaxWidth(1f / (7 - index))
       ) {
-        dayContent(DayState(day, selectionState))
+        dayContent(DayState(day, selectionState, eventState))
       }
     }
   }

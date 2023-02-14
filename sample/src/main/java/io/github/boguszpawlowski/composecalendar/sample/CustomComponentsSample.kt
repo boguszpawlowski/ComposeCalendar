@@ -30,6 +30,7 @@ import io.github.boguszpawlowski.composecalendar.day.NonSelectableDayState
 import io.github.boguszpawlowski.composecalendar.header.DefaultWeekDaysNames
 import io.github.boguszpawlowski.composecalendar.rememberCalendarState
 import io.github.boguszpawlowski.composecalendar.states.CurrentState
+import io.github.boguszpawlowski.composecalendar.states.EventState
 import java.time.DayOfWeek
 import java.time.DayOfWeek.SUNDAY
 import java.time.format.TextStyle.NARROW
@@ -42,7 +43,9 @@ fun CustomComponentsSample() {
     .fillMaxWidth()
     .verticalScroll(scrollState)
   ) {
-    val calendarState = rememberCalendarState()
+    val calendarState = rememberCalendarState(
+      eventState = EventState( dayEventList )
+    )
     ModeControls(modeState = calendarState.modeState)
     StaticCalendar(
       modifier = Modifier.animateContentSize(),

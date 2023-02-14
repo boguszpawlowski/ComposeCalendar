@@ -37,6 +37,7 @@ import io.github.boguszpawlowski.composecalendar.rememberSelectableCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode.Period
+import io.github.boguszpawlowski.composecalendar.states.EventState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import java.time.LocalDate
@@ -55,6 +56,7 @@ fun ViewModelSample() {
   val state = rememberSelectableCalendarState(
     confirmSelectionChange = { viewModel.onSelectionChanged(it); true },
     initialSelectionMode = Period,
+    eventState = EventState( dayEventList )
   )
 
   Column(

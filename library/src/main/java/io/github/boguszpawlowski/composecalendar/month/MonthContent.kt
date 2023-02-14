@@ -21,8 +21,10 @@ import dev.chrisbanes.snapper.SnapperFlingBehaviorDefaults
 import dev.chrisbanes.snapper.SnapperLayoutInfo
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import io.github.boguszpawlowski.composecalendar.day.DayState
+import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.states.CurrentState
+import io.github.boguszpawlowski.composecalendar.states.EventState
 import io.github.boguszpawlowski.composecalendar.week.WeekContainer
 import io.github.boguszpawlowski.composecalendar.week.getWeeks
 import java.time.DayOfWeek
@@ -38,6 +40,7 @@ internal fun <T : SelectionState> MonthPager(
   initialMonth: YearMonth,
   showAdjacentMonths: Boolean,
   selectionState: T,
+  eventState: EventState,
   currentState: CurrentState,
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
@@ -64,7 +67,9 @@ internal fun <T : SelectionState> MonthPager(
       coroutineScope = coroutineScope,
       initialMonth = initialMonth,
       currentState = currentState,
-      listState = listState
+      listState = listState,
+      selectionState = if (selectionState is DynamicSelectionState) selectionState
+      else null
     )
   }
 
@@ -79,6 +84,7 @@ internal fun <T : SelectionState> MonthPager(
         modifier = Modifier.fillParentMaxWidth(),
         showAdjacentMonths = showAdjacentMonths,
         selectionState = selectionState,
+        eventState = eventState,
         currentMonth = monthListState.getMonthForPage(index),
         today = today,
         daysOfWeek = daysOfWeek,
@@ -94,6 +100,7 @@ internal fun <T : SelectionState> MonthPager(
 internal fun <T : SelectionState> MonthContent(
   showAdjacentMonths: Boolean,
   selectionState: T,
+  eventState: EventState,
   currentMonth: YearMonth,
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
@@ -122,6 +129,7 @@ internal fun <T : SelectionState> MonthContent(
           WeekContainer(
             week = week,
             selectionState = selectionState,
+            eventState = eventState,
             dayContent = dayContent,
           )
         }

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
 import io.github.boguszpawlowski.composecalendar.rememberCalendarState
+import io.github.boguszpawlowski.composecalendar.states.EventState
 
 @Composable
 fun StaticCalendarSample() {
@@ -19,7 +20,9 @@ fun StaticCalendarSample() {
     .fillMaxWidth()
     .verticalScroll(scrollState)
   ) {
-    val calendarState = rememberCalendarState()
+    val calendarState = rememberCalendarState(
+      eventState = EventState( dayEventList )
+    )
     ModeControls(modeState = calendarState.modeState)
     StaticCalendar(
       modifier = Modifier

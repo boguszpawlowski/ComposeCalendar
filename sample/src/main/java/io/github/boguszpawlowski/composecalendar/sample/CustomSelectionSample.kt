@@ -19,6 +19,8 @@ import io.github.boguszpawlowski.composecalendar.CalendarState
 import io.github.boguszpawlowski.composecalendar.states.ModeState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.states.CurrentState
+import io.github.boguszpawlowski.composecalendar.states.DayEvent
+import io.github.boguszpawlowski.composecalendar.states.EventState
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -29,7 +31,9 @@ fun CustomSelectionSample() {
     .fillMaxWidth()
     .verticalScroll(scrollState)
   ) {
-    val calendarState = rememberMonthSelectionState()
+    val calendarState = rememberMonthSelectionState(
+      eventState = EventState( dayEventList )
+    )
     ModeControls(modeState = calendarState.modeState)
     Calendar(calendarState = calendarState)
   }
@@ -65,6 +69,7 @@ private fun rememberMonthSelectionState(
   initialDay: LocalDate = LocalDate.now(),
   initialSelection: YearMonth? = null,
   initialMonthMode: Boolean = true,
+  initialEventList: List<DayEvent> = emptyList(),
   currentState: CurrentState = rememberSaveable(saver = CurrentState.Saver()) {
     CurrentState(initialDay = initialDay)
   },
@@ -74,10 +79,14 @@ private fun rememberMonthSelectionState(
   modeState: ModeState = rememberSaveable(saver = ModeState.Saver()) {
     ModeState(initialMonthMode = initialMonthMode)
   },
+  eventState: EventState = rememberSaveable(saver = EventState.Saver()) {
+    EventState(initialEventList)
+  },
 ): CalendarState<MonthSelectionState> = remember { CalendarState(
   currentState = currentState,
   modeState = modeState,
   selectionState = selectionState,
+  eventState = eventState,
 ) }
 
 private val LocalDate.yearMonth: YearMonth
