@@ -50,7 +50,7 @@ fun CustomComponentsSample() {
       firstDayOfWeek = SUNDAY,
       monthContainer = { MonthContainer(it) },
       dayContent = { DayContent(dayState = it) },
-      weekDaysNames = { DefaultWeekDaysNames(daysOfWeek = it) },
+      weekDaysNames = { DefaultWeekDaysNames(listDays = it) },
       monthHeader = { MonthHeader(currentState = it) },
       calendarState = calendarState
     )

@@ -3,8 +3,6 @@
 package io.github.boguszpawlowski.composecalendar
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.FiniteAnimationSpec
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -290,8 +288,8 @@ public fun rememberSelectableCalendarState(
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   modeState: ModeState = rememberSaveable(saver = ModeState.Saver()) {
-  ModeState(initialMonthMode = initialMonthMode)
-},
+    ModeState(initialMonthMode = initialMonthMode)
+  },
   currentState: CurrentState = rememberSaveable(saver = CurrentState.Saver()) {
     CurrentState(initialDay)
   },

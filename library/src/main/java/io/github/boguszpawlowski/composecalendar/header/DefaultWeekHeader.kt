@@ -3,9 +3,7 @@ package io.github.boguszpawlowski.composecalendar.header
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -17,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
 import io.github.boguszpawlowski.composecalendar.states.CurrentState
 import java.time.format.TextStyle.FULL
 import java.util.Locale
@@ -27,6 +24,19 @@ public fun DefaultWeekHeader(
   currentState: CurrentState,
   modifier: Modifier = Modifier,
 ) {
+  val firstDayOfCurrentWeek = currentState.day.minusDays(currentState.day.dayOfWeek.value.toLong() - 1)
+  val monthName = firstDayOfCurrentWeek.month
+    .getDisplayName(FULL, Locale.getDefault())
+    .lowercase()
+    .replaceFirstChar { it.titlecase() }
+  val nextMonthName = firstDayOfCurrentWeek.plusDays(6L).month
+    .getDisplayName(FULL, Locale.getDefault())
+    .lowercase()
+    .replaceFirstChar { it.titlecase() }
+  val monthYearName = if (firstDayOfCurrentWeek.monthValue == firstDayOfCurrentWeek.plusDays(6L).monthValue)
+    "$monthName ${currentState.day.year}"
+  else "$monthName - $nextMonthName"
+
   Row(
     modifier = modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.Center,
@@ -44,14 +54,9 @@ public fun DefaultWeekHeader(
     }
     Text(
       modifier = Modifier.testTag("MonthLabel"),
-      text = currentState.day.month
-        .getDisplayName(FULL, Locale.getDefault())
-        .lowercase()
-        .replaceFirstChar { it.titlecase() },
-      style = MaterialTheme.typography.h4,
+      text = monthYearName,
+      style = MaterialTheme.typography.h5,
     )
-    Spacer(modifier = Modifier.width(8.dp))
-    Text(text = currentState.day.year.toString(), style = MaterialTheme.typography.h4)
     IconButton(
       modifier = Modifier.testTag("Increment"),
       onClick = { currentState.day = currentState.day.plusDays(7L) }

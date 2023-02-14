@@ -12,11 +12,11 @@ import java.util.Locale
 
 @Composable
 public fun DefaultWeekDaysNames(
-  daysOfWeek: List<DayOfWeek>,
+  listDays: List<DayOfWeek>,
   modifier: Modifier = Modifier,
 ) {
   Row(modifier = modifier) {
-    daysOfWeek.forEach { dayOfWeek ->
+    listDays.forEach { dayOfWeek ->
       Text(
         textAlign = TextAlign.Center,
         text = dayOfWeek.getDisplayName(SHORT, Locale.getDefault()),

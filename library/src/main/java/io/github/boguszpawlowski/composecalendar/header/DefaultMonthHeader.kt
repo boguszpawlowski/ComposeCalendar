@@ -52,10 +52,10 @@ public fun DefaultMonthHeader(
         .getDisplayName(FULL, Locale.getDefault())
         .lowercase()
         .replaceFirstChar { it.titlecase() },
-      style = MaterialTheme.typography.h4,
+      style = MaterialTheme.typography.h5,
     )
     Spacer(modifier = Modifier.width(8.dp))
-    Text(text = currentState.day.year.toString(), style = MaterialTheme.typography.h4)
+    Text(text = currentState.day.year.toString(), style = MaterialTheme.typography.h5)
     IconButton(
       modifier = Modifier.testTag("Increment"),
       onClick = { currentState.day = currentState.day.plusMonths(1L) }
