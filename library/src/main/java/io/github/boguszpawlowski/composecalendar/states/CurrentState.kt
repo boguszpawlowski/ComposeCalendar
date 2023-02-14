@@ -17,7 +17,7 @@ public interface CurrentState {
   public companion object {
     @Suppress("FunctionName") // Factory function
     public fun Saver(): Saver<CurrentState, String> = Saver(
-      save = { it.toString() },
+      save = { it.day.toString() },
       restore = { CurrentState(LocalDate.parse(it)) }
     )
   }

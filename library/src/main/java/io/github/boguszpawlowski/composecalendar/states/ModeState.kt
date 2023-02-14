@@ -16,7 +16,7 @@ public interface ModeState {
   public companion object {
     @Suppress("FunctionName") // Factory function
     public fun Saver(): Saver<ModeState, String> = Saver(
-      save = { it.toString() },
+      save = { it.isMonthMode.toString() },
       restore = { ModeState(it.toBoolean()) }
     )
   }
