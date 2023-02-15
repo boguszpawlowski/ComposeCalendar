@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -45,6 +46,7 @@ internal fun <T : SelectionState> WeekPager(
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   weekDaysNames: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   weekContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
+  onSwipe: (LocalDate) -> Unit
 ) {
   val coroutineScope = rememberCoroutineScope()
 
@@ -66,6 +68,10 @@ internal fun <T : SelectionState> WeekPager(
       currentState = currentState,
       listState = listState,
     )
+  }
+
+  LaunchedEffect(key1 = listState.firstVisibleItemIndex) {
+    onSwipe(weekListState.getWeekForPage(listState.firstVisibleItemIndex))
   }
 
   LazyRow(

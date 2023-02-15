@@ -2,6 +2,7 @@
 
 package io.github.boguszpawlowski.composecalendar
 
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -94,6 +95,7 @@ public fun SelectableCalendar(
   weekContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
+  onSwipe: (LocalDate) -> Unit = { },
 ) {
   Calendar(
     modifier = modifier,
@@ -108,6 +110,7 @@ public fun SelectableCalendar(
     weekDaysNames = weekDaysNames,
     monthContainer = monthContainer,
     weekContainer = weekContainer,
+    onSwipe = onSwipe,
   )
 }
 
@@ -151,6 +154,7 @@ public fun StaticCalendar(
   weekContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
+  onSwipe: (LocalDate) -> Unit = { },
 ) {
   Calendar(
     modifier = modifier,
@@ -165,6 +169,7 @@ public fun StaticCalendar(
     weekDaysNames = weekDaysNames,
     monthContainer = monthContainer,
     weekContainer = weekContainer,
+    onSwipe = onSwipe,
   )
 }
 
@@ -203,6 +208,7 @@ public fun <T : SelectionState> Calendar(
   weekContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
+  onSwipe: (LocalDate) -> Unit = { },
 ) {
 
   val daysOfWeek = remember(firstDayOfWeek) {
@@ -227,6 +233,7 @@ public fun <T : SelectionState> Calendar(
           dayContent = dayContent,
           weekDaysNames = weekDaysNames,
           weekContainer = weekContainer,
+          onSwipe = onSwipe
         )
       } else {
         WeekContent(
@@ -257,6 +264,7 @@ public fun <T : SelectionState> Calendar(
           dayContent = dayContent,
           weekDaysNames = weekDaysNames,
           monthContainer = monthContainer,
+          onSwipe = onSwipe,
         )
       } else {
         MonthContent(

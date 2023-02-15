@@ -10,7 +10,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +49,7 @@ internal fun <T : SelectionState> MonthPager(
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   weekDaysNames: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
+  onSwipe: (LocalDate) -> Unit,
 ) {
   val coroutineScope = rememberCoroutineScope()
 
@@ -71,6 +73,10 @@ internal fun <T : SelectionState> MonthPager(
       selectionState = if (selectionState is DynamicSelectionState) selectionState
       else null
     )
+  }
+
+  LaunchedEffect(key1 = listState.firstVisibleItemIndex) {
+    onSwipe(monthListState.getMonthForPage(listState.firstVisibleItemIndex).atDay(1))
   }
 
   LazyRow(
