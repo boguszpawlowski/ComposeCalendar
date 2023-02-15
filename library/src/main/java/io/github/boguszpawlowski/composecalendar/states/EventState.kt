@@ -26,7 +26,7 @@ public class EventState(
     get() = _eventList
     set(value) {
       if (value != eventList) {
-        _eventList = value
+        _eventList = List(value.size) { value[it] }
       }
     }
 
