@@ -35,7 +35,7 @@ internal val dayEventList = listOf(
 @Composable
 fun SelectableCalendarSample() {
   val calendarState = rememberSelectableCalendarState(
-    eventState = EventState( dayEventList )
+    initialEventList = dayEventList
   )
 
   Column(

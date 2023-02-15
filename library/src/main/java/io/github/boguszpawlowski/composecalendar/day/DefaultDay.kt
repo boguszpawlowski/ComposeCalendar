@@ -40,10 +40,8 @@ public fun <T : SelectionState> DefaultDay(
 ) {
   val date = state.date
   val selectionState = state.selectionState
-  var isHasEvent = false
-  try {
-    isHasEvent = state.eventState.eventList.first { it.day == state.date }.eventCount > 0
-  } catch (e: NoSuchElementException) { }
+  val isHasEvent = state.eventState.getEventsByDate(date) > 0
+  //  (state.eventState.eventList.firstOrNull { it.day == state.date }?.eventCount ?: 0) > 0
 
   val isSelected = selectionState.isDateSelected(date)
 
