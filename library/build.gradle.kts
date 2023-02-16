@@ -25,8 +25,6 @@ dependencies {
   implementation(Compose.FoundationLayout)
   implementation(Compose.Material)
   implementation(Timber.Core)
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-  implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.5.1")
 
   testImplementation(Kotest.Assertions)
   testImplementation(Kotest.RunnerJunit5)
