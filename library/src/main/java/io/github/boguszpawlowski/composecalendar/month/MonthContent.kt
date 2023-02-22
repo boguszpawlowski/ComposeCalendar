@@ -120,7 +120,7 @@ internal fun <T : SelectionState> MonthContent(
           today = today,
         ).forEach { week ->
           WeekContent(
-            week = week,
+            weekDays = week,
             selectionState = selectionState,
             dayContent = dayContent,
           )

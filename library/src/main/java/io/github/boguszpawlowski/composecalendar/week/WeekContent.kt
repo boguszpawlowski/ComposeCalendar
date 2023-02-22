@@ -13,7 +13,7 @@ import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 
 @Composable
 internal fun <T : SelectionState> WeekContent(
-  week: Week,
+  weekDays: WeekDays,
   selectionState: T,
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit
@@ -22,9 +22,9 @@ internal fun <T : SelectionState> WeekContent(
     modifier = modifier
       .fillMaxWidth()
       .wrapContentHeight(),
-    horizontalArrangement = if (week.isFirstWeekOfTheMonth) Arrangement.End else Arrangement.Start
+    horizontalArrangement = if (weekDays.isFirstWeekOfTheMonth) Arrangement.End else Arrangement.Start
   ) {
-    week.days.forEachIndexed { index, day ->
+    weekDays.days.forEachIndexed { index, day ->
       Box(
         modifier = Modifier.fillMaxWidth(1f / (7 - index))
       ) {
