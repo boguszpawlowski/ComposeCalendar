@@ -18,7 +18,7 @@ import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.week.DaysInAWeek
-import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
+import io.github.boguszpawlowski.composecalendar.week.DefaultDaysOfWeekHeader
 import io.github.boguszpawlowski.composecalendar.week.Week
 import io.github.boguszpawlowski.composecalendar.week.WeekContent
 import io.github.boguszpawlowski.composecalendar.week.WeekPager
@@ -73,7 +73,7 @@ public fun SelectableWeekCalendar(
   weekHeader: @Composable ColumnScope.(WeekState) -> Unit = {
     DefaultProperWeekHeader(it)
   },
-  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
 ) {
   WeekCalendar(
     modifier = modifier,
@@ -118,7 +118,7 @@ public fun StaticWeekCalendar(
   weekHeader: @Composable ColumnScope.(WeekState) -> Unit = {
     DefaultProperWeekHeader(it)
   },
-  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
 ) {
   WeekCalendar(
     modifier = modifier,
@@ -158,7 +158,7 @@ public fun <T : SelectionState> WeekCalendar(
   weekHeader: @Composable ColumnScope.(WeekState) -> Unit = {
     DefaultProperWeekHeader(it)
   },
-  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
 ) {
   val initialWeek = remember { calendarState.weekState.currentWeek }
   val daysOfWeek = remember(firstDayOfWeek) {

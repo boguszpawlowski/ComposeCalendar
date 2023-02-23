@@ -24,7 +24,7 @@ import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import io.github.boguszpawlowski.composecalendar.week.DaysInAWeek
-import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
+import io.github.boguszpawlowski.composecalendar.week.DefaultDaysOfWeekHeader
 import io.github.boguszpawlowski.composecalendar.week.rotateRight
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -76,7 +76,7 @@ public fun SelectableCalendar(
   calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
   dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
@@ -127,7 +127,7 @@ public fun StaticCalendar(
   calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
@@ -173,7 +173,7 @@ public fun <T : SelectionState> Calendar(
   horizontalSwipeEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },

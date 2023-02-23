@@ -3,7 +3,9 @@ package io.github.boguszpawlowski.composecalendar.header
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,9 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
-import io.github.boguszpawlowski.composecalendar.week.Week
-import java.time.Month
-import java.time.YearMonth
+import androidx.compose.ui.unit.dp
 import java.time.format.TextStyle.FULL
 import java.util.Locale
 
@@ -46,9 +46,17 @@ public fun DefaultWeekHeader(
       )
     }
     Text(
-      modifier = Modifier.testTag("WeekLabel"),
-      text = weekState.currentWeek.toMonthLabel(),
+      modifier = Modifier.testTag("MonthLabel"),
+      text = weekState.currentWeek.yearMonth.month
+        .getDisplayName(FULL, Locale.getDefault())
+        .lowercase()
+        .replaceFirstChar { it.titlecase() },
       style = MaterialTheme.typography.h4,
+    )
+    Spacer(modifier = Modifier.width(8.dp))
+    Text(
+      text = weekState.currentWeek.yearMonth.year.toString(),
+      style = MaterialTheme.typography.h4
     )
     IconButton(
       modifier = Modifier.testTag("Increment"),
@@ -62,16 +70,3 @@ public fun DefaultWeekHeader(
     }
   }
 }
-
-private fun Week.toMonthLabel() = when (months.size) {
-  1 -> months.first().toLabel()
-  2 -> months.first().month.toLabel() + "..." + months[1].toLabel()
-  else -> error("Invalid number of months per week")
-}
-
-private fun YearMonth.toLabel(): String = month.toLabel() + " " + year.toString()
-
-private fun Month.toLabel(): String =
-  getDisplayName(FULL, Locale.getDefault())
-    .lowercase()
-    .replaceFirstChar { it.titlecase() }

@@ -24,7 +24,7 @@ public data class Week(
 
   public val end: LocalDate get() = days.last()
 
-  public val months: List<YearMonth> = days.map { YearMonth.of(it.year, it.month) }.distinct()
+  public val yearMonth: YearMonth = YearMonth.of(start.year, start.month)
 
   public operator fun inc(): Week = plusWeeks(1)
 
