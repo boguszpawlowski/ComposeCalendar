@@ -1,4 +1,4 @@
-@file:Suppress("MatchingDeclarationName", "LongParameterList")
+@file:Suppress("MatchingDeclarationName")
 
 package io.github.boguszpawlowski.composecalendar
 
@@ -17,13 +17,13 @@ import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.DefaultDay
 import io.github.boguszpawlowski.composecalendar.header.DefaultMonthHeader
 import io.github.boguszpawlowski.composecalendar.header.MonthState
-import io.github.boguszpawlowski.composecalendar.month.DaysOfWeek
 import io.github.boguszpawlowski.composecalendar.month.MonthContent
 import io.github.boguszpawlowski.composecalendar.month.MonthPager
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
+import io.github.boguszpawlowski.composecalendar.week.DaysInAWeek
 import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
 import io.github.boguszpawlowski.composecalendar.week.rotateRight
 import java.time.DayOfWeek
@@ -180,7 +180,7 @@ public fun <T : SelectionState> Calendar(
 ) {
   val initialMonth = remember { calendarState.monthState.currentMonth }
   val daysOfWeek = remember(firstDayOfWeek) {
-    DayOfWeek.values().rotateRight(DaysOfWeek - firstDayOfWeek.ordinal)
+    DayOfWeek.values().rotateRight(DaysInAWeek - firstDayOfWeek.ordinal)
   }
 
   Column(

@@ -4,7 +4,6 @@ import io.kotest.assertions.asClue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
-import java.time.DayOfWeek.WEDNESDAY
 import java.time.LocalDate
 
 internal class WeekTest : ShouldSpec({

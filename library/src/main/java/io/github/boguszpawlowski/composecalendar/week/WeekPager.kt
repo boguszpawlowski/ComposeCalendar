@@ -1,11 +1,10 @@
-package io.github.boguszpawlowski.composecalendar.month
+package io.github.boguszpawlowski.composecalendar.week
 
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -18,31 +17,29 @@ import androidx.compose.ui.platform.testTag
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.SnapOffsets
 import dev.chrisbanes.snapper.SnapperFlingBehaviorDefaults
-import dev.chrisbanes.snapper.SnapperLayoutInfo
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import io.github.boguszpawlowski.composecalendar.day.DayState
-import io.github.boguszpawlowski.composecalendar.header.MonthState
+import io.github.boguszpawlowski.composecalendar.day.WeekDay
+import io.github.boguszpawlowski.composecalendar.header.WeekState
+import io.github.boguszpawlowski.composecalendar.month.PagerItemCount
+import io.github.boguszpawlowski.composecalendar.month.StartIndex
+import io.github.boguszpawlowski.composecalendar.month.coerceSnapIndex
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import io.github.boguszpawlowski.composecalendar.week.WeekRow
-import io.github.boguszpawlowski.composecalendar.week.getWeeks
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.YearMonth
 
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
 @Suppress("LongMethod")
-internal fun <T : SelectionState> MonthPager(
-  initialMonth: YearMonth,
-  showAdjacentMonths: Boolean,
+internal fun <T : SelectionState> WeekPager(
+  initialWeek: Week,
   selectionState: T,
-  monthState: MonthState,
+  weekState: WeekState,
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
-  monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
 ) {
   val coroutineScope = rememberCoroutineScope()
 
@@ -57,80 +54,72 @@ internal fun <T : SelectionState> MonthPager(
     snapIndex = coerceSnapIndex,
   )
 
-  val monthListState = remember {
-    MonthListState(
+  val weekListState = remember {
+    WeekListState(
       coroutineScope = coroutineScope,
-      initialMonth = initialMonth,
-      monthState = monthState,
+      initialWeek = initialWeek,
+      weekState = weekState,
       listState = listState,
     )
   }
 
   LazyRow(
-    modifier = modifier.testTag("MonthPager"),
+    modifier = modifier.testTag("WeekPager"),
     state = listState,
     flingBehavior = flingBehavior,
     verticalAlignment = Alignment.Top,
   ) {
     items(PagerItemCount) { index ->
-      MonthContent(
+      WeekContent(
         modifier = Modifier.fillParentMaxWidth(),
-        showAdjacentMonths = showAdjacentMonths,
-        selectionState = selectionState,
-        currentMonth = monthListState.getMonthForPage(index),
-        today = today,
         daysOfWeek = daysOfWeek,
+        weekDays = weekListState.getWeekForPage(index).getWeekDays(today = today),
+        selectionState = selectionState,
         dayContent = dayContent,
-        weekHeader = weekHeader,
-        monthContainer = monthContainer
+        daysOfWeekHeader = daysOfWeekHeader,
       )
     }
   }
 }
 
 @Composable
-internal fun <T : SelectionState> MonthContent(
-  showAdjacentMonths: Boolean,
+internal fun <T : SelectionState> WeekContent(
   selectionState: T,
-  currentMonth: YearMonth,
+  weekDays: WeekDays,
   daysOfWeek: List<DayOfWeek>,
-  today: LocalDate,
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
-  monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
 ) {
-  Column {
+  Column(
+    modifier = modifier,
+  ) {
     Box(
-      modifier = modifier
-        .wrapContentHeight(),
-      content = { weekHeader(daysOfWeek) },
+      modifier = Modifier
+        .wrapContentHeight()
+        .fillMaxWidth(),
+      content = { daysOfWeekHeader(daysOfWeek) },
     )
-
-    monthContainer { paddingValues ->
-      Column(
-        modifier = modifier
-          .padding(paddingValues)
-      ) {
-        currentMonth.getWeeks(
-          includeAdjacentMonths = showAdjacentMonths,
-          firstDayOfTheWeek = daysOfWeek.first(),
-          today = today,
-        ).forEach { week ->
-          WeekRow(
-            weekDays = week,
-            selectionState = selectionState,
-            dayContent = dayContent,
-          )
-        }
-      }
-    }
+    WeekRow(
+      weekDays = weekDays,
+      modifier = Modifier.fillMaxWidth(),
+      selectionState = selectionState,
+      dayContent = dayContent,
+    )
   }
 }
 
-@OptIn(ExperimentalSnapperApi::class)
-internal val coerceSnapIndex: (SnapperLayoutInfo, startIndex: Int, targetIndex: Int) -> Int =
-  { _, startIndex, targetIndex ->
-    targetIndex
-      .coerceIn(startIndex - 1, startIndex + 1)
+internal fun Week.getWeekDays(today: LocalDate): WeekDays {
+  val weekDays = days.map {
+    WeekDay(
+      date = it,
+      isCurrentDay = it == today,
+      isFromCurrentMonth = true,
+    )
   }
+
+  return WeekDays(
+    isFirstWeekOfTheMonth = false,
+    days = weekDays,
+  )
+}

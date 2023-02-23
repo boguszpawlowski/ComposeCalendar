@@ -1,10 +1,10 @@
 package io.github.boguszpawlowski.composecalendar.week
 
-import io.github.boguszpawlowski.composecalendar.month.DaysOfWeek
 import io.github.boguszpawlowski.composecalendar.selection.fillUpTo
 import io.github.boguszpawlowski.composecalendar.util.daysUntil
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.Locale
 
@@ -13,16 +13,18 @@ public data class Week(
 ) {
 
   init {
-    require(days.size == 7)
+    require(days.size == DaysInAWeek)
   }
 
   internal constructor(firstDay: LocalDate) : this(
-    listOf(firstDay).fillUpTo(firstDay.plusDays((DaysOfWeek - 1).toLong()))
+    listOf(firstDay).fillUpTo(firstDay.plusDays((DaysInAWeek - 1).toLong()))
   )
 
   public val start: LocalDate get() = days.first()
 
   public val end: LocalDate get() = days.last()
+
+  public val months: List<YearMonth> = days.map { YearMonth.of(it.year, it.month) }.distinct()
 
   public operator fun inc(): Week = plusWeeks(1)
 

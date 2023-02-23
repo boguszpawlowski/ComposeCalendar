@@ -12,7 +12,7 @@ import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 
 @Composable
-internal fun <T : SelectionState> WeekContent(
+internal fun <T : SelectionState> WeekRow(
   weekDays: WeekDays,
   selectionState: T,
   modifier: Modifier = Modifier,

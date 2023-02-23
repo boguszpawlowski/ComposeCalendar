@@ -6,7 +6,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 
-private const val DaysInAWeek = 7
+internal const val DaysInAWeek = 7
 
 internal fun YearMonth.getWeeks(
   includeAdjacentMonths: Boolean,

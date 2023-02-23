@@ -5,34 +5,35 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
-import java.time.YearMonth
+import io.github.boguszpawlowski.composecalendar.week.Week
+import java.time.LocalDate
 
 @Suppress("FunctionName") // Factory function
-public fun WeekState(initialMonth: YearMonth): WeekState = WeekStateImpl(initialMonth)
+public fun WeekState(initialWeek: Week): WeekState = WeekStateImpl(initialWeek)
 
 @Stable
 public interface WeekState {
-  public var currentMonth: YearMonth
+  public var currentWeek: Week
 
   public companion object {
     @Suppress("FunctionName") // Factory function
     public fun Saver(): Saver<WeekState, String> = Saver(
-      save = { it.currentMonth.toString() },
-      restore = { WeekState(YearMonth.parse(it)) }
+      save = { it.currentWeek.start.toString() },
+      restore = { WeekState(initialWeek = Week(firstDay = LocalDate.parse(it))) }
     )
   }
 }
 
 @Stable
 private class WeekStateImpl(
-  initialMonth: YearMonth,
+  initialWeek: Week,
 ) : WeekState {
 
-  private var _currentMonth by mutableStateOf<YearMonth>(initialMonth)
+  private var _currentWeek by mutableStateOf<Week>(initialWeek)
 
-  override var currentMonth: YearMonth
-    get() = _currentMonth
+  override var currentWeek: Week
+    get() = _currentWeek
     set(value) {
-      _currentMonth = value
+      _currentWeek = value
     }
 }

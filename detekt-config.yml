@@ -23,6 +23,7 @@ complexity:
     active: true
     functionThreshold: 10
     constructorThreshold: 5
+    ignoreAnnotated: [ 'Composable' ]
   NestedBlockDepth:
     active: true
   StringLiteralDuplication:
@@ -140,6 +141,7 @@ naming:
   FunctionNaming:
     active: false
     functionPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'
+    ignoreAnnotated: [ 'Composable' ]
   FunctionParameterNaming:
     active: true
     parameterPattern: '^[a-z]+(?:[A-Z][a-z]+)*$'

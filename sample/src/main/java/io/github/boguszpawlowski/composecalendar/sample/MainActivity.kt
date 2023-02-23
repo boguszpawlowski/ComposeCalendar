@@ -52,6 +52,7 @@ fun MainScreen() {
       NavHost(navController = navController, startDestination = "main") {
         composable("main") { MainMenu(navController = navController) }
         composable("static") { StaticCalendarSample() }
+        composable("week") { WeekCalendarSample() }
         composable("selection") { SelectableCalendarSample() }
         composable("components") { CustomComponentsSample() }
         composable("custom_selection") { CustomSelectionSample() }
@@ -76,6 +77,11 @@ fun MainMenu(navController: NavController) {
 
     Button(onClick = { navController.navigate("selection") }) {
       Text(text = "Selectable Calendar")
+    }
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Button(onClick = { navController.navigate("week") }) {
+      Text(text = "Week Calendar")
     }
     Spacer(modifier = Modifier.height(16.dp))
 
