@@ -36,6 +36,7 @@ Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.s
 - Customizable month container
 - Fully customizable day content
 - Horizontal swipe for changing a current month
+- Month / Week mode
 
 ## Basic Usage
 

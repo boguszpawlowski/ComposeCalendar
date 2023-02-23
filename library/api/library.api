@@ -206,6 +206,7 @@ public final class io/github/boguszpawlowski/composecalendar/selection/Selection
 }
 
 public final class io/github/boguszpawlowski/composecalendar/week/DefaultWeekHeaderKt {
+	public static final fun DefaultDaysOfWeekHeader (Ljava/util/List;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 	public static final fun DefaultWeekHeader (Ljava/util/List;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 }
 
@@ -220,8 +221,8 @@ public final class io/github/boguszpawlowski/composecalendar/week/Week {
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDays ()Ljava/util/List;
 	public final fun getEnd ()Ljava/time/LocalDate;
-	public final fun getMonths ()Ljava/util/List;
 	public final fun getStart ()Ljava/time/LocalDate;
+	public final fun getYearMonth ()Ljava/time/YearMonth;
 	public fun hashCode ()I
 	public final fun inc ()Lio/github/boguszpawlowski/composecalendar/week/Week;
 	public final fun plusWeeks (J)Lio/github/boguszpawlowski/composecalendar/week/Week;

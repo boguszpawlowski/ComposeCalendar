@@ -26,6 +26,7 @@ import java.util.Locale
  * 2 arrows for changing currently showed month
  */
 @Composable
+@Suppress("LongMethod")
 public fun DefaultWeekHeader(
   weekState: WeekState,
   modifier: Modifier = Modifier,
