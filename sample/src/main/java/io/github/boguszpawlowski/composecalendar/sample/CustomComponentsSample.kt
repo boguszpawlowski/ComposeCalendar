@@ -38,7 +38,7 @@ fun CustomComponentsSample() {
     firstDayOfWeek = SUNDAY,
     monthContainer = { MonthContainer(it) },
     dayContent = { DayContent(dayState = it) },
-    weekHeader = { WeekHeader(daysOfWeek = it) },
+    daysOfWeekHeader = { WeekHeader(daysOfWeek = it) },
     monthHeader = { MonthHeader(monthState = it) },
   )
 }

@@ -14,6 +14,7 @@ public final class io/github/boguszpawlowski/composecalendar/CalendarKt {
 }
 
 public final class io/github/boguszpawlowski/composecalendar/CalendarState {
+	public static final field $stable I
 	public fun <init> (Lio/github/boguszpawlowski/composecalendar/header/MonthState;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;)V
 	public final fun getMonthState ()Lio/github/boguszpawlowski/composecalendar/header/MonthState;
 	public final fun getSelectionState ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;
@@ -80,6 +81,7 @@ public final class io/github/boguszpawlowski/composecalendar/WeekCalendarKt {
 }
 
 public final class io/github/boguszpawlowski/composecalendar/WeekCalendarState {
+	public static final field $stable I
 	public fun <init> (Lio/github/boguszpawlowski/composecalendar/header/WeekState;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;)V
 	public final fun getSelectionState ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;
 	public final fun getWeekState ()Lio/github/boguszpawlowski/composecalendar/header/WeekState;
@@ -92,6 +94,7 @@ public abstract interface class io/github/boguszpawlowski/composecalendar/day/Da
 }
 
 public final class io/github/boguszpawlowski/composecalendar/day/DayState : io/github/boguszpawlowski/composecalendar/day/Day {
+	public static final field $stable I
 	public fun <init> (Lio/github/boguszpawlowski/composecalendar/day/Day;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;)V
 	public final fun component2 ()Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;
 	public final fun copy (Lio/github/boguszpawlowski/composecalendar/day/Day;Lio/github/boguszpawlowski/composecalendar/selection/SelectionState;)Lio/github/boguszpawlowski/composecalendar/day/DayState;
@@ -170,6 +173,7 @@ public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSe
 }
 
 public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState : io/github/boguszpawlowski/composecalendar/selection/SelectionState {
+	public static final field $stable I
 	public fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getSelection ()Ljava/util/List;
@@ -181,6 +185,7 @@ public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSe
 }
 
 public final class io/github/boguszpawlowski/composecalendar/selection/EmptySelectionState : io/github/boguszpawlowski/composecalendar/selection/SelectionState {
+	public static final field $stable I
 	public static final field INSTANCE Lio/github/boguszpawlowski/composecalendar/selection/EmptySelectionState;
 	public fun isDateSelected (Ljava/time/LocalDate;)Z
 	public fun onDateSelected (Ljava/time/LocalDate;)V

@@ -17,7 +17,6 @@ android {
 }
 
 dependencies {
-  implementation(Kotlin.StdLib)
   implementation(Compose.Ui)
   implementation(Compose.UiTooling)
   implementation(Compose.AccompanistPager)
@@ -28,7 +27,6 @@ dependencies {
 
   testImplementation(Kotest.Assertions)
   testImplementation(Kotest.RunnerJunit5)
-  testImplementation(Kotlin.Reflect)
 }
 
 plugins.withId("com.vanniktech.maven.publish") {

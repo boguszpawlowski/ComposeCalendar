@@ -6,16 +6,16 @@ object MavenPublish {
 
 object AndroidSdk {
   const val Min = 21
-  const val Compile = 32
+  const val Compile = 33
   const val Target = Compile
 }
 
 object Kotlin {
-  const val Version = "1.7.20"
+  const val Version = "1.8.10"
   const val CompatibilityPluginVersion = "0.11.0"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
-  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:$Version"
+  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.7.20"
 
   const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
 
@@ -28,13 +28,11 @@ object Kotlin {
   const val CompatibilityPluginId = "binary-compatibility-validator"
 
   const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
-  const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
-  const val Reflect = "org.jetbrains.kotlin:kotlin-reflect:$Version"
   const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.2.1"
+  const val GradlePlugin = "com.android.tools.build:gradle:7.4.2"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"
@@ -77,8 +75,8 @@ object AndroidX {
   const val Version = "1.0.0"
   const val LifecycleVersion = "2.2.0"
 
-  const val AppCompat = "androidx.appcompat:appcompat:1.4.1"
-  const val ComposeActivity = "androidx.activity:activity-compose:1.5.1"
+  const val AppCompat = "androidx.appcompat:appcompat:1.6.1"
+  const val ComposeActivity = "androidx.activity:activity-compose:1.6.1"
 }
 
 object Material {
@@ -101,8 +99,8 @@ object Timber {
 }
 
 object Compose {
-  const val Version = "1.2.1"
-  const val CompilerVersion = "1.3.2"
+  const val Version = "1.3.1"
+  const val CompilerVersion = "1.4.3"
   const val AccompanistVersion = "0.25.1"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
