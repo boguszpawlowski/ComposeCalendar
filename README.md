@@ -36,6 +36,7 @@ Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.s
 - Customizable month container
 - Fully customizable day content
 - Horizontal swipe for changing a current month
+- Month / Week mode
 
 ## Basic Usage
 
@@ -50,7 +51,15 @@ To show the basic version of the calendar, without any kind of selection mechani
 
 ```
 This chunk will render the calendar with default components for each day, and also month and week headers.
-See the `StaticCalendarSample` file for a full example.
+See the `StaticCalendarSample` file for a full example. For showing a week calendar, you can similarly use `StaticWeekCalendar`:
+```kotlin
+
+  @Composable
+  fun MainScreen() {
+    StaticWeekCalendar()
+  }
+
+```
 
 <img src="https://github.com/boguszpawlowski/ComposeCalendar/blob/main/blob/screenshot_1.jpg" width="260">
 
@@ -67,7 +76,16 @@ Calendar with a mechanism for selection. The default implementation uses `Dynami
 
 ```
 By the default, after changing the selection mode, selection is cleared.
-See the `SelectableCalendarSample` file for a full example
+See the `SelectableCalendarSample` file for a full example. For showing a week calendar, you can similarly use `SelectableWeekCalendar`:
+```kotlin
+
+  @Composable
+  fun MainScreen() {
+    SelectableWeekCalendar()
+  }
+
+```
+See the `WeekCalendarSample` file for a full example.
 
 https://user-images.githubusercontent.com/36514058/126049987-685a7b81-1596-48a4-95a1-c342f6c796bf.mp4
 

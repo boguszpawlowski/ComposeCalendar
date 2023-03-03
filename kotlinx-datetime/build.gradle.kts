@@ -11,11 +11,9 @@ kotlin {
 
 dependencies {
   api(Kotlin.DateTime)
-  implementation(Kotlin.StdLib)
 
   testImplementation(Kotest.Assertions)
   testImplementation(Kotest.RunnerJunit5)
-  testImplementation(Kotlin.Reflect)
 }
 
 plugins.withId("com.vanniktech.maven.publish") {

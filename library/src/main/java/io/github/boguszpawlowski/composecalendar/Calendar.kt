@@ -1,4 +1,4 @@
-@file:Suppress("MatchingDeclarationName", "LongParameterList")
+@file:Suppress("MatchingDeclarationName")
 
 package io.github.boguszpawlowski.composecalendar
 
@@ -17,14 +17,14 @@ import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.DefaultDay
 import io.github.boguszpawlowski.composecalendar.header.DefaultMonthHeader
 import io.github.boguszpawlowski.composecalendar.header.MonthState
-import io.github.boguszpawlowski.composecalendar.month.DaysOfWeek
 import io.github.boguszpawlowski.composecalendar.month.MonthContent
 import io.github.boguszpawlowski.composecalendar.month.MonthPager
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
-import io.github.boguszpawlowski.composecalendar.week.DefaultWeekHeader
+import io.github.boguszpawlowski.composecalendar.week.DaysInAWeek
+import io.github.boguszpawlowski.composecalendar.week.DefaultDaysOfWeekHeader
 import io.github.boguszpawlowski.composecalendar.week.rotateRight
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -63,7 +63,7 @@ public class CalendarState<T : SelectionState>(
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
- * @param weekHeader header for showing captions for each day of week
+ * @param daysOfWeekHeader header for showing captions for each day of week
  * @param monthContainer container composable for all the days in current month
  */
 @Composable
@@ -76,7 +76,7 @@ public fun SelectableCalendar(
   calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
   dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
@@ -90,7 +90,7 @@ public fun SelectableCalendar(
     calendarState = calendarState,
     dayContent = dayContent,
     monthHeader = monthHeader,
-    weekHeader = weekHeader,
+    daysOfWeekHeader = daysOfWeekHeader,
     monthContainer = monthContainer
   )
 }
@@ -114,7 +114,7 @@ public fun SelectableCalendar(
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
- * @param weekHeader header for showing captions for each day of week
+ * @param daysOfWeekHeader header for showing captions for each day of week
  * @param monthContainer container composable for all the days in current month
  */
 @Composable
@@ -127,7 +127,7 @@ public fun StaticCalendar(
   calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
@@ -141,7 +141,7 @@ public fun StaticCalendar(
     calendarState = calendarState,
     dayContent = dayContent,
     monthHeader = monthHeader,
-    weekHeader = weekHeader,
+    daysOfWeekHeader = daysOfWeekHeader,
     monthContainer = monthContainer
   )
 }
@@ -160,7 +160,7 @@ public fun StaticCalendar(
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
- * @param weekHeader header for showing captions for each day of week
+ * @param daysOfWeekHeader header for showing captions for each day of week
  * @param monthContainer container composable for all the days in current month
  */
 @Composable
@@ -173,14 +173,14 @@ public fun <T : SelectionState> Calendar(
   horizontalSwipeEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
-  weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultWeekHeader(it) },
+  daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit = { content ->
     Box { content(PaddingValues()) }
   },
 ) {
   val initialMonth = remember { calendarState.monthState.currentMonth }
   val daysOfWeek = remember(firstDayOfWeek) {
-    DayOfWeek.values().rotateRight(DaysOfWeek - firstDayOfWeek.ordinal)
+    DayOfWeek.values().rotateRight(DaysInAWeek - firstDayOfWeek.ordinal)
   }
 
   Column(
@@ -196,7 +196,7 @@ public fun <T : SelectionState> Calendar(
         today = today,
         daysOfWeek = daysOfWeek,
         dayContent = dayContent,
-        weekHeader = weekHeader,
+        weekHeader = daysOfWeekHeader,
         monthContainer = monthContainer,
       )
     } else {
@@ -208,7 +208,7 @@ public fun <T : SelectionState> Calendar(
         today = today,
         daysOfWeek = daysOfWeek,
         dayContent = dayContent,
-        weekHeader = weekHeader,
+        weekHeader = daysOfWeekHeader,
         monthContainer = monthContainer,
       )
     }

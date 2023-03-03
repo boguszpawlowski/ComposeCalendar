@@ -25,8 +25,6 @@ dependencies {
   implementation(project(":library"))
   implementation(project(":kotlinx-datetime"))
 
-  implementation(Kotlin.StdLib)
-
   implementation(Material.Core)
 
   implementation(AndroidX.AppCompat)
