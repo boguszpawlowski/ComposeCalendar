@@ -164,7 +164,7 @@ Initial state for the static calendar is provided by the `rememberCalendarState(
   fun MainScreen() {
     StaticCalendar(
       calendarState = rememberCalendarState(
-        initialDate = YearMonth.now().plusYears(1),
+        initialMonth = YearMonth.now().plusYears(1),
       )
     )
   }
@@ -178,7 +178,7 @@ In case of the selectable calendar, the state has additional parameters, used to
   fun MainScreen() {
     SelectableCalendar(
       calendarState = rememberSelectableCalendarState(
-        initialDate = YearMonth.now().plusYears(1),
+        initialMonth = YearMonth.now().plusYears(1),
         initialSelection = listOf(LocalDate.parse("20-01-2020")),
         initialSelectionMode = SelectionMode.Period,
       )
