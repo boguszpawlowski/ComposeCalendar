@@ -11,7 +11,7 @@ plugins {
 android {
   tasks.withType<KotlinCompile> {
     kotlinOptions {
-      freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
+      freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict" + "-Xcontext-receivers"
     }
   }
 }
