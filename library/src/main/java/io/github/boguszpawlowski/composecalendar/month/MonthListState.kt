@@ -6,6 +6,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import io.github.boguszpawlowski.composecalendar.header.MonthState
+import io.github.boguszpawlowski.composecalendar.util.throttleOnOffset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,7 +22,7 @@ internal class MonthListState(
   private val listState: LazyListState,
 ) {
 
-  private val currentlyVisibleMonth by derivedStateOf {
+  private val currentFirstVisibleMonth by derivedStateOf {
     getMonthForPage(listState.firstVisibleItemIndex)
   }
 
@@ -30,16 +31,20 @@ internal class MonthListState(
       moveToMonth(month)
     }.launchIn(coroutineScope)
 
-    snapshotFlow { currentlyVisibleMonth }.onEach { newMonth ->
-      monthState.currentMonth = newMonth
-    }.launchIn(coroutineScope)
+    with(listState) {
+      snapshotFlow { currentFirstVisibleMonth }
+        .throttleOnOffset()
+        .onEach { newMonth ->
+          monthState.currentMonth = newMonth
+        }.launchIn(coroutineScope)
+    }
   }
 
   fun getMonthForPage(index: Int): YearMonth =
     initialMonth.plusMonths((index - StartIndex).toLong())
 
   private fun moveToMonth(month: YearMonth) {
-    if (month == currentlyVisibleMonth) return
+    if (month == currentFirstVisibleMonth) return
     initialMonth.minus(month).let { offset ->
       coroutineScope.launch {
         listState.animateScrollToItem((StartIndex - offset).toInt())
