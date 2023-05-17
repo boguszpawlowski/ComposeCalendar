@@ -1,7 +1,7 @@
 @file:Suppress("ObjectPropertyNaming", "ClassNaming", "UnderscoresInNumericLiterals")
 object MavenPublish {
   const val PluginId = "com.vanniktech.maven.publish"
-  const val GradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.18.0"
+  const val GradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.25.2"
 }
 
 object AndroidSdk {
