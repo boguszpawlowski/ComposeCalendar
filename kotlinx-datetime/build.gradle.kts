@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
   kotlin(Kotlin.JvmPluginId)
   id(MavenPublish.PluginId)
@@ -14,11 +12,4 @@ dependencies {
 
   testImplementation(Kotest.Assertions)
   testImplementation(Kotest.RunnerJunit5)
-}
-
-plugins.withId("com.vanniktech.maven.publish") {
-  mavenPublish {
-    sonatypeHost = SonatypeHost.S01
-    releaseSigningEnabled = true
-  }
 }
