@@ -43,6 +43,7 @@ internal fun <T : SelectionState> MonthPager(
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
+  onMonthSwipe: (YearMonth) -> Unit,
 ) {
   val coroutineScope = rememberCoroutineScope()
 
@@ -64,6 +65,10 @@ internal fun <T : SelectionState> MonthPager(
       monthState = monthState,
       listState = listState,
     )
+  }
+
+  flingBehavior.animationTarget?.let { index ->
+    onMonthSwipe(monthListState.getMonthForPage(index))
   }
 
   LazyRow(
@@ -106,7 +111,6 @@ internal fun <T : SelectionState> MonthContent(
         .wrapContentHeight(),
       content = { weekHeader(daysOfWeek) },
     )
-
     monthContainer { paddingValues ->
       Column(
         modifier = modifier

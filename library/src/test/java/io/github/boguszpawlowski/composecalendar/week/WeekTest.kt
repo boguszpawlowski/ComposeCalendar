@@ -22,6 +22,24 @@ internal class WeekTest : ShouldSpec({
     }
   }
 
+  context("Constructing a week with a given date") {
+    val year = 2023
+    val month = 1
+    val day = 15 // Sunday
+    val firstDayOfWeek = 9 // Monday
+    val weekStartDate = LocalDate.of(year, month, firstDayOfWeek)
+    val week = Week.of(LocalDate.of(year, month, day))
+
+
+    should("Properly create an instance of week for give date") {
+      week.asClue {
+        it.days.first() shouldBe weekStartDate
+        it.days.last() shouldBe weekStartDate.plusDays(6)
+        it.days.size shouldBe 7
+      }
+    }
+  }
+
   context("Incrementing") {
     val week = Week(firstDay = today).inc()
 

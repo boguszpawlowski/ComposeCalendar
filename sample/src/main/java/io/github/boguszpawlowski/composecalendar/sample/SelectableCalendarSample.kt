@@ -17,6 +17,7 @@ import io.github.boguszpawlowski.composecalendar.SelectableCalendar
 import io.github.boguszpawlowski.composecalendar.rememberSelectableCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
+import timber.log.Timber
 
 @Composable
 fun SelectableCalendarSample() {
@@ -25,7 +26,10 @@ fun SelectableCalendarSample() {
   Column(
     Modifier.verticalScroll(rememberScrollState())
   ) {
-    SelectableCalendar(calendarState = calendarState)
+    SelectableCalendar(
+      calendarState = calendarState,
+      onMonthSwipe = { Timber.tag("new month").d(it.toString()) },
+    )
 
     SelectionControls(selectionState = calendarState.selectionState)
   }

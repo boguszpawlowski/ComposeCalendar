@@ -28,6 +28,7 @@ import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toKotlinLocalDate
+import timber.log.Timber
 
 @Composable
 fun KotlinXDateTimeSample() {
@@ -89,7 +90,8 @@ fun DateTimeCalendar(
           selectionState = dayState.selectionState,
         )
       )
-    }
+    },
+    onMonthSwipe = { Timber.tag("new month").d(it.toString()) },
   )
 }
 

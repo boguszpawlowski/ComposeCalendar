@@ -40,5 +40,15 @@ public data class Week(
 
       return Week(firstDay)
     }
+
+    public fun of(
+      date: LocalDate,
+      firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
+    ): Week {
+      val offset = date.dayOfWeek.daysUntil(firstDayOfWeek)
+      val firstDay = date.minusDays(offset.toLong())
+
+      return Week(firstDay)
+    }
   }
 }

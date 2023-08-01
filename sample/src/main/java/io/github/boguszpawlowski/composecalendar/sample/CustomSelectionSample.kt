@@ -11,12 +11,16 @@ import io.github.boguszpawlowski.composecalendar.Calendar
 import io.github.boguszpawlowski.composecalendar.CalendarState
 import io.github.boguszpawlowski.composecalendar.header.MonthState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.YearMonth
 
 @Composable
 fun CustomSelectionSample() {
-  Calendar(calendarState = rememberMonthSelectionState())
+  Calendar(
+    calendarState = rememberMonthSelectionState(),
+    onMonthSwipe = { Timber.tag("new month").d(it.toString()) },
+  )
 }
 
 private class MonthSelectionState(
@@ -53,7 +57,7 @@ private fun rememberMonthSelectionState(
   },
   selectionState: MonthSelectionState = rememberSaveable(saver = MonthSelectionState.Saver()) {
     MonthSelectionState(initialSelection = initialSelection)
-  }
+  },
 ): CalendarState<MonthSelectionState> = remember { CalendarState(monthState, selectionState) }
 
 private val LocalDate.yearMonth: YearMonth

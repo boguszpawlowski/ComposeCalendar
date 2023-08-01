@@ -40,6 +40,7 @@ internal fun <T : SelectionState> WeekPager(
   modifier: Modifier = Modifier,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
+  onWeekSwipe: (Week) -> Unit = {},
 ) {
   val coroutineScope = rememberCoroutineScope()
 
@@ -61,6 +62,10 @@ internal fun <T : SelectionState> WeekPager(
       weekState = weekState,
       listState = listState,
     )
+  }
+
+  flingBehavior.animationTarget?.let { index ->
+    onWeekSwipe(weekListState.getWeekForPage(index))
   }
 
   LazyRow(

@@ -46,6 +46,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.YearMonth
 import kotlin.random.Random
@@ -88,7 +89,8 @@ fun ViewModelSample() {
           state = dayState,
           plannedRecipe = recipes.firstOrNull { it.date == dayState.date },
         )
-      }
+      },
+      onMonthSwipe = { Timber.tag("new month").d(it.toString()) },
     )
 
     Spacer(modifier = Modifier.height(20.dp))
