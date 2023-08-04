@@ -60,6 +60,7 @@ public class CalendarState<T : SelectionState>(
  * @param today current day, defaults to [LocalDate.now]
  * @param showAdjacentMonths whenever to show or hide the days from adjacent months
  * @param horizontalSwipeEnabled whenever user is able to change the month by horizontal swipe
+ * @param weekDaysScrollEnabled if the week days should be scrollable
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
@@ -73,6 +74,7 @@ public fun SelectableCalendar(
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
+  weekDaysScrollEnabled: Boolean = true,
   calendarState: CalendarState<DynamicSelectionState> = rememberSelectableCalendarState(),
   dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
@@ -87,6 +89,7 @@ public fun SelectableCalendar(
     today = today,
     showAdjacentMonths = showAdjacentMonths,
     horizontalSwipeEnabled = horizontalSwipeEnabled,
+    weekDaysScrollEnabled = weekDaysScrollEnabled,
     calendarState = calendarState,
     dayContent = dayContent,
     monthHeader = monthHeader,
@@ -111,6 +114,7 @@ public fun SelectableCalendar(
  * @param today current day, defaults to [LocalDate.now]
  * @param showAdjacentMonths whenever to show or hide the days from adjacent months
  * @param horizontalSwipeEnabled whenever user is able to change the month by horizontal swipe
+ * @param weekDaysScrollEnabled if the week days should be scrollable
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param monthHeader header for showing the current month and controls for changing it
@@ -124,6 +128,7 @@ public fun StaticCalendar(
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
+  weekDaysScrollEnabled: Boolean = true,
   calendarState: CalendarState<EmptySelectionState> = rememberCalendarState(),
   dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
@@ -138,6 +143,7 @@ public fun StaticCalendar(
     today = today,
     showAdjacentMonths = showAdjacentMonths,
     horizontalSwipeEnabled = horizontalSwipeEnabled,
+    weekDaysScrollEnabled = weekDaysScrollEnabled,
     calendarState = calendarState,
     dayContent = dayContent,
     monthHeader = monthHeader,
@@ -171,6 +177,7 @@ public fun <T : SelectionState> Calendar(
   today: LocalDate = LocalDate.now(),
   showAdjacentMonths: Boolean = true,
   horizontalSwipeEnabled: Boolean = true,
+  weekDaysScrollEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   monthHeader: @Composable ColumnScope.(MonthState) -> Unit = { DefaultMonthHeader(it) },
   daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit = { DefaultDaysOfWeekHeader(it) },
@@ -194,6 +201,7 @@ public fun <T : SelectionState> Calendar(
         monthState = calendarState.monthState,
         selectionState = calendarState.selectionState,
         today = today,
+        weekDaysScrollEnabled = weekDaysScrollEnabled,
         daysOfWeek = daysOfWeek,
         dayContent = dayContent,
         weekHeader = daysOfWeekHeader,
@@ -206,6 +214,7 @@ public fun <T : SelectionState> Calendar(
         showAdjacentMonths = showAdjacentMonths,
         selectionState = calendarState.selectionState,
         today = today,
+        weekDaysScrollEnabled = weekDaysScrollEnabled,
         daysOfWeek = daysOfWeek,
         dayContent = dayContent,
         weekHeader = daysOfWeekHeader,

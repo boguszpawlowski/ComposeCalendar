@@ -57,6 +57,7 @@ public class WeekCalendarState<T : SelectionState>(
  * @param firstDayOfWeek first day of a week, defaults to current locale's
  * @param today current day, defaults to [LocalDate.now]
  * @param horizontalSwipeEnabled whenever user is able to change the week by horizontal swipe
+ * @param weekDaysScrollEnabled if the week days should be scrollable
  * @param calendarState state of the composable
  * @param dayContent composable rendering the current day
  * @param weekHeader header for showing the current week and controls for changing it
@@ -68,6 +69,7 @@ public fun SelectableWeekCalendar(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   today: LocalDate = LocalDate.now(),
   horizontalSwipeEnabled: Boolean = true,
+  weekDaysScrollEnabled: Boolean = true,
   calendarState: WeekCalendarState<DynamicSelectionState> = rememberSelectableWeekCalendarState(),
   dayContent: @Composable BoxScope.(DayState<DynamicSelectionState>) -> Unit = { DefaultDay(it) },
   weekHeader: @Composable ColumnScope.(WeekState) -> Unit = {
@@ -81,6 +83,7 @@ public fun SelectableWeekCalendar(
     today = today,
     horizontalSwipeEnabled = horizontalSwipeEnabled,
     firstDayOfWeek = firstDayOfWeek,
+    weekDaysScrollEnabled = weekDaysScrollEnabled,
     dayContent = dayContent,
     weekHeader = weekHeader,
     daysOfWeekHeader = daysOfWeekHeader,
@@ -114,6 +117,7 @@ public fun StaticWeekCalendar(
   today: LocalDate = LocalDate.now(),
   horizontalSwipeEnabled: Boolean = true,
   calendarState: WeekCalendarState<EmptySelectionState> = rememberWeekCalendarState(),
+  weekDaysScrollEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<EmptySelectionState>) -> Unit = { DefaultDay(it) },
   weekHeader: @Composable ColumnScope.(WeekState) -> Unit = {
     DefaultProperWeekHeader(it)
@@ -126,6 +130,7 @@ public fun StaticWeekCalendar(
     today = today,
     horizontalSwipeEnabled = horizontalSwipeEnabled,
     firstDayOfWeek = firstDayOfWeek,
+    weekDaysScrollEnabled = weekDaysScrollEnabled,
     dayContent = dayContent,
     weekHeader = weekHeader,
     daysOfWeekHeader = daysOfWeekHeader,
@@ -154,6 +159,7 @@ public fun <T : SelectionState> WeekCalendar(
   today: LocalDate = LocalDate.now(),
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   horizontalSwipeEnabled: Boolean = true,
+  weekDaysScrollEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit = { DefaultDay(it) },
   weekHeader: @Composable ColumnScope.(WeekState) -> Unit = {
     DefaultProperWeekHeader(it)
@@ -176,6 +182,7 @@ public fun <T : SelectionState> WeekCalendar(
         weekState = calendarState.weekState,
         selectionState = calendarState.selectionState,
         today = today,
+        weekDaysScrollEnabled = weekDaysScrollEnabled,
         dayContent = dayContent,
         daysOfWeekHeader = daysOfWeekHeader,
       )
@@ -184,6 +191,7 @@ public fun <T : SelectionState> WeekCalendar(
         daysOfWeek = daysOfWeek,
         weekDays = calendarState.weekState.currentWeek.getWeekDays(today),
         selectionState = calendarState.selectionState,
+        weekDaysScrollEnabled = weekDaysScrollEnabled,
         dayContent = dayContent,
         daysOfWeekHeader = daysOfWeekHeader,
       )

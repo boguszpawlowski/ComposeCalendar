@@ -38,6 +38,7 @@ internal fun <T : SelectionState> WeekPager(
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
   modifier: Modifier = Modifier,
+  weekDaysScrollEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
 ) {
@@ -62,22 +63,34 @@ internal fun <T : SelectionState> WeekPager(
       listState = listState,
     )
   }
-
-  LazyRow(
-    modifier = modifier.testTag("WeekPager"),
-    state = listState,
-    flingBehavior = flingBehavior,
-    verticalAlignment = Alignment.Top,
+  Column(
+    modifier = modifier,
   ) {
-    items(PagerItemCount) { index ->
-      WeekContent(
-        modifier = Modifier.fillParentMaxWidth(),
-        daysOfWeek = daysOfWeek,
-        weekDays = weekListState.getWeekForPage(index).getWeekDays(today = today),
-        selectionState = selectionState,
-        dayContent = dayContent,
-        daysOfWeekHeader = daysOfWeekHeader,
+    if (weekDaysScrollEnabled.not()) {
+      Box(
+        modifier = Modifier
+          .wrapContentHeight()
+          .fillMaxWidth(),
+        content = { daysOfWeekHeader(daysOfWeek) },
       )
+    }
+    LazyRow(
+      modifier = modifier.testTag("WeekPager"),
+      state = listState,
+      flingBehavior = flingBehavior,
+      verticalAlignment = Alignment.Top,
+    ) {
+      items(PagerItemCount) { index ->
+        WeekContent(
+          modifier = Modifier.fillParentMaxWidth(),
+          daysOfWeek = daysOfWeek,
+          weekDays = weekListState.getWeekForPage(index).getWeekDays(today = today),
+          selectionState = selectionState,
+          weekDaysScrollEnabled = weekDaysScrollEnabled,
+          dayContent = dayContent,
+          daysOfWeekHeader = daysOfWeekHeader,
+        )
+      }
     }
   }
 }
@@ -88,18 +101,21 @@ internal fun <T : SelectionState> WeekContent(
   weekDays: WeekDays,
   daysOfWeek: List<DayOfWeek>,
   modifier: Modifier = Modifier,
+  weekDaysScrollEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   daysOfWeekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
 ) {
   Column(
     modifier = modifier,
   ) {
-    Box(
-      modifier = Modifier
-        .wrapContentHeight()
-        .fillMaxWidth(),
-      content = { daysOfWeekHeader(daysOfWeek) },
-    )
+    if (weekDaysScrollEnabled) {
+      Box(
+        modifier = Modifier
+          .wrapContentHeight()
+          .fillMaxWidth(),
+        content = { daysOfWeekHeader(daysOfWeek) },
+      )
+    }
     WeekRow(
       weekDays = weekDays,
       modifier = Modifier.fillMaxWidth(),

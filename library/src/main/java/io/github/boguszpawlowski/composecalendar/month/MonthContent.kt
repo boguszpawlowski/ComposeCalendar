@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
@@ -40,6 +41,7 @@ internal fun <T : SelectionState> MonthPager(
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
   modifier: Modifier = Modifier,
+  weekDaysScrollEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
@@ -66,24 +68,35 @@ internal fun <T : SelectionState> MonthPager(
     )
   }
 
-  LazyRow(
-    modifier = modifier.testTag("MonthPager"),
-    state = listState,
-    flingBehavior = flingBehavior,
-    verticalAlignment = Alignment.Top,
-  ) {
-    items(PagerItemCount) { index ->
-      MonthContent(
-        modifier = Modifier.fillParentMaxWidth(),
-        showAdjacentMonths = showAdjacentMonths,
-        selectionState = selectionState,
-        currentMonth = monthListState.getMonthForPage(index),
-        today = today,
-        daysOfWeek = daysOfWeek,
-        dayContent = dayContent,
-        weekHeader = weekHeader,
-        monthContainer = monthContainer
+  Column(modifier = Modifier.fillMaxWidth()) {
+    if (weekDaysScrollEnabled.not()) {
+      Box(
+        modifier = Modifier
+          .wrapContentHeight()
+          .fillMaxWidth(),
+        content = { weekHeader(daysOfWeek) },
       )
+    }
+    LazyRow(
+      modifier = modifier.testTag("MonthPager"),
+      state = listState,
+      flingBehavior = flingBehavior,
+      verticalAlignment = Alignment.Top,
+    ) {
+      items(PagerItemCount) { index ->
+        MonthContent(
+          modifier = Modifier.fillParentMaxWidth(),
+          showAdjacentMonths = showAdjacentMonths,
+          selectionState = selectionState,
+          currentMonth = monthListState.getMonthForPage(index),
+          today = today,
+          weekDaysScrollEnabled = weekDaysScrollEnabled,
+          daysOfWeek = daysOfWeek,
+          dayContent = dayContent,
+          weekHeader = weekHeader,
+          monthContainer = monthContainer
+        )
+      }
     }
   }
 }
@@ -96,17 +109,19 @@ internal fun <T : SelectionState> MonthContent(
   daysOfWeek: List<DayOfWeek>,
   today: LocalDate,
   modifier: Modifier = Modifier,
+  weekDaysScrollEnabled: Boolean = true,
   dayContent: @Composable BoxScope.(DayState<T>) -> Unit,
   weekHeader: @Composable BoxScope.(List<DayOfWeek>) -> Unit,
   monthContainer: @Composable (content: @Composable (PaddingValues) -> Unit) -> Unit,
 ) {
   Column {
-    Box(
-      modifier = modifier
-        .wrapContentHeight(),
-      content = { weekHeader(daysOfWeek) },
-    )
-
+    if (weekDaysScrollEnabled) {
+      Box(
+        modifier = modifier
+          .wrapContentHeight(),
+        content = { weekHeader(daysOfWeek) },
+      )
+    }
     monthContainer { paddingValues ->
       Column(
         modifier = modifier
