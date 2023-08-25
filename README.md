@@ -199,7 +199,7 @@ you need to hoist the state out of the `Calendar` composable:
     StaticCalendar(calendarState = calendarState)
    
     // now you can manipulate the state from scope of this composable
-    calendarState.monthState.currentMonth = MonthYear.of(2020, 5)
+    calendarState.monthState.currentMonth = YearMonth.of(2020, 5)
   }
 
 ```
