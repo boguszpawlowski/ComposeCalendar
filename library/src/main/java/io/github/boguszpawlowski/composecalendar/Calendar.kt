@@ -235,11 +235,17 @@ public fun <T : SelectionState> Calendar(
 @Composable
 public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
+  minMonth: YearMonth = initialMonth.minusMonths(10000),
+  maxMonth: YearMonth = initialMonth.plusMonths(10000),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
+    MonthState(
+      initialMonth = initialMonth,
+      minMonth = minMonth,
+      maxMonth = maxMonth
+    )
   },
   selectionState: DynamicSelectionState = rememberSaveable(
     saver = DynamicSelectionState.Saver(confirmSelectionChange),
@@ -256,7 +262,13 @@ public fun rememberSelectableCalendarState(
 @Composable
 public fun rememberCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
+  minMonth: YearMonth = initialMonth.minusMonths(10000),
+  maxMonth: YearMonth = initialMonth.plusMonths(10000),
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
+    MonthState(
+      initialMonth = initialMonth,
+      minMonth = minMonth,
+      maxMonth = maxMonth
+    )
   },
 ): CalendarState<EmptySelectionState> = remember { CalendarState(monthState, EmptySelectionState) }

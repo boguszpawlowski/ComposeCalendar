@@ -63,7 +63,11 @@ fun ViewModelSample() {
   val recipes by viewModel.recipesFlow.collectAsState()
   val selectedPrice by viewModel.selectedRecipesPriceFlow.collectAsState(0)
   val monthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = YearMonth.now())
+    MonthState(
+      initialMonth = YearMonth.now(),
+      minMonth = YearMonth.now().minusMonths(10000),
+      maxMonth = YearMonth.now().plusMonths(10000),
+    )
   }
 
   LaunchedEffect(monthState) {

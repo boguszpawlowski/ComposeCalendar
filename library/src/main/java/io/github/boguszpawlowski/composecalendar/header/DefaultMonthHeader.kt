@@ -37,6 +37,7 @@ public fun DefaultMonthHeader(
   ) {
     IconButton(
       modifier = Modifier.testTag("Decrement"),
+      enabled = monthState.currentMonth > monthState.minMonth,
       onClick = { monthState.currentMonth = monthState.currentMonth.minusMonths(1) }
     ) {
       Image(
@@ -57,6 +58,7 @@ public fun DefaultMonthHeader(
     Text(text = monthState.currentMonth.year.toString(), style = MaterialTheme.typography.h4)
     IconButton(
       modifier = Modifier.testTag("Increment"),
+      enabled = monthState.currentMonth < monthState.maxMonth,
       onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }
     ) {
       Image(

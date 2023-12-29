@@ -41,14 +41,12 @@ internal class MonthListState(
   }
 
   fun getMonthForPage(index: Int): YearMonth =
-    initialMonth.plusMonths((index - StartIndex).toLong())
+    monthState.minMonth.plusMonths(index.toLong())
 
   private fun moveToMonth(month: YearMonth) {
     if (month == currentFirstVisibleMonth) return
-    initialMonth.minus(month).let { offset ->
-      coroutineScope.launch {
-        listState.animateScrollToItem((StartIndex - offset).toInt())
-      }
+    coroutineScope.launch {
+      listState.animateScrollToItem(ChronoUnit.MONTHS.between(monthState.minMonth, month).toInt())
     }
   }
 
