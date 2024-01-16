@@ -4,8 +4,8 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.setValue
-import org.json.JSONObject
 import java.time.YearMonth
 
 @Suppress("FunctionName") // Factory function
@@ -22,21 +22,19 @@ public interface MonthState {
   public var maxMonth: YearMonth
 
   public companion object {
-    @Suppress("FunctionName") // Factory function
-    public fun Saver(): Saver<MonthState, String> = Saver(
+    public fun Saver(): Saver<MonthState, Any> = mapSaver(
       save = { monthState ->
-        JSONObject().also { jsonObject ->
-          jsonObject.put("currentMonth", monthState.currentMonth.toString())
-          jsonObject.put("minMonth", monthState.minMonth.toString())
-          jsonObject.put("maxMonth", monthState.maxMonth.toString())
-        }.toString()
+        mapOf(
+          "currentMonth" to monthState.currentMonth.toString(),
+          "minMonth" to monthState.minMonth.toString(),
+          "maxMonth" to monthState.maxMonth.toString(),
+        )
       },
-      restore = {
-        val jsonObject = JSONObject(it)
+      restore = { restoreMap ->
         MonthState(
-          YearMonth.parse(jsonObject.getString("currentMonth")),
-          YearMonth.parse(jsonObject.getString("minMonth")),
-          YearMonth.parse(jsonObject.getString("maxMonth")),
+          YearMonth.parse(restoreMap["currentMonth"] as String),
+          YearMonth.parse(restoreMap["minMonth"] as String),
+          YearMonth.parse(restoreMap["maxMonth"] as String),
         )
       }
     )

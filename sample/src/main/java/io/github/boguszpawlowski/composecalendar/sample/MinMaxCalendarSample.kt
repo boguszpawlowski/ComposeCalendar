@@ -5,14 +5,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +26,7 @@ import io.github.boguszpawlowski.composecalendar.StaticCalendar
 import io.github.boguszpawlowski.composecalendar.rememberCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 @Composable
@@ -40,6 +44,8 @@ fun MinMaxCalendarSample() {
   ) {
     StaticCalendar(calendarState = calendarState)
 
+    Spacer(modifier = Modifier.height(20.dp))
+
     MinMaxControls(calendarState = calendarState)
   }
 }
@@ -48,6 +54,7 @@ fun MinMaxCalendarSample() {
 private fun MinMaxControls(
   calendarState: CalendarState<EmptySelectionState>,
 ) {
+  val dateFormatter = remember { DateTimeFormatter.ofPattern("yyyy-MM") }
   Text(
     text = "Calendar Min Month",
     style = MaterialTheme.typography.h5,
@@ -60,20 +67,21 @@ private fun MinMaxControls(
     Text(
       modifier = Modifier
         .clickable {
-          if (calendarState.monthState.minMonth < calendarState.monthState.currentMonth) {
-            calendarState.monthState.minMonth = calendarState.monthState.minMonth.plusMonths(1L)
-          }
+          calendarState.monthState.minMonth = calendarState.monthState.minMonth.minusMonths(1L)
         }
         .size(25.dp)
         .border(1.dp, Color.Black),
       text = "-",
       textAlign = TextAlign.Center
     )
-    Text(text = ChronoUnit.MONTHS.between(calendarState.monthState.minMonth, calendarState.monthState.currentMonth).toString())
+    val minYearMonthText = remember(calendarState.monthState.minMonth) { dateFormatter.format(calendarState.monthState.minMonth) }
+    Text(text = minYearMonthText)
     Text(
       modifier = Modifier
         .clickable {
-          calendarState.monthState.minMonth = calendarState.monthState.minMonth.minusMonths(1L)
+          if (calendarState.monthState.minMonth < calendarState.monthState.currentMonth) {
+            calendarState.monthState.minMonth = calendarState.monthState.minMonth.plusMonths(1L)
+          }
         }
         .size(25.dp)
         .border(1.dp, Color.Black),
@@ -81,6 +89,8 @@ private fun MinMaxControls(
       textAlign = TextAlign.Center
     )
   }
+  
+  Spacer(modifier = Modifier.height(20.dp))
 
   Text(
     text = "Calendar Max Month",
@@ -103,7 +113,8 @@ private fun MinMaxControls(
       text = "-",
       textAlign = TextAlign.Center
     )
-    Text(text = ChronoUnit.MONTHS.between(calendarState.monthState.currentMonth, calendarState.monthState.maxMonth).toString())
+    val maxYearMonthText = remember(calendarState.monthState.maxMonth) { dateFormatter.format(calendarState.monthState.maxMonth) }
+    Text(text = maxYearMonthText)
     Text(
       modifier = Modifier
         .clickable {

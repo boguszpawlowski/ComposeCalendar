@@ -88,7 +88,12 @@ internal fun <T : SelectionState> MonthPager(
       flingBehavior = flingBehavior,
       verticalAlignment = Alignment.Top,
     ) {
-      items(pagerCount, key = { monthListState.getMonthForPage(it).let { "${it.year}-${it.monthValue}" } }) { index ->
+      items(
+        count = pagerCount,
+        key = { index ->
+          monthListState.getMonthForPage(index).let { "${it.year}-${it.monthValue}" }
+        }
+      ) { index ->
         MonthContent(
           modifier = Modifier.fillParentMaxWidth(),
           showAdjacentMonths = showAdjacentMonths,
