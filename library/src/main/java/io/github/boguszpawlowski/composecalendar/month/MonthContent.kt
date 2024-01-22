@@ -49,7 +49,9 @@ internal fun <T : SelectionState> MonthPager(
 ) {
   val coroutineScope = rememberCoroutineScope()
 
-  val initialFirstVisibleItemIndex = remember(initialMonth, monthState.minMonth) { ChronoUnit.MONTHS.between(monthState.minMonth, initialMonth).toInt() }
+  val initialFirstVisibleItemIndex = remember(initialMonth, monthState.minMonth) {
+    ChronoUnit.MONTHS.between(monthState.minMonth, initialMonth).toInt()
+  }
   val listState = rememberLazyListState(
     initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
   )

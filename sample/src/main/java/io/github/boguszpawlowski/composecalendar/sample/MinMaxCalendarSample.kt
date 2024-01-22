@@ -27,7 +27,6 @@ import io.github.boguszpawlowski.composecalendar.rememberCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 
 @Composable
 fun MinMaxCalendarSample() {
@@ -59,6 +58,26 @@ private fun MinMaxControls(
     text = "Calendar Min Month",
     style = MaterialTheme.typography.h5,
   )
+  MinControls(
+    calendarState = calendarState,
+    dateFormatter = dateFormatter
+  )
+  Spacer(modifier = Modifier.height(20.dp))
+  Text(
+    text = "Calendar Max Month",
+    style = MaterialTheme.typography.h5,
+  )
+  MaxControls(
+    calendarState = calendarState,
+    dateFormatter = dateFormatter
+  )
+}
+
+@Composable
+private fun MinControls(
+  calendarState: CalendarState<EmptySelectionState>,
+  dateFormatter: DateTimeFormatter
+) {
   Row(
     modifier = Modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.spacedBy(5.dp),
@@ -74,7 +93,9 @@ private fun MinMaxControls(
       text = "-",
       textAlign = TextAlign.Center
     )
-    val minYearMonthText = remember(calendarState.monthState.minMonth) { dateFormatter.format(calendarState.monthState.minMonth) }
+    val minYearMonthText = remember(calendarState.monthState.minMonth) {
+      dateFormatter.format(calendarState.monthState.minMonth)
+    }
     Text(text = minYearMonthText)
     Text(
       modifier = Modifier
@@ -89,13 +110,13 @@ private fun MinMaxControls(
       textAlign = TextAlign.Center
     )
   }
-  
-  Spacer(modifier = Modifier.height(20.dp))
+}
 
-  Text(
-    text = "Calendar Max Month",
-    style = MaterialTheme.typography.h5,
-  )
+@Composable
+private fun MaxControls(
+  calendarState: CalendarState<EmptySelectionState>,
+  dateFormatter: DateTimeFormatter
+) {
   Row(
     modifier = Modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.spacedBy(5.dp),
@@ -113,7 +134,9 @@ private fun MinMaxControls(
       text = "-",
       textAlign = TextAlign.Center
     )
-    val maxYearMonthText = remember(calendarState.monthState.maxMonth) { dateFormatter.format(calendarState.monthState.maxMonth) }
+    val maxYearMonthText = remember(calendarState.monthState.maxMonth) {
+      dateFormatter.format(calendarState.monthState.maxMonth)
+    }
     Text(text = maxYearMonthText)
     Text(
       modifier = Modifier
