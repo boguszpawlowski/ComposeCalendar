@@ -9,8 +9,8 @@ public final class io/github/boguszpawlowski/composecalendar/CalendarKt {
 	public static final fun Calendar (Lio/github/boguszpawlowski/composecalendar/CalendarState;Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZZZLkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 	public static final fun SelectableCalendar (Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZZZLio/github/boguszpawlowski/composecalendar/CalendarState;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 	public static final fun StaticCalendar (Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZZZLio/github/boguszpawlowski/composecalendar/CalendarState;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
-	public static final fun rememberCalendarState (Ljava/time/YearMonth;Lio/github/boguszpawlowski/composecalendar/header/MonthState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/CalendarState;
-	public static final fun rememberSelectableCalendarState (Ljava/time/YearMonth;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;Lkotlin/jvm/functions/Function1;Lio/github/boguszpawlowski/composecalendar/header/MonthState;Lio/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/CalendarState;
+	public static final fun rememberCalendarState (Ljava/time/YearMonth;Ljava/time/YearMonth;Ljava/time/YearMonth;Lio/github/boguszpawlowski/composecalendar/header/MonthState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/CalendarState;
+	public static final fun rememberSelectableCalendarState (Ljava/time/YearMonth;Ljava/time/YearMonth;Ljava/time/YearMonth;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;Lkotlin/jvm/functions/Function1;Lio/github/boguszpawlowski/composecalendar/header/MonthState;Lio/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/CalendarState;
 }
 
 public final class io/github/boguszpawlowski/composecalendar/CalendarState {
@@ -141,7 +141,11 @@ public final class io/github/boguszpawlowski/composecalendar/header/DefaultWeekH
 public abstract interface class io/github/boguszpawlowski/composecalendar/header/MonthState {
 	public static final field Companion Lio/github/boguszpawlowski/composecalendar/header/MonthState$Companion;
 	public abstract fun getCurrentMonth ()Ljava/time/YearMonth;
+	public abstract fun getMaxMonth ()Ljava/time/YearMonth;
+	public abstract fun getMinMonth ()Ljava/time/YearMonth;
 	public abstract fun setCurrentMonth (Ljava/time/YearMonth;)V
+	public abstract fun setMaxMonth (Ljava/time/YearMonth;)V
+	public abstract fun setMinMonth (Ljava/time/YearMonth;)V
 }
 
 public final class io/github/boguszpawlowski/composecalendar/header/MonthState$Companion {
@@ -149,7 +153,7 @@ public final class io/github/boguszpawlowski/composecalendar/header/MonthState$C
 }
 
 public final class io/github/boguszpawlowski/composecalendar/header/MonthStateKt {
-	public static final fun MonthState (Ljava/time/YearMonth;)Lio/github/boguszpawlowski/composecalendar/header/MonthState;
+	public static final fun MonthState (Ljava/time/YearMonth;Ljava/time/YearMonth;Ljava/time/YearMonth;)Lio/github/boguszpawlowski/composecalendar/header/MonthState;
 }
 
 public abstract interface class io/github/boguszpawlowski/composecalendar/header/WeekState {

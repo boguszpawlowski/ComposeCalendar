@@ -29,6 +29,7 @@ import io.github.boguszpawlowski.composecalendar.week.getWeeks
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.temporal.ChronoUnit
 
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
@@ -48,8 +49,11 @@ internal fun <T : SelectionState> MonthPager(
 ) {
   val coroutineScope = rememberCoroutineScope()
 
+  val initialFirstVisibleItemIndex = remember(initialMonth, monthState.minMonth) {
+    ChronoUnit.MONTHS.between(monthState.minMonth, initialMonth).toInt()
+  }
   val listState = rememberLazyListState(
-    initialFirstVisibleItemIndex = StartIndex,
+    initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
   )
   val flingBehavior = rememberSnapperFlingBehavior(
     lazyListState = listState,
@@ -77,13 +81,21 @@ internal fun <T : SelectionState> MonthPager(
         content = { weekHeader(daysOfWeek) },
       )
     }
+    val pagerCount = remember(monthState.minMonth, monthState.maxMonth) {
+      ChronoUnit.MONTHS.between(monthState.minMonth, monthState.maxMonth).toInt() + 1
+    }
     LazyRow(
       modifier = modifier.testTag("MonthPager"),
       state = listState,
       flingBehavior = flingBehavior,
       verticalAlignment = Alignment.Top,
     ) {
-      items(PagerItemCount) { index ->
+      items(
+        count = pagerCount,
+        key = { index ->
+          monthListState.getMonthForPage(index).let { "${it.year}-${it.monthValue}" }
+        }
+      ) { index ->
         MonthContent(
           modifier = Modifier.fillParentMaxWidth(),
           showAdjacentMonths = showAdjacentMonths,

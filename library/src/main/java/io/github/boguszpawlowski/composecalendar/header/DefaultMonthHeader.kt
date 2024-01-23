@@ -35,16 +35,7 @@ public fun DefaultMonthHeader(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    IconButton(
-      modifier = Modifier.testTag("Decrement"),
-      onClick = { monthState.currentMonth = monthState.currentMonth.minusMonths(1) }
-    ) {
-      Image(
-        imageVector = Icons.Default.KeyboardArrowLeft,
-        colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
-        contentDescription = "Previous",
-      )
-    }
+    DecrementButton(monthState = monthState)
     Text(
       modifier = Modifier.testTag("MonthLabel"),
       text = monthState.currentMonth.month
@@ -55,15 +46,40 @@ public fun DefaultMonthHeader(
     )
     Spacer(modifier = Modifier.width(8.dp))
     Text(text = monthState.currentMonth.year.toString(), style = MaterialTheme.typography.h4)
-    IconButton(
-      modifier = Modifier.testTag("Increment"),
-      onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }
-    ) {
-      Image(
-        imageVector = Icons.Default.KeyboardArrowRight,
-        colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
-        contentDescription = "Next",
-      )
-    }
+    IncrementButton(monthState = monthState)
+  }
+}
+
+@Composable
+private fun DecrementButton(
+  monthState: MonthState,
+) {
+  IconButton(
+    modifier = Modifier.testTag("Decrement"),
+    enabled = monthState.currentMonth > monthState.minMonth,
+    onClick = { monthState.currentMonth = monthState.currentMonth.minusMonths(1) }
+  ) {
+    Image(
+      imageVector = Icons.Default.KeyboardArrowLeft,
+      colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+      contentDescription = "Previous",
+    )
+  }
+}
+
+@Composable
+private fun IncrementButton(
+  monthState: MonthState,
+) {
+  IconButton(
+    modifier = Modifier.testTag("Increment"),
+    enabled = monthState.currentMonth < monthState.maxMonth,
+    onClick = { monthState.currentMonth = monthState.currentMonth.plusMonths(1) }
+  ) {
+    Image(
+      imageVector = Icons.Default.KeyboardArrowRight,
+      colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+      contentDescription = "Next",
+    )
   }
 }

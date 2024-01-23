@@ -47,9 +47,15 @@ private class MonthSelectionState(
 @Composable
 private fun rememberMonthSelectionState(
   initialMonth: YearMonth = YearMonth.now(),
+  minMonth: YearMonth = initialMonth.minusMonths(10000),
+  maxMonth: YearMonth = initialMonth.plusMonths(10000),
   initialSelection: YearMonth? = null,
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
+    MonthState(
+      initialMonth = initialMonth,
+      minMonth = minMonth,
+      maxMonth = maxMonth
+    )
   },
   selectionState: MonthSelectionState = rememberSaveable(saver = MonthSelectionState.Saver()) {
     MonthSelectionState(initialSelection = initialSelection)

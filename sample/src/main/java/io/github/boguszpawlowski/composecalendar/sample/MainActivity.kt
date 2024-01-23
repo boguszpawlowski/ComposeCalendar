@@ -58,6 +58,7 @@ fun MainScreen() {
         composable("custom_selection") { CustomSelectionSample() }
         composable("viewmodel") { ViewModelSample() }
         composable("kotlinx_datetime") { KotlinXDateTimeSample() }
+        composable("min_max_month") { MinMaxCalendarSample() }
       }
     }
   }
@@ -102,6 +103,11 @@ fun MainMenu(navController: NavController) {
 
     Button(onClick = { navController.navigate("kotlinx_datetime") }) {
       Text(text = "Kotlinx DateTime")
+    }
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Button(onClick = { navController.navigate("min_max_month") }) {
+      Text(text = "Min Max Month")
     }
   }
 }

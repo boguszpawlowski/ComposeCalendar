@@ -235,11 +235,17 @@ public fun <T : SelectionState> Calendar(
 @Composable
 public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
+  minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarMonthRange),
+  maxMonth: YearMonth = initialMonth.plusMonths(DefaultCalendarMonthRange),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
+    MonthState(
+      initialMonth = initialMonth,
+      minMonth = minMonth,
+      maxMonth = maxMonth
+    )
   },
   selectionState: DynamicSelectionState = rememberSaveable(
     saver = DynamicSelectionState.Saver(confirmSelectionChange),
@@ -256,7 +262,15 @@ public fun rememberSelectableCalendarState(
 @Composable
 public fun rememberCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
+  minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarMonthRange),
+  maxMonth: YearMonth = initialMonth.plusMonths(DefaultCalendarMonthRange),
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = initialMonth)
+    MonthState(
+      initialMonth = initialMonth,
+      minMonth = minMonth,
+      maxMonth = maxMonth
+    )
   },
 ): CalendarState<EmptySelectionState> = remember { CalendarState(monthState, EmptySelectionState) }
+
+internal const val DefaultCalendarMonthRange = 10000L

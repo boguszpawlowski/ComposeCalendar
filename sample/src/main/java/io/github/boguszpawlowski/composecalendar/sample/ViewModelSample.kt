@@ -62,22 +62,17 @@ fun ViewModelSample() {
   val viewModel = remember { RecipeViewModel() }
   val recipes by viewModel.recipesFlow.collectAsState()
   val selectedPrice by viewModel.selectedRecipesPriceFlow.collectAsState(0)
-  val monthState = rememberSaveable(saver = MonthState.Saver()) {
-    MonthState(initialMonth = YearMonth.now())
-  }
-
+  val monthState = rememberMonthStateDefault()
   LaunchedEffect(monthState) {
     snapshotFlow { monthState.currentMonth }
       .onEach { viewModel.onMonthChanged(it) }
       .launchIn(this)
   }
-
   val state = rememberSelectableCalendarState(
     confirmSelectionChange = { viewModel.onSelectionChanged(it); true },
     monthState = monthState,
     initialSelectionMode = Period,
   )
-
   Column(
     Modifier.verticalScroll(rememberScrollState())
   ) {
@@ -90,15 +85,22 @@ fun ViewModelSample() {
         )
       }
     )
-
     Spacer(modifier = Modifier.height(20.dp))
     Text(
       text = "Selected recipes price: $selectedPrice",
       style = MaterialTheme.typography.h6,
     )
-
     Spacer(modifier = Modifier.height(20.dp))
   }
+}
+
+@Composable
+private fun rememberMonthStateDefault() = rememberSaveable(saver = MonthState.Saver()) {
+  MonthState(
+    initialMonth = YearMonth.now(),
+    minMonth = YearMonth.now().minusMonths(10000),
+    maxMonth = YearMonth.now().plusMonths(10000),
+  )
 }
 
 /**
