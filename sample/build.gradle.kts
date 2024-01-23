@@ -14,11 +14,6 @@ android {
     versionName = "0.0.1"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
-
-  packagingOptions {
-    exclude("META-INF/AL2.0")
-    exclude("META-INF/LGPL2.1")
-  }
 }
 
 dependencies {
