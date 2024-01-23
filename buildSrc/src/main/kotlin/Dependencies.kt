@@ -11,7 +11,7 @@ object AndroidSdk {
 }
 
 object Kotlin {
-  const val Version = "1.8.10"
+  const val Version = "1.9.20"
   const val CompatibilityPluginVersion = "0.11.0"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
@@ -32,7 +32,7 @@ object Kotlin {
 }
 
 object Android {
-  const val GradlePlugin = "com.android.tools.build:gradle:7.4.2"
+  const val GradlePlugin = "com.android.tools.build:gradle:8.2.0"
 
   const val ApplicationPluginId = "com.android.application"
   const val LibraryPluginId = "com.android.library"

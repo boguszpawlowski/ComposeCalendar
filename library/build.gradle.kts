@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+  namespace = "io.github.boguszpawlowski.composecalendar"
   tasks.withType<KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict" + "-Xcontext-receivers"

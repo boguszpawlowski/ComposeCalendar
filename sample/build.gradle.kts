@@ -9,15 +9,17 @@ plugins {
 val commitsCount = Grgit.open(mapOf("dir" to rootDir)).log().size
 
 android {
+  namespace = "io.github.boguszpawlowski.composecalendar.sample"
   defaultConfig {
     versionCode = commitsCount
     versionName = "0.0.1"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
-  packagingOptions {
-    exclude("META-INF/AL2.0")
-    exclude("META-INF/LGPL2.1")
+  packaging {
+    resources {
+      excludes.addAll(listOf("META-INF/AL2.0", "META-INF/LGPL2.1"))
+    }
   }
 }
 

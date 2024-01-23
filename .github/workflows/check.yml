@@ -18,10 +18,11 @@ jobs:
           key: cache-gradle-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
           restore-keys: cache-gradle-
 
-      - name: Setup Java 15
-        uses: actions/setup-java@v1
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
         with:
-          java-version: '15'
+          distribution: zulu
+          java-version: 17
 
       - name: Run Detekt
         run: ./gradlew detekt --stacktrace
@@ -44,10 +45,11 @@ jobs:
           key: cache-gradle-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
           restore-keys: cache-gradle-
 
-      - name: Setup Java 15
-        uses: actions/setup-java@v1
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
         with:
-          java-version: '15'
+          distribution: zulu
+          java-version: 17
 
       - name: Run Debug Unit Tests
         run: ./gradlew test --stacktrace
@@ -71,10 +73,11 @@ jobs:
           key: cache-gradle-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
           restore-keys: cache-gradle-
 
-      - name: Setup Java 15
-        uses: actions/setup-java@v1
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
         with:
-          java-version: '15'
+          distribution: zulu
+          java-version: 17
 
       - name: Build app and test APKs
         run: ./gradlew :sample:assembleDebug && ./gradlew  :sample:assembleDebugAndroidTest
@@ -114,10 +117,11 @@ jobs:
           key: cache-gradle-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
           restore-keys: cache-gradle-
 
-      - name: Setup Java 15
-        uses: actions/setup-java@v1
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
         with:
-          java-version: '15'
+          distribution: zulu
+          java-version: 17
 
       - name: Check API compatibility
         run: ./gradlew apiCheck
