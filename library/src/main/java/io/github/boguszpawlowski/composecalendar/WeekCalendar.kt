@@ -212,11 +212,17 @@ public fun <T : SelectionState> WeekCalendar(
 public fun rememberSelectableWeekCalendarState(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   initialWeek: Week = Week.now(firstDayOfWeek),
+  minWeek: Week = initialWeek.minusWeeks(10_000),
+  maxWeek: Week = initialWeek.plusWeeks(10_000),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
-    WeekState(initialWeek = initialWeek)
+    WeekState(
+      initialWeek = initialWeek,
+      minWeek = minWeek,
+      maxWeek = maxWeek,
+    )
   },
   selectionState: DynamicSelectionState = rememberSaveable(
     saver = DynamicSelectionState.Saver(confirmSelectionChange),
@@ -236,8 +242,14 @@ public fun rememberSelectableWeekCalendarState(
 public fun rememberWeekCalendarState(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   initialWeek: Week = Week.now(firstDayOfWeek),
+  minWeek: Week = initialWeek.minusWeeks(10_000),
+  maxWeek: Week = initialWeek.plusWeeks(10_000),
   weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
-    WeekState(initialWeek = initialWeek)
+    WeekState(
+      initialWeek = initialWeek,
+      minWeek = minWeek,
+      maxWeek = maxWeek,
+    )
   },
 ): WeekCalendarState<EmptySelectionState> =
   remember { WeekCalendarState(weekState, EmptySelectionState) }

@@ -1,4 +1,4 @@
-name: Publish Snaphot
+name: Publish Snapshot
 on:
   workflow_dispatch:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-maven-snapshot:
-    name: Deploy To Maven Snaphot
+    name: Deploy To Maven Snapshot
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

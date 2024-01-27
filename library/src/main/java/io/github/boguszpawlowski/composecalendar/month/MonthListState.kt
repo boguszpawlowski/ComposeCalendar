@@ -17,7 +17,6 @@ import java.time.temporal.ChronoUnit
 @Stable
 internal class MonthListState(
   private val coroutineScope: CoroutineScope,
-  private val initialMonth: YearMonth,
   private val monthState: MonthState,
   private val listState: LazyListState,
 ) {

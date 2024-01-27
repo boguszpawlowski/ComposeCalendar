@@ -23,8 +23,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.github.boguszpawlowski.composecalendar.CalendarState
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
+import io.github.boguszpawlowski.composecalendar.StaticWeekCalendar
+import io.github.boguszpawlowski.composecalendar.WeekCalendarState
 import io.github.boguszpawlowski.composecalendar.rememberCalendarState
+import io.github.boguszpawlowski.composecalendar.rememberWeekCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.EmptySelectionState
+import io.github.boguszpawlowski.composecalendar.week.Week
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
@@ -34,6 +38,12 @@ fun MinMaxCalendarSample() {
     initialMonth = YearMonth.now(),
     minMonth = YearMonth.now(),
     maxMonth = YearMonth.now()
+  )
+
+  val weekCalendarState = rememberWeekCalendarState(
+    initialWeek = Week.now(),
+    minWeek = Week.now(),
+    maxWeek = Week.now(),
   )
 
   Column(
@@ -46,6 +56,14 @@ fun MinMaxCalendarSample() {
     Spacer(modifier = Modifier.height(20.dp))
 
     MinMaxControls(calendarState = calendarState)
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    StaticWeekCalendar(calendarState = weekCalendarState)
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    WeekMinMaxControls(calendarState = weekCalendarState)
   }
 }
 
@@ -76,7 +94,7 @@ private fun MinMaxControls(
 @Composable
 private fun MinControls(
   calendarState: CalendarState<EmptySelectionState>,
-  dateFormatter: DateTimeFormatter
+  dateFormatter: DateTimeFormatter,
 ) {
   Row(
     modifier = Modifier.fillMaxWidth(),
@@ -100,9 +118,7 @@ private fun MinControls(
     Text(
       modifier = Modifier
         .clickable {
-          if (calendarState.monthState.minMonth < calendarState.monthState.currentMonth) {
-            calendarState.monthState.minMonth = calendarState.monthState.minMonth.plusMonths(1L)
-          }
+          calendarState.monthState.minMonth = calendarState.monthState.minMonth.plusMonths(1L)
         }
         .size(25.dp)
         .border(1.dp, Color.Black),
@@ -115,7 +131,7 @@ private fun MinControls(
 @Composable
 private fun MaxControls(
   calendarState: CalendarState<EmptySelectionState>,
-  dateFormatter: DateTimeFormatter
+  dateFormatter: DateTimeFormatter,
 ) {
   Row(
     modifier = Modifier.fillMaxWidth(),
@@ -125,9 +141,7 @@ private fun MaxControls(
     Text(
       modifier = Modifier
         .clickable {
-          if (calendarState.monthState.maxMonth > calendarState.monthState.currentMonth) {
-            calendarState.monthState.maxMonth = calendarState.monthState.maxMonth.plusMonths(1L)
-          }
+          calendarState.monthState.maxMonth = calendarState.monthState.maxMonth.minusMonths(1L)
         }
         .size(25.dp)
         .border(1.dp, Color.Black),
@@ -142,6 +156,104 @@ private fun MaxControls(
       modifier = Modifier
         .clickable {
           calendarState.monthState.maxMonth = calendarState.monthState.maxMonth.plusMonths(1L)
+        }
+        .size(25.dp)
+        .border(1.dp, Color.Black),
+      text = "+",
+      textAlign = TextAlign.Center
+    )
+  }
+}
+
+@Composable
+private fun WeekMinMaxControls(
+  calendarState: WeekCalendarState<EmptySelectionState>,
+) {
+  val dateFormatter = remember { DateTimeFormatter.ofPattern("yyyy-MM") }
+  Text(
+    text = "Calendar Min Week",
+    style = MaterialTheme.typography.h5,
+  )
+  WeekMinControls(
+    calendarState = calendarState,
+    dateFormatter = dateFormatter
+  )
+  Spacer(modifier = Modifier.height(20.dp))
+  Text(
+    text = "Calendar Max Week",
+    style = MaterialTheme.typography.h5,
+  )
+  WeekMaxControls(
+    calendarState = calendarState,
+    dateFormatter = dateFormatter
+  )
+}
+
+@Composable
+private fun WeekMinControls(
+  calendarState: WeekCalendarState<EmptySelectionState>,
+  dateFormatter: DateTimeFormatter,
+) {
+  Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.spacedBy(5.dp),
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    Text(
+      modifier = Modifier
+        .clickable {
+          calendarState.weekState.minWeek = --calendarState.weekState.minWeek
+        }
+        .size(25.dp)
+        .border(1.dp, Color.Black),
+      text = "-",
+      textAlign = TextAlign.Center
+    )
+    val minYearMonthText = remember(calendarState.weekState.minWeek) {
+      dateFormatter.format(calendarState.weekState.minWeek.start)
+    }
+    Text(text = minYearMonthText)
+    Text(
+      modifier = Modifier
+        .clickable {
+          calendarState.weekState.minWeek = ++calendarState.weekState.minWeek
+        }
+        .size(25.dp)
+        .border(1.dp, Color.Black),
+      text = "+",
+      textAlign = TextAlign.Center
+    )
+  }
+}
+
+@Composable
+private fun WeekMaxControls(
+  calendarState: WeekCalendarState<EmptySelectionState>,
+  dateFormatter: DateTimeFormatter,
+) {
+  Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.spacedBy(5.dp),
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    Text(
+      modifier = Modifier
+        .clickable {
+          calendarState.weekState.maxWeek = --calendarState.weekState.maxWeek
+        }
+        .size(25.dp)
+        .border(1.dp, Color.Black),
+      text = "-",
+      textAlign = TextAlign.Center
+    )
+    val maxYearMonthText = remember(calendarState.weekState.maxWeek) {
+      dateFormatter.format(calendarState.weekState.maxWeek.start)
+    }
+    Text(text = maxYearMonthText)
+    Text(
+      modifier = Modifier
+        .clickable {
+          calendarState.weekState.maxWeek = ++calendarState.weekState.maxWeek
         }
         .size(25.dp)
         .border(1.dp, Color.Black),
