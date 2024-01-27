@@ -70,6 +70,3 @@ internal class MonthListState(
 
 private operator fun YearMonth.minus(other: YearMonth) =
   ChronoUnit.MONTHS.between(other, this)
-
-internal const val PagerItemCount = 20_000
-internal const val StartIndex = PagerItemCount / 2

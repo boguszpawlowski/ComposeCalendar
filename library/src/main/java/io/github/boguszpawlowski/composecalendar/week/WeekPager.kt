@@ -21,8 +21,6 @@ import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.WeekDay
 import io.github.boguszpawlowski.composecalendar.header.WeekState
-import io.github.boguszpawlowski.composecalendar.month.PagerItemCount
-import io.github.boguszpawlowski.composecalendar.month.StartIndex
 import io.github.boguszpawlowski.composecalendar.month.coerceSnapIndex
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import java.time.DayOfWeek

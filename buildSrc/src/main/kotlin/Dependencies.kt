@@ -84,7 +84,7 @@ object Material {
 }
 
 object DetektLib {
-  const val Version = "1.21.0"
+  const val Version = "1.23.4"
 
   const val PluginId = "io.gitlab.arturbosch.detekt"
   const val Plugin = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$Version"
