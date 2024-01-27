@@ -231,12 +231,14 @@ public fun <T : SelectionState> Calendar(
  * @param initialSelection initial selection of the composable
  * @param initialSelectionMode initial mode of the selection
  * @param confirmSelectionChange callback for optional side-effects handling and vetoing the state change
+ * @param minMonth first month that can be shown
+ * @param maxMonth last month that can be shown
  */
 @Composable
 public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
-  minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarMonthRange),
-  maxMonth: YearMonth = initialMonth.plusMonths(DefaultCalendarMonthRange),
+  minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarPagerRange),
+  maxMonth: YearMonth = initialMonth.plusMonths(DefaultCalendarPagerRange),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
@@ -258,12 +260,14 @@ public fun rememberSelectableCalendarState(
  * Helper function for providing a [CalendarState] implementation without a selection mechanism.
  *
  * @param initialMonth initially rendered month
+ * @param minMonth first month that can be shown
+ * @param maxMonth last month that can be shown
  */
 @Composable
 public fun rememberCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
-  minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarMonthRange),
-  maxMonth: YearMonth = initialMonth.plusMonths(DefaultCalendarMonthRange),
+  minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarPagerRange),
+  maxMonth: YearMonth = initialMonth.plusMonths(DefaultCalendarPagerRange),
   monthState: MonthState = rememberSaveable(saver = MonthState.Saver()) {
     MonthState(
       initialMonth = initialMonth,
@@ -273,4 +277,4 @@ public fun rememberCalendarState(
   },
 ): CalendarState<EmptySelectionState> = remember { CalendarState(monthState, EmptySelectionState) }
 
-internal const val DefaultCalendarMonthRange = 10000L
+internal const val DefaultCalendarPagerRange = 10_000L

@@ -66,6 +66,3 @@ internal class WeekListState(
     return result
   }
 }
-
-private operator fun Week.minus(other: Week) =
-  ChronoUnit.WEEKS.between(other.start, this.start)

@@ -57,7 +57,7 @@ fun MinMaxCalendarSample() {
 
     MinMaxControls(calendarState = calendarState)
 
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer(modifier = Modifier.height(40.dp))
 
     StaticWeekCalendar(calendarState = weekCalendarState)
 
@@ -169,7 +169,7 @@ private fun MaxControls(
 private fun WeekMinMaxControls(
   calendarState: WeekCalendarState<EmptySelectionState>,
 ) {
-  val dateFormatter = remember { DateTimeFormatter.ofPattern("yyyy-MM") }
+  val dateFormatter = remember { DateTimeFormatter.ofPattern("yyyy-MM-dd") }
   Text(
     text = "Calendar Min Week",
     style = MaterialTheme.typography.h5,
@@ -210,7 +210,9 @@ private fun WeekMinControls(
       textAlign = TextAlign.Center
     )
     val minYearMonthText = remember(calendarState.weekState.minWeek) {
-      dateFormatter.format(calendarState.weekState.minWeek.start)
+      val start = dateFormatter.format(calendarState.weekState.minWeek.start)
+      val end = dateFormatter.format(calendarState.weekState.minWeek.end)
+      "$start - $end"
     }
     Text(text = minYearMonthText)
     Text(
@@ -247,7 +249,9 @@ private fun WeekMaxControls(
       textAlign = TextAlign.Center
     )
     val maxYearMonthText = remember(calendarState.weekState.maxWeek) {
-      dateFormatter.format(calendarState.weekState.maxWeek.start)
+      val start = dateFormatter.format(calendarState.weekState.maxWeek.start)
+      val end = dateFormatter.format(calendarState.weekState.maxWeek.end)
+      "$start - $end"
     }
     Text(text = maxYearMonthText)
     Text(

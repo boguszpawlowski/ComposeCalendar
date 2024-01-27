@@ -76,8 +76,8 @@ public final class io/github/boguszpawlowski/composecalendar/WeekCalendarKt {
 	public static final fun SelectableWeekCalendar (Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZZLio/github/boguszpawlowski/composecalendar/WeekCalendarState;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
 	public static final fun StaticWeekCalendar (Landroidx/compose/ui/Modifier;Ljava/time/DayOfWeek;Ljava/time/LocalDate;ZLio/github/boguszpawlowski/composecalendar/WeekCalendarState;ZLkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
 	public static final fun WeekCalendar (Lio/github/boguszpawlowski/composecalendar/WeekCalendarState;Landroidx/compose/ui/Modifier;Ljava/time/LocalDate;Ljava/time/DayOfWeek;ZZLkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
-	public static final fun rememberSelectableWeekCalendarState (Ljava/time/DayOfWeek;Lio/github/boguszpawlowski/composecalendar/week/Week;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;Lkotlin/jvm/functions/Function1;Lio/github/boguszpawlowski/composecalendar/header/WeekState;Lio/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/WeekCalendarState;
-	public static final fun rememberWeekCalendarState (Ljava/time/DayOfWeek;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/header/WeekState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/WeekCalendarState;
+	public static final fun rememberSelectableWeekCalendarState (Ljava/time/DayOfWeek;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/week/Week;Ljava/util/List;Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;Lkotlin/jvm/functions/Function1;Lio/github/boguszpawlowski/composecalendar/header/WeekState;Lio/github/boguszpawlowski/composecalendar/selection/DynamicSelectionState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/WeekCalendarState;
+	public static final fun rememberWeekCalendarState (Ljava/time/DayOfWeek;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/header/WeekState;Landroidx/compose/runtime/Composer;II)Lio/github/boguszpawlowski/composecalendar/WeekCalendarState;
 }
 
 public final class io/github/boguszpawlowski/composecalendar/WeekCalendarState {
@@ -159,7 +159,11 @@ public final class io/github/boguszpawlowski/composecalendar/header/MonthStateKt
 public abstract interface class io/github/boguszpawlowski/composecalendar/header/WeekState {
 	public static final field Companion Lio/github/boguszpawlowski/composecalendar/header/WeekState$Companion;
 	public abstract fun getCurrentWeek ()Lio/github/boguszpawlowski/composecalendar/week/Week;
+	public abstract fun getMaxWeek ()Lio/github/boguszpawlowski/composecalendar/week/Week;
+	public abstract fun getMinWeek ()Lio/github/boguszpawlowski/composecalendar/week/Week;
 	public abstract fun setCurrentWeek (Lio/github/boguszpawlowski/composecalendar/week/Week;)V
+	public abstract fun setMaxWeek (Lio/github/boguszpawlowski/composecalendar/week/Week;)V
+	public abstract fun setMinWeek (Lio/github/boguszpawlowski/composecalendar/week/Week;)V
 }
 
 public final class io/github/boguszpawlowski/composecalendar/header/WeekState$Companion {
@@ -167,7 +171,7 @@ public final class io/github/boguszpawlowski/composecalendar/header/WeekState$Co
 }
 
 public final class io/github/boguszpawlowski/composecalendar/header/WeekStateKt {
-	public static final fun WeekState (Lio/github/boguszpawlowski/composecalendar/week/Week;)Lio/github/boguszpawlowski/composecalendar/header/WeekState;
+	public static final fun WeekState (Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/week/Week;)Lio/github/boguszpawlowski/composecalendar/header/WeekState;
 }
 
 public final class io/github/boguszpawlowski/composecalendar/selection/DynamicSelectionHandler {
@@ -223,6 +227,7 @@ public final class io/github/boguszpawlowski/composecalendar/week/Week {
 	public static final field $stable I
 	public static final field Companion Lio/github/boguszpawlowski/composecalendar/week/Week$Companion;
 	public fun <init> (Ljava/util/List;)V
+	public final fun compareTo (Lio/github/boguszpawlowski/composecalendar/week/Week;)I
 	public final fun component1 ()Ljava/util/List;
 	public final fun copy (Ljava/util/List;)Lio/github/boguszpawlowski/composecalendar/week/Week;
 	public static synthetic fun copy$default (Lio/github/boguszpawlowski/composecalendar/week/Week;Ljava/util/List;ILjava/lang/Object;)Lio/github/boguszpawlowski/composecalendar/week/Week;
@@ -234,6 +239,7 @@ public final class io/github/boguszpawlowski/composecalendar/week/Week {
 	public final fun getYearMonth ()Ljava/time/YearMonth;
 	public fun hashCode ()I
 	public final fun inc ()Lio/github/boguszpawlowski/composecalendar/week/Week;
+	public final fun minusWeeks (J)Lio/github/boguszpawlowski/composecalendar/week/Week;
 	public final fun plusWeeks (J)Lio/github/boguszpawlowski/composecalendar/week/Week;
 	public fun toString ()Ljava/lang/String;
 }
@@ -241,5 +247,9 @@ public final class io/github/boguszpawlowski/composecalendar/week/Week {
 public final class io/github/boguszpawlowski/composecalendar/week/Week$Companion {
 	public final fun now (Ljava/time/DayOfWeek;)Lio/github/boguszpawlowski/composecalendar/week/Week;
 	public static synthetic fun now$default (Lio/github/boguszpawlowski/composecalendar/week/Week$Companion;Ljava/time/DayOfWeek;ILjava/lang/Object;)Lio/github/boguszpawlowski/composecalendar/week/Week;
+}
+
+public final class io/github/boguszpawlowski/composecalendar/week/WeekKt {
+	public static final fun between (Ljava/time/temporal/ChronoUnit;Lio/github/boguszpawlowski/composecalendar/week/Week;Lio/github/boguszpawlowski/composecalendar/week/Week;)I
 }
 
