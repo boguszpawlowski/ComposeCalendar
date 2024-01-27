@@ -1,16 +1,17 @@
 name: Check
 on:
   pull_request:
+
 jobs:
   detekt:
     name: Detekt Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache Gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches/
@@ -29,15 +30,16 @@ jobs:
 
       - name: Stop Gradle
         run: ./gradlew --stop
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache Gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches/
@@ -56,16 +58,17 @@ jobs:
 
       - name: Stop Gradle
         run: ./gradlew --stop
+
   ui-tests:
     name: FTL UI Tests
     needs: [unit-tests, detekt]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache Gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches/
@@ -88,7 +91,7 @@ jobs:
           credentials_json: ${{ secrets.GCLOUD_AUTH_KEY }}
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: Use gcloud CLI
         run: gcloud info
@@ -101,15 +104,16 @@ jobs:
 
       - name: Stop Gradle
         run: ./gradlew --stop
+
   compatibility-check:
     name: Compatibility Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache Gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches/
