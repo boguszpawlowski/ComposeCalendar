@@ -207,16 +207,24 @@ public fun <T : SelectionState> WeekCalendar(
  * @param initialSelection initial selection of the composable
  * @param initialSelectionMode initial mode of the selection
  * @param confirmSelectionChange callback for optional side-effects handling and vetoing the state change
+ * @param minWeek first week that can be shown
+ * @param maxWeek last week that can be shown
  */
 @Composable
 public fun rememberSelectableWeekCalendarState(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   initialWeek: Week = Week.now(firstDayOfWeek),
+  minWeek: Week = initialWeek.minusWeeks(DefaultCalendarPagerRange),
+  maxWeek: Week = initialWeek.plusWeeks(DefaultCalendarPagerRange),
   initialSelection: List<LocalDate> = emptyList(),
   initialSelectionMode: SelectionMode = SelectionMode.Single,
   confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
-    WeekState(initialWeek = initialWeek)
+    WeekState(
+      initialWeek = initialWeek,
+      minWeek = minWeek,
+      maxWeek = maxWeek,
+    )
   },
   selectionState: DynamicSelectionState = rememberSaveable(
     saver = DynamicSelectionState.Saver(confirmSelectionChange),
@@ -231,13 +239,21 @@ public fun rememberSelectableWeekCalendarState(
  *
  * @param firstDayOfWeek first day of a week, defaults to current locale's
  * @param initialWeek initially rendered week
+ * @param minWeek first week that can be shown
+ * @param maxWeek last week that can be shown
  */
 @Composable
 public fun rememberWeekCalendarState(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   initialWeek: Week = Week.now(firstDayOfWeek),
+  minWeek: Week = initialWeek.minusWeeks(DefaultCalendarPagerRange),
+  maxWeek: Week = initialWeek.plusWeeks(DefaultCalendarPagerRange),
   weekState: WeekState = rememberSaveable(saver = WeekState.Saver()) {
-    WeekState(initialWeek = initialWeek)
+    WeekState(
+      initialWeek = initialWeek,
+      minWeek = minWeek,
+      maxWeek = maxWeek,
+    )
   },
 ): WeekCalendarState<EmptySelectionState> =
   remember { WeekCalendarState(weekState, EmptySelectionState) }

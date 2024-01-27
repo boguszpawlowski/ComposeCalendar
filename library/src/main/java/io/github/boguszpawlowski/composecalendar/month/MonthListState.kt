@@ -17,7 +17,6 @@ import java.time.temporal.ChronoUnit
 @Stable
 internal class MonthListState(
   private val coroutineScope: CoroutineScope,
-  private val initialMonth: YearMonth,
   private val monthState: MonthState,
   private val listState: LazyListState,
 ) {
@@ -71,6 +70,3 @@ internal class MonthListState(
 
 private operator fun YearMonth.minus(other: YearMonth) =
   ChronoUnit.MONTHS.between(other, this)
-
-internal const val PagerItemCount = 20_000
-internal const val StartIndex = PagerItemCount / 2

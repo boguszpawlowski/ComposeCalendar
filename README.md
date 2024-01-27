@@ -20,24 +20,16 @@ Library is available on Maven Central repository.
 ```
 Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/).
 
-## Compose versions
-| Compose Version 	 | Compose Calendar Version 	 |
-|-------------------|----------------------------|
-| 1.0.0           	 | 0.3.0                    	 |
-| 1.1.0           	 | 0.5.1                    	 |
-| 1.2.0           	 | 0.6.0                    	 |
-| 1.2.1           	 | 1.0.2                    	 |
-| 1.3.1           	 | 1.1.0                    	 |
-
 ## Supported features
 - Selection (single, multiple or a range of days)
-- Every day as first day of week
+- Chose day as first day of week
 - Showing/hiding adjacent months
 - Month and week headers
 - Customizable month container
 - Fully customizable day content
 - Horizontal swipe for changing a current month
 - Month / Week mode
+- Min / Max Month (or Week) 
 
 ## Basic Usage
 
@@ -144,6 +136,10 @@ Apart from rendering your own components inside the calendar, you can modify it 
 - `showAdjacentMonths` - whenever to render days from adjacent months. Defaults to `true`.
 - `firstDayOfWeek` - you can pass the `DayOfWeek` which you want you week to start with. It defaults to the first day of week of the `Locale.default()`.
 - `horizontalScrollEnabled` - a Boolean flag which enables month to be changed by a horizontal swipe. Defaults to `true`.
+- `minMonth` - a `YearMonth` object representing the minimum month that can be shown in the calendar. By default there is no minimum month.
+- `maxMonth` - a `YearMonth` object representing the maximum month that can be shown in the calendar. By default there is no maximum month.
+
+> :exclamation: You cannot set `minMonth` to be lower than `maxMonth` and vice versa. If you do so, the calendar state won't change.
 
 Apart from this, `Calendar` you can pass a `Modifier` object like in any other composable.
 
@@ -212,6 +208,9 @@ Selection modes are represented by `SelectionMode` enum, with following values:
 - `Multiple` - a list of dates can be selected.
 - `Period` - selectable period - implemented by `start` and `end` dates. - selection will contain all dates between start and the end date.
 This implementation of SelectionState also allows for handling side-effects and vetoing the state change via `confirmSelectionChange` callback.
+
+## Week Calendar
+Apart from the default calendar, there is also a week calendar, which shows a single week at a time. It can be used in the same way as the default calendar, and has the same customization options.
 
 ## KotlinX DateTime
 As the core of the library is built on `java.time` library, on Android it requires to use [core libary desugaring](https://developer.android.com/studio/write/java8-support) to be able to access it's API.

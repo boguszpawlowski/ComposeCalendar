@@ -66,7 +66,6 @@ internal fun <T : SelectionState> MonthPager(
   val monthListState = remember {
     MonthListState(
       coroutineScope = coroutineScope,
-      initialMonth = initialMonth,
       monthState = monthState,
       listState = listState,
     )

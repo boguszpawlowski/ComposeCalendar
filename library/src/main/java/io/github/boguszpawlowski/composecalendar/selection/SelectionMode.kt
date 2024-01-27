@@ -12,5 +12,4 @@ public enum class SelectionMode {
   Single,
   Multiple,
   Period,
-  ;
 }

@@ -5,6 +5,7 @@ import io.github.boguszpawlowski.composecalendar.util.daysUntil
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.temporal.ChronoUnit
 import java.time.temporal.WeekFields
 import java.util.Locale
 
@@ -30,6 +31,10 @@ public data class Week(
 
   public operator fun dec(): Week = plusWeeks(-1)
 
+  public operator fun compareTo(other: Week): Int = start.compareTo(other.start)
+
+  public fun minusWeeks(value: Long): Week = plusWeeks(-value)
+
   public fun plusWeeks(value: Long): Week = copy(days = days.map { it.plusWeeks(value) })
 
   public companion object {
@@ -42,3 +47,6 @@ public data class Week(
     }
   }
 }
+
+public fun ChronoUnit.between(first: Week, other: Week): Int =
+  between(first.start, other.start).toInt()

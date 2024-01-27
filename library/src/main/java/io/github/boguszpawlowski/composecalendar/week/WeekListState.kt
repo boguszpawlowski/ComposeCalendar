@@ -6,7 +6,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import io.github.boguszpawlowski.composecalendar.header.WeekState
-import io.github.boguszpawlowski.composecalendar.month.StartIndex
 import io.github.boguszpawlowski.composecalendar.util.throttleOnOffset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
@@ -17,7 +16,6 @@ import java.time.temporal.ChronoUnit
 @Stable
 internal class WeekListState(
   private val coroutineScope: CoroutineScope,
-  private val initialWeek: Week,
   private val weekState: WeekState,
   private val listState: LazyListState,
 ) {
@@ -41,14 +39,12 @@ internal class WeekListState(
   }
 
   fun getWeekForPage(index: Int): Week =
-    initialWeek.plusWeeks((index - StartIndex).toLong())
+    weekState.minWeek.plusWeeks(index.toLong())
 
   private fun moveToWeek(week: Week) {
     if (week == currentlyFirstVisibleMonth) return
-    initialWeek.minus(week).let { offset ->
-      coroutineScope.launch {
-        listState.animateScrollToItem((StartIndex - offset).toInt())
-      }
+    coroutineScope.launch {
+      listState.animateScrollToItem(ChronoUnit.WEEKS.between(weekState.minWeek, week))
     }
   }
 
@@ -70,6 +66,3 @@ internal class WeekListState(
     return result
   }
 }
-
-private operator fun Week.minus(other: Week) =
-  ChronoUnit.WEEKS.between(other.start, this.start)

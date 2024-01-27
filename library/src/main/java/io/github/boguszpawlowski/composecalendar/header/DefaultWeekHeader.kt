@@ -22,7 +22,7 @@ import java.time.format.TextStyle.FULL
 import java.util.Locale
 
 /**
- * Default implementation of month header, shows current month and year, as well as
+ * Default implementation of week header, shows current month and year, as well as
  * 2 arrows for changing currently showed month
  */
 @Composable
@@ -36,18 +36,9 @@ public fun DefaultWeekHeader(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    IconButton(
-      modifier = Modifier.testTag("Decrement"),
-      onClick = { weekState.currentWeek = weekState.currentWeek.dec() }
-    ) {
-      Image(
-        imageVector = Icons.Default.KeyboardArrowLeft,
-        colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
-        contentDescription = "Previous",
-      )
-    }
+    DecrementButton(weekState = weekState)
     Text(
-      modifier = Modifier.testTag("MonthLabel"),
+      modifier = Modifier.testTag("WeekLabel"),
       text = weekState.currentWeek.yearMonth.month
         .getDisplayName(FULL, Locale.getDefault())
         .lowercase()
@@ -59,15 +50,40 @@ public fun DefaultWeekHeader(
       text = weekState.currentWeek.yearMonth.year.toString(),
       style = MaterialTheme.typography.h4
     )
-    IconButton(
-      modifier = Modifier.testTag("Increment"),
-      onClick = { weekState.currentWeek = weekState.currentWeek.inc() }
-    ) {
-      Image(
-        imageVector = Icons.Default.KeyboardArrowRight,
-        colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
-        contentDescription = "Next",
-      )
-    }
+    IncrementButton(monthState = weekState)
+  }
+}
+
+@Composable
+private fun DecrementButton(
+  weekState: WeekState,
+) {
+  IconButton(
+    modifier = Modifier.testTag("Decrement"),
+    enabled = weekState.currentWeek > weekState.minWeek,
+    onClick = { weekState.currentWeek = weekState.currentWeek.dec() }
+  ) {
+    Image(
+      imageVector = Icons.Default.KeyboardArrowLeft,
+      colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+      contentDescription = "Previous",
+    )
+  }
+}
+
+@Composable
+private fun IncrementButton(
+  monthState: WeekState,
+) {
+  IconButton(
+    modifier = Modifier.testTag("Increment"),
+    enabled = monthState.currentWeek < monthState.maxWeek,
+    onClick = { monthState.currentWeek = monthState.currentWeek.inc() }
+  ) {
+    Image(
+      imageVector = Icons.Default.KeyboardArrowRight,
+      colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+      contentDescription = "Next",
+    )
   }
 }

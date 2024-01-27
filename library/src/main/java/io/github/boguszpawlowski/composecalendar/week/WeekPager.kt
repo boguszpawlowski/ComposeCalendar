@@ -21,12 +21,11 @@ import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.WeekDay
 import io.github.boguszpawlowski.composecalendar.header.WeekState
-import io.github.boguszpawlowski.composecalendar.month.PagerItemCount
-import io.github.boguszpawlowski.composecalendar.month.StartIndex
 import io.github.boguszpawlowski.composecalendar.month.coerceSnapIndex
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
@@ -44,8 +43,11 @@ internal fun <T : SelectionState> WeekPager(
 ) {
   val coroutineScope = rememberCoroutineScope()
 
+  val initialFirstVisibleItemIndex = remember(initialWeek, weekState.minWeek) {
+    ChronoUnit.WEEKS.between(weekState.minWeek, initialWeek)
+  }
   val listState = rememberLazyListState(
-    initialFirstVisibleItemIndex = StartIndex,
+    initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
   )
   val flingBehavior = rememberSnapperFlingBehavior(
     lazyListState = listState,
@@ -58,7 +60,6 @@ internal fun <T : SelectionState> WeekPager(
   val weekListState = remember {
     WeekListState(
       coroutineScope = coroutineScope,
-      initialWeek = initialWeek,
       weekState = weekState,
       listState = listState,
     )
@@ -74,13 +75,19 @@ internal fun <T : SelectionState> WeekPager(
         content = { daysOfWeekHeader(daysOfWeek) },
       )
     }
+    val pagerCount = remember(weekState.minWeek, weekState.maxWeek) {
+      ChronoUnit.WEEKS.between(weekState.minWeek, weekState.maxWeek) + 1
+    }
     LazyRow(
       modifier = modifier.testTag("WeekPager"),
       state = listState,
       flingBehavior = flingBehavior,
       verticalAlignment = Alignment.Top,
     ) {
-      items(PagerItemCount) { index ->
+      items(
+        count = pagerCount,
+        key = { index -> weekListState.getWeekForPage(index).start.let { "${it.month}-${it.dayOfMonth}" } },
+      ) { index ->
         WeekContent(
           modifier = Modifier.fillParentMaxWidth(),
           daysOfWeek = daysOfWeek,
