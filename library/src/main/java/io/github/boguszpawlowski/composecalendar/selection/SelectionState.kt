@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.selection
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ public interface SelectionState {
  * @param confirmSelectionChange return false from this callback to veto the selection change
  */
 @Stable
+@SuppressLint("NewApi")
 public class DynamicSelectionState(
   private val confirmSelectionChange: (newValue: List<LocalDate>) -> Boolean = { true },
   selection: List<LocalDate>,

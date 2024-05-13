@@ -33,7 +33,7 @@ import java.time.temporal.ChronoUnit
 
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
-@Suppress("LongMethod")
+@Suppress("LongMethod", "NewApi")
 internal fun <T : SelectionState> MonthPager(
   initialMonth: YearMonth,
   showAdjacentMonths: Boolean,

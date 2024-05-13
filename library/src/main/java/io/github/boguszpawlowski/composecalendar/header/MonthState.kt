@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.header
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +43,7 @@ public interface MonthState {
 }
 
 @Stable
+@SuppressLint("NewApi")
 private class MonthStateImpl(
   initialMonth: YearMonth,
   minMonth: YearMonth,

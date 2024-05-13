@@ -2,6 +2,7 @@
 
 package io.github.boguszpawlowski.composecalendar
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -68,6 +69,7 @@ public class CalendarState<T : SelectionState>(
  * @param monthContainer container composable for all the days in current month
  */
 @Composable
+@SuppressLint("NewApi")
 public fun SelectableCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
@@ -122,6 +124,7 @@ public fun SelectableCalendar(
  * @param monthContainer container composable for all the days in current month
  */
 @Composable
+@SuppressLint("NewApi")
 public fun StaticCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
@@ -170,6 +173,7 @@ public fun StaticCalendar(
  * @param monthContainer container composable for all the days in current month
  */
 @Composable
+@SuppressLint("NewApi")
 public fun <T : SelectionState> Calendar(
   calendarState: CalendarState<T>,
   modifier: Modifier = Modifier,
@@ -235,6 +239,7 @@ public fun <T : SelectionState> Calendar(
  * @param maxMonth last month that can be shown
  */
 @Composable
+@SuppressLint("NewApi")
 public fun rememberSelectableCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
   minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarPagerRange),
@@ -264,6 +269,7 @@ public fun rememberSelectableCalendarState(
  * @param maxMonth last month that can be shown
  */
 @Composable
+@SuppressLint("NewApi")
 public fun rememberCalendarState(
   initialMonth: YearMonth = YearMonth.now(),
   minMonth: YearMonth = initialMonth.minusMonths(DefaultCalendarPagerRange),

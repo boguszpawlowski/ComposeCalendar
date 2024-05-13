@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.selection
 
+import android.annotation.SuppressLint
 import io.github.boguszpawlowski.composecalendar.util.addOrRemoveIfExists
 import java.time.LocalDate
 
@@ -10,6 +11,7 @@ import java.time.LocalDate
  * @param selectionMode current selection mode
  * @returns new selection in a form of a list of local dates.
  */
+@SuppressLint("NewApi")
 public object DynamicSelectionHandler {
   public fun calculateNewSelection(
     date: LocalDate,

@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.month
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
@@ -15,6 +16,7 @@ import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
 @Stable
+@SuppressLint("NewApi")
 internal class MonthListState(
   private val coroutineScope: CoroutineScope,
   private val monthState: MonthState,

@@ -20,6 +20,23 @@ Library is available on Maven Central repository.
 ```
 Snapshots are available on [Sonatype’s snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/boguszpawlowski/composecalendar/).
 
+### 1.3.0 Changes
+From version 1.3.0 library no longer uses `coreLibraryDesugaring` itself. If you are using it in project supporting min SDK < 26, you need to add it to prevent runtime crashes. 
+```kotlin
+  // app-level build.gradle
+  android {
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+  }
+  dependencies {
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
+  }
+```
+
 ## Supported features
 - Selection (single, multiple or a range of days)
 - Chose day as first day of week
@@ -213,7 +230,7 @@ This implementation of SelectionState also allows for handling side-effects and 
 Apart from the default calendar, there is also a week calendar, which shows a single week at a time. It can be used in the same way as the default calendar, and has the same customization options.
 
 ## KotlinX DateTime
-As the core of the library is built on `java.time` library, on Android it requires to use [core libary desugaring](https://developer.android.com/studio/write/java8-support) to be able to access it's API.
+As the core of the library is built on `java.time` library, on Android SDK < 26 it requires to use [core libary desugaring](https://developer.android.com/studio/write/java8-support) to access it's API.
 As a result it's features may be unavailable to some project built around different date-time libraries (e.g. kotlinx-datetime). Although the project wont be migrating from `java.time`, as it's the best suited for it, there is a separate `kotlinx-datetime` artifact for those who need to use the library from a codebase based on it. It doesn't consist of a separate version of `ComposeCalendar` features, but offers a small bunch of utilities, that will enable you to create your own wrapper, as briefly presented in `KotlinDateTimeSample`. If the provided functionality, doesn't match your use-case, please submit an issue.
 
 ## License

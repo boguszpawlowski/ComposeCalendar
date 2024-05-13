@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.week
 
+import android.annotation.SuppressLint
 import io.github.boguszpawlowski.composecalendar.selection.fillUpTo
 import io.github.boguszpawlowski.composecalendar.util.daysUntil
 import java.time.DayOfWeek
@@ -9,6 +10,7 @@ import java.time.temporal.ChronoUnit
 import java.time.temporal.WeekFields
 import java.util.Locale
 
+@SuppressLint("NewApi")
 public data class Week(
   val days: List<LocalDate>,
 ) {
@@ -48,5 +50,6 @@ public data class Week(
   }
 }
 
+@SuppressLint("NewApi")
 public fun ChronoUnit.between(first: Week, other: Week): Int =
   between(first.start, other.start).toInt()

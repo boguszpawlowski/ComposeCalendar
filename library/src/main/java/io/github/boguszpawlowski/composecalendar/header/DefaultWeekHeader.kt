@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.header
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import java.util.Locale
  */
 @Composable
 @Suppress("LongMethod")
+@SuppressLint("NewApi")
 public fun DefaultWeekHeader(
   weekState: WeekState,
   modifier: Modifier = Modifier,
