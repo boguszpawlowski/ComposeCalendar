@@ -204,6 +204,7 @@ public final class io/github/boguszpawlowski/composecalendar/selection/Selection
 	public static final field None Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
 	public static final field Period Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
 	public static final field Single Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
 	public static fun values ()[Lio/github/boguszpawlowski/composecalendar/selection/SelectionMode;
 }
