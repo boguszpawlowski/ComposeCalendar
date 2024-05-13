@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.week
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 import java.time.temporal.ChronoUnit
 
 @Stable
+@SuppressLint("NewApi")
 internal class WeekListState(
   private val coroutineScope: CoroutineScope,
   private val weekState: WeekState,

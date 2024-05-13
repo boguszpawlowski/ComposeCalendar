@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.header
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +22,7 @@ public fun WeekState(
 )
 
 @Stable
+@SuppressLint("NewApi")
 public interface WeekState {
   public var currentWeek: Week
   public var minWeek: Week

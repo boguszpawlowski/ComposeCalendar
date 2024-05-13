@@ -34,6 +34,7 @@ allprojects {
     mavenCentral()
     gradlePluginPortal()
     google()
+    mavenLocal()
   }
 
   tasks.withType<KotlinCompile> {

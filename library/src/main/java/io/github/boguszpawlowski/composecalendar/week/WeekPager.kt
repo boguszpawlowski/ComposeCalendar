@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.week
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -30,6 +31,7 @@ import java.time.temporal.ChronoUnit
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
 @Suppress("LongMethod")
+@SuppressLint("NewApi")
 internal fun <T : SelectionState> WeekPager(
   initialWeek: Week,
   selectionState: T,

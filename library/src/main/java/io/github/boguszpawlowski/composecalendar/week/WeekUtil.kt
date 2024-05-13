@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.week
 
+import android.annotation.SuppressLint
 import io.github.boguszpawlowski.composecalendar.day.WeekDay
 import io.github.boguszpawlowski.composecalendar.util.daysUntil
 import java.time.DayOfWeek
@@ -8,10 +9,11 @@ import java.time.YearMonth
 
 internal const val DaysInAWeek = 7
 
+@SuppressLint("NewApi")
 internal fun YearMonth.getWeeks(
   includeAdjacentMonths: Boolean,
   firstDayOfTheWeek: DayOfWeek,
-  today: LocalDate = LocalDate.now(),
+  today: LocalDate,
 ): List<WeekDays> {
   val daysLength = lengthOfMonth()
 

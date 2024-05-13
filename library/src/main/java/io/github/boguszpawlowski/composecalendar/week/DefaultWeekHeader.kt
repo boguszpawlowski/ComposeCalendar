@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.week
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Text
@@ -20,6 +21,7 @@ import kotlin.DeprecationLevel.WARNING
   ),
   message = "Replace with DefaultDaysOfWeekHeader, DefaultWeekHeader will be removed in future versions"
 )
+@SuppressLint("NewApi")
 public fun DefaultWeekHeader(
   daysOfWeek: List<DayOfWeek>,
   modifier: Modifier = Modifier,
@@ -38,6 +40,7 @@ public fun DefaultWeekHeader(
 }
 
 @Composable
+@SuppressLint("NewApi")
 public fun DefaultDaysOfWeekHeader(
   daysOfWeek: List<DayOfWeek>,
   modifier: Modifier = Modifier,

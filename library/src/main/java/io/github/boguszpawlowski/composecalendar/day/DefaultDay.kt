@@ -1,5 +1,6 @@
 package io.github.boguszpawlowski.composecalendar.day
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import java.time.LocalDate
  * @param onClick callback for interacting with day clicks
  */
 @Composable
+@SuppressLint("NewApi")
 public fun <T : SelectionState> DefaultDay(
   state: DayState<T>,
   modifier: Modifier = Modifier,

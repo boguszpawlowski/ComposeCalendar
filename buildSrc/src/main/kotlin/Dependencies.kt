@@ -27,7 +27,7 @@ object Kotlin {
   const val CompatibilityPlugin = "org.jetbrains.kotlinx.binary-compatibility-validator"
   const val CompatibilityPluginId = "binary-compatibility-validator"
 
-  const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
+  const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:2.0.4"
   const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 }
 

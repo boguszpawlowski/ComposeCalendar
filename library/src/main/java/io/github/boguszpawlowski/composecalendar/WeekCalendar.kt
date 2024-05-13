@@ -2,6 +2,7 @@
 
 package io.github.boguszpawlowski.composecalendar
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -111,6 +112,7 @@ public fun SelectableWeekCalendar(
  * @param daysOfWeekHeader header for showing captions for each day of week
  */
 @Composable
+@SuppressLint("NewApi")
 public fun StaticWeekCalendar(
   modifier: Modifier = Modifier,
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
@@ -153,6 +155,7 @@ public fun StaticWeekCalendar(
  * @param daysOfWeekHeader header for showing captions for each day of week
  */
 @Composable
+@SuppressLint("NewApi")
 public fun <T : SelectionState> WeekCalendar(
   calendarState: WeekCalendarState<T>,
   modifier: Modifier = Modifier,
@@ -211,6 +214,7 @@ public fun <T : SelectionState> WeekCalendar(
  * @param maxWeek last week that can be shown
  */
 @Composable
+@SuppressLint("NewApi")
 public fun rememberSelectableWeekCalendarState(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   initialWeek: Week = Week.now(firstDayOfWeek),
@@ -243,6 +247,7 @@ public fun rememberSelectableWeekCalendarState(
  * @param maxWeek last week that can be shown
  */
 @Composable
+@SuppressLint("NewApi")
 public fun rememberWeekCalendarState(
   firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
   initialWeek: Week = Week.now(firstDayOfWeek),
