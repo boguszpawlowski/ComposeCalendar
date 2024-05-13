@@ -1,7 +1,7 @@
 @file:Suppress("ObjectPropertyNaming", "ClassNaming", "UnderscoresInNumericLiterals")
 object MavenPublish {
   const val PluginId = "com.vanniktech.maven.publish"
-  const val GradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.25.2"
+  const val GradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.27.0"
 }
 
 object AndroidSdk {
@@ -11,24 +11,20 @@ object AndroidSdk {
 }
 
 object Kotlin {
-  const val Version = "1.9.20"
-  const val CompatibilityPluginVersion = "0.11.0"
+  const val Version = "1.9.21"
+  const val CompatibilityPluginVersion = "0.13.2"
 
   const val GradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$Version"
-  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.7.20"
-
-  const val SafeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0"
+  const val DokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.9.10"
 
   const val AndroidPluginId = "android"
-  const val KaptPluginId = "kapt"
-  const val SafeArgsPluginId = "androidx.navigation.safeargs.kotlin"
   const val JvmPluginId = "jvm"
 
   const val CompatibilityPlugin = "org.jetbrains.kotlinx.binary-compatibility-validator"
   const val CompatibilityPluginId = "binary-compatibility-validator"
 
   const val DesugarJdkLibs = "com.android.tools:desugar_jdk_libs:2.0.4"
-  const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
+  const val DateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
 }
 
 object Android {
@@ -100,7 +96,7 @@ object Timber {
 
 object Compose {
   const val Version = "1.3.1"
-  const val CompilerVersion = "1.4.3"
+  const val CompilerVersion = "1.5.5"
   const val AccompanistVersion = "0.25.1"
 
   const val Runtime = "androidx.compose.runtime:runtime:$Version"
@@ -110,11 +106,8 @@ object Compose {
   const val Material = "androidx.compose.material:material:$Version"
   const val Ui = "androidx.compose.ui:ui:$Version"
   const val UiTooling = "androidx.compose.ui:ui-tooling:$Version"
-  const val MaterialIconsExtended = "androidx.compose.material:material-icons-extended:$Version"
   const val AccompanistPager = "com.google.accompanist:accompanist-pager:$AccompanistVersion"
   const val Navigation = "androidx.navigation:navigation-compose:2.5.0-alpha03"
-  const val Testing = "androidx.compose.ui:ui-test:$Version"
-  const val JunitTesting = "androidx.compose.ui:ui-test-junit4:$Version"
 }
 
 object Debug {
