@@ -34,7 +34,7 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-        run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache --no-daemon --no-parallel
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache --no-daemon --no-parallel
 
       - name: Stop Gradle
         run: ./gradlew --stop

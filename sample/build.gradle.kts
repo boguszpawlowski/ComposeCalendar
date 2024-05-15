@@ -22,16 +22,18 @@ android {
     }
   }
 
-  compileOptions {
-    isCoreLibraryDesugaringEnabled = true
-  }
+//  compileOptions {
+//    isCoreLibraryDesugaringEnabled = true
+//  }
 }
 
 dependencies {
-  coreLibraryDesugaring(Kotlin.DesugarJdkLibs)
+//  coreLibraryDesugaring(Kotlin.DesugarJdkLibs)
 
-  implementation(project(":library"))
+//  implementation(project(":library"))
   implementation(project(":kotlinx-datetime"))
+
+  implementation("io.github.boguszpawlowski.composecalendar:composecalendar:1.3.0")
 
   implementation(Material.Core)
 
