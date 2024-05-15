@@ -235,7 +235,7 @@ As a result it's features may be unavailable to some project built around differ
 
 ## License
 
-    Copyright 2022 Bogusz Pawłowski
+    Copyright 2024 Bogusz Pawłowski
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
