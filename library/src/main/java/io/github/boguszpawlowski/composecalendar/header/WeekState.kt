@@ -33,9 +33,9 @@ public interface WeekState {
     public fun Saver(): Saver<WeekState, Any> = mapSaver(
       save = { weekState ->
         mapOf(
-          CurrentWeekKey to weekState.currentWeek.toString(),
-          MinWeekKey to weekState.minWeek.toString(),
-          MaxWeekKey to weekState.maxWeek.toString(),
+          CurrentWeekKey to weekState.currentWeek.days[0].toString(),
+          MinWeekKey to weekState.minWeek.days[0].toString(),
+          MaxWeekKey to weekState.maxWeek.days[0].toString(),
         )
       },
       restore = { restoreMap ->
